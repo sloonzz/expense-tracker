@@ -17,18 +17,6 @@ class ExpenseController extends Controller
     {
         $expenses = Expense::all();
         return ExpenseResource::collection($expenses);
-        // return ExpenseResource::collection(Expense::findAll());
-        // return Expense::find(52);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -39,7 +27,10 @@ class ExpenseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $expense = Expense::create($request->all());
+        if ($expense->save()) {
+            return new ExpenseResource($expense);
+        }
     }
 
     /**
@@ -50,18 +41,7 @@ class ExpenseController extends Controller
      */
     public function show(Expense $expense)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Expense  $expense
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Expense $expense)
-    {
-        //
+        return new ExpenseResource(Expense::find($expense->id));
     }
 
     /**
@@ -73,7 +53,10 @@ class ExpenseController extends Controller
      */
     public function update(Request $request, Expense $expense)
     {
-        //
+        $expense->fill($request->all());
+        if ($expense->save()) {
+            return new ExpenseResource($expense);
+        }
     }
 
     /**
@@ -84,6 +67,9 @@ class ExpenseController extends Controller
      */
     public function destroy(Expense $expense)
     {
-        //
+        if ($expense->delete()) {
+            return new ExpenseResource($expense);
+        }
+
     }
 }
