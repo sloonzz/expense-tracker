@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Expense;
+use App\Http\Requests\ExpenseRequest;
 use App\Http\Resources\Expense as ExpenseResource;
 use Illuminate\Http\Request;
 
@@ -25,7 +26,7 @@ class ExpenseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ExpenseRequest $request)
     {
         $expense = Expense::create($request->all());
         if ($expense->save()) {
@@ -68,7 +69,10 @@ class ExpenseController extends Controller
     public function destroy(Expense $expense)
     {
         if ($expense->delete()) {
-            return new ExpenseResource($expense);
+            return [
+                'data' => (new ExpenseResource($expense)),
+                'message' => 'Resource successfully deleted.',
+            ];
         }
 
     }

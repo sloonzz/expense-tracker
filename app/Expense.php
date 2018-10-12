@@ -22,5 +22,6 @@ class Expense extends Model
      */
     protected $attributes = [
         'user_id' => 1,
+        'description' => '',
     ];
 }
