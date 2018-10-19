@@ -25,4 +25,6 @@ const routes = [
         name: 'logout',
         component: Logout
     }
-]
+];
+
+export default routes;

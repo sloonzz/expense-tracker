@@ -12,6 +12,7 @@ window.Vue = require('vue');
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import routes from './routes'
+import Master from './components/main/Master'
 import { store } from './store/store'
 
 Vue.use(VueRouter);
@@ -22,7 +23,8 @@ Vue.use(VueRouter);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
+// Vue.component('example-component', require('./components/ExampleComponent.vue'));
+// Vue.component('Master', require('./components/main/Master.vue'));
 
 const router = new VueRouter({
     routes,
@@ -32,5 +34,5 @@ const router = new VueRouter({
 const app = new Vue({
     el: '#app',
     router: router,
-    store: store,
+    store: store
 });
