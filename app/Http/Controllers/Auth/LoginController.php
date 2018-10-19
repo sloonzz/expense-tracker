@@ -61,7 +61,6 @@ class LoginController extends Controller
         // TODO: Register user if it doesn't exist in the database.
         $user = User::firstOrNew([
             'name' => $providerUser->name,
-            'password' => bcrypt("secret"),
             'email' => $providerUser->email,
         ]);
         // Otherwise, give the user an access token.
