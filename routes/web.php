@@ -19,9 +19,6 @@ Route::get('/', function () {
 
 // Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/{any}', function() {
+Route::get('/{any}', function () {
     return view('welcome');
 });
-
-// Route::get('login/github', 'Auth\LoginController@redirectToProvider');
-// Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback');

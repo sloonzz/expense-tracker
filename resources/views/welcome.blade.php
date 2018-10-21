@@ -9,10 +9,7 @@
     </head>
     <body>
         <div id="app">
-            <div class="container">
-                <h1>Welcome</h1>
-                <router-view></router-view>
-            </div>
+            <Home></Home>
         </div>
     <script src="{{asset('js/app.js')}}"></script>
     </body>
