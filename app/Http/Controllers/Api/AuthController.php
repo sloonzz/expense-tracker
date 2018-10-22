@@ -7,11 +7,10 @@ use App\Http\Requests\RegisterRequest;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Requests\LoginRequest;
-use Illuminate\Foundation\Http\FormRequest;
 
 class AuthController extends Controller
 {
+
     public function register(RegisterRequest $request)
     {
         return User::create([
@@ -21,11 +20,20 @@ class AuthController extends Controller
         ]);
     }
 
-    public function login(LoginRequest $request)
+    public function login(Request $request)
     {
+        /**
+         * TODO: Move validation to custom LoginRequest
+         * This is delayed due to unidentified bug
+         * regarding dispatch requests.
+         */
+        $request->validate([
+            'email' => 'required|string|email|max:255',
+            'password' => 'required|min:6',
+        ]);
+
         $email = $request->email;
         $password = $request->password;
-        $request = new Request();
 
         $request->request->add([
             'username' => $email,
@@ -38,10 +46,14 @@ class AuthController extends Controller
 
         $tokenRequest = Request::create(
             env('APP_URL') . '/oauth/token',
-            'post'
+            'post',
+            $request->all()
         );
 
+        // $tokenRequest = $request;
         $response = Route::dispatch($tokenRequest);
+
+        // $response = app()->handle($tokenRequest);
 
         return $response;
     }

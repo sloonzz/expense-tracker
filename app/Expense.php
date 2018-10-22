@@ -24,4 +24,9 @@ class Expense extends Model
         'user_id' => 1,
         'description' => '',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

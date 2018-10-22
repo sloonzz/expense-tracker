@@ -1,10 +1,5 @@
 <template>
   <div class="container">
-    <div class="alert alert-danger" v-for="(errorMessage, uIndex) in this.$store.state.errors" :key="uIndex" >
-      <div class="" v-for="(error, index) in errorMessage" :key="index">
-        {{ error }}
-      </div>
-    </div>
     <button v-on:click="logout" v-if="this.$store.getters.isLoggedIn" class="btn btn-danger">Logout</button>
   </div>
 </template>
@@ -23,8 +18,24 @@ export default {
         });
     },
     created() {
-      this.$store.commit('errors', null);
+      this.$store.commit("errors", null);
     }
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.$store
+        .dispatch("retrieveUser")
+        .then(response => {
+          if (!vm.$store.getters.isLoggedIn) {
+            next("/");
+          } else {
+            next();
+          }
+        })
+        .catch(error => {
+          next("/");
+        });
+    });
   }
 };
 </script>

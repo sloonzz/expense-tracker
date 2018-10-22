@@ -1,10 +1,5 @@
 <template>
     <div class="container">
-      <div class="alert alert-danger" v-for="(errorMessage, uIndex) in this.$store.state.errors" :key="uIndex" >
-        <div class="" v-for="(error, index) in errorMessage" :key="index">
-          {{ error }}
-        </div>
-      </div>
         <div class="form-group">
             <form v-if="!this.$store.getters.isLoggedIn">
                 <div class="form-group">
@@ -50,13 +45,30 @@ export default {
         })
         .then(response => {
           this.$router.push("/login");
+          this.$store.commit("messages", [["Successfully registered!"]]);
         })
-        .catch(error => {
-        });
+        .catch(error => {});
     }
   },
   created() {
-    this.$store.commit('errors', null);
+    this.$store.commit("errors", null);
+    this.$store.commit("messages", null);
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.$store
+        .dispatch("retrieveUser")
+        .then(response => {
+          if (vm.$store.getters.isLoggedIn) {
+            next("/");
+          } else {
+            next();
+          }
+        })
+        .catch(error => {
+          next();
+        });
+    });
   }
 };
 </script>

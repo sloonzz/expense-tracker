@@ -5,11 +5,8 @@ export default {
         user: {},
         accessToken: localStorage.getItem("access_token") || null,
         validToken: false,
-        errors: [
-        ],
-        messages: [
-
-        ]
+        errors: [],
+        messages: []
     },
     getters: {
         isLoggedIn: function(state) {
@@ -36,20 +33,24 @@ export default {
     actions: {
         retrieveUser: function(context) {
             return new Promise((resolve, reject) => {
-                axios.defaults.headers.common.Authorization =
-                    "Bearer " + context.state.accessToken;
-                axios
-                    .get("/api/user")
-                    .then(response => {
-                        context.commit("user", response.data);
-                        context.commit("isValidToken", true);
-                        resolve(response);
-                    })
-                    .catch(error => {
-                        context.commit("isValidToken", false);
-                        localStorage.removeItem("access_token");
-                        reject(error);
-                    });
+                if (context.state.accessToken) {
+                    axios.defaults.headers.common.Authorization =
+                        "Bearer " + context.state.accessToken;
+                    axios
+                        .get("/api/user")
+                        .then(response => {
+                            context.commit("user", response.data);
+                            context.commit("isValidToken", true);
+                            resolve(response);
+                        })
+                        .catch(error => {
+                            context.commit("isValidToken", false);
+                            localStorage.removeItem("access_token");
+                            reject(error);
+                        });
+                } else {
+                    reject(error);
+                }
             });
         },
         loginUser: function(context, { email, password }) {
@@ -65,10 +66,13 @@ export default {
                             response.data.access_token
                         );
                         context.commit("accessToken");
+                        context.commit("isValidToken", true);
                         context.commit("errors", null);
+                        console.log(context.getters.isLoggedIn);
                         resolve(response);
                     })
                     .catch(error => {
+                        console.log(email + password);
                         localStorage.removeItem("access_token");
                         context.commit("accessToken");
                         context.commit("errors", error.response.data.errors);
@@ -87,10 +91,13 @@ export default {
                         localStorage.removeItem("access_token");
                         context.commit("accessToken");
                         context.commit("errors", null);
+                        context.commit("isValidToken", false);
                         resolve(response);
                     })
                     .catch(error => {
                         context.commit("errors", error.response.data.errors);
+                        context.commit("isValidToken", false);
+                        localStorage.removeItem("access_token");
                         reject(error);
                     });
             });

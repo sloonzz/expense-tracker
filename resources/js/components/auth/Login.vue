@@ -1,18 +1,5 @@
 <template>
     <div class="container">
-
-        <div class="alert alert-success" v-for="(messageObject, uIndex) in this.$store.state.messages" :key="uIndex" >
-          <div class="" v-for="(message, index) in messageObject" :key="index">
-            {{ message }}
-          </div>
-        </div>
-
-        <div class="alert alert-danger" v-for="(errorMessage, uIndex) in this.$store.state.errors" :key="uIndex" >
-          <div class="" v-for="(error, index) in errorMessage" :key="index">
-            {{ error }}
-          </div>
-        </div>
-
         <form v-if="!this.$store.getters.isLoggedIn">
             <div class="form-group">
                 <label for="email">Email</label>
@@ -25,7 +12,7 @@
             <button @click.prevent v-on:click="login" class="btn btn-primary">Submit</button>
         </form>
         <div v-else>
-            <h1>You are logged in {{ this.getUser.name }}</h1>
+            <h1>You are already logged in, {{ this.getUser.name }}</h1>
         </div>
     </div>
 </template>
@@ -48,6 +35,7 @@ export default {
         })
         .then(response => {
           this.$router.push("/");
+          this.$store.dispatch("retrieveUser");
         })
         .catch(error => {});
     }
@@ -57,8 +45,24 @@ export default {
       return this.$store.state.user;
     }
   },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.$store
+        .dispatch("retrieveUser")
+        .then(response => {
+          if (vm.$store.getters.isLoggedIn) {
+            next("/");
+          } else {
+            next();
+          }
+        })
+        .catch(error => {
+          next();
+        });
+    });
+  },
   created() {
-      this.$store.commit('errors', null);
+    this.$store.commit("errors", null);
   }
 };
 </script>
