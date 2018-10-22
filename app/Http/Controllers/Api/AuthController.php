@@ -7,6 +7,8 @@ use App\Http\Requests\RegisterRequest;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Requests\LoginRequest;
+use Illuminate\Foundation\Http\FormRequest;
 
 class AuthController extends Controller
 {
@@ -19,11 +21,12 @@ class AuthController extends Controller
         ]);
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-
         $email = $request->email;
         $password = $request->password;
+        $request = new Request();
+
         $request->request->add([
             'username' => $email,
             'password' => $password,

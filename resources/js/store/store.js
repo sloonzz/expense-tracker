@@ -5,7 +5,11 @@ export default {
         user: {},
         accessToken: localStorage.getItem("access_token") || null,
         validToken: false,
-        errors: {}
+        errors: [
+        ],
+        messages: [
+
+        ]
     },
     getters: {
         isLoggedIn: function(state) {
@@ -21,6 +25,12 @@ export default {
         },
         isValidToken: function(state, validToken) {
             state.validToken = validToken;
+        },
+        errors: function(state, errors) {
+            state.errors = errors;
+        },
+        messages: function(state, messages) {
+            state.messages = messages;
         }
     },
     actions: {
@@ -55,11 +65,13 @@ export default {
                             response.data.access_token
                         );
                         context.commit("accessToken");
+                        context.commit("errors", null);
                         resolve(response);
                     })
                     .catch(error => {
                         localStorage.removeItem("access_token");
                         context.commit("accessToken");
+                        context.commit("errors", error.response.data.errors);
                         reject(error);
                     });
             });
@@ -74,9 +86,11 @@ export default {
                     .then(response => {
                         localStorage.removeItem("access_token");
                         context.commit("accessToken");
+                        context.commit("errors", null);
                         resolve(response);
                     })
                     .catch(error => {
+                        context.commit("errors", error.response.data.errors);
                         reject(error);
                     });
             });
@@ -94,9 +108,11 @@ export default {
                         password_confirmation
                     })
                     .then(response => {
+                        context.commit("errors", null);
                         resolve(response);
                     })
                     .catch(error => {
+                        context.commit("errors", error.response.data.errors);
                         reject(error);
                     });
             });

@@ -1,5 +1,10 @@
 <template>
     <div class="container">
+      <div class="alert alert-danger" v-for="(errorMessage, uIndex) in this.$store.state.errors" :key="uIndex" >
+        <div class="" v-for="(error, index) in errorMessage" :key="index">
+          {{ error }}
+        </div>
+      </div>
         <div class="form-group">
             <form v-if="!this.$store.getters.isLoggedIn">
                 <div class="form-group">
@@ -44,13 +49,14 @@ export default {
           password_confirmation: this.password_confirmation
         })
         .then(response => {
-          console.log(response);
           this.$router.push("/login");
         })
         .catch(error => {
-          console.log(error.response.data.errors);
         });
     }
+  },
+  created() {
+    this.$store.commit('errors', null);
   }
 };
 </script>
