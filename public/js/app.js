@@ -24960,7 +24960,7 @@ module.exports = Vue;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(15);
-module.exports = __webpack_require__(67);
+module.exports = __webpack_require__(70);
 
 
 /***/ }),
@@ -24974,8 +24974,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(40);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(41);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__routes__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store_store__ = __webpack_require__(60);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__views_Home_vue__ = __webpack_require__(61);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store_store__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__views_Home_vue__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__views_Home_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__views_Home_vue__);
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -50907,7 +50907,7 @@ var index_esm = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_auth_Logout___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_auth_Logout__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_main_Welcome__ = __webpack_require__(57);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_main_Welcome___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_main_Welcome__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_resources_Expenses__ = __webpack_require__(71);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_resources_Expenses__ = __webpack_require__(60);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_resources_Expenses___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_resources_Expenses__);
 // import Home from "./components/general/Home";
 
@@ -52072,6 +52072,273 @@ if (false) {
 
 /***/ }),
 /* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(61)
+/* template */
+var __vue_template__ = __webpack_require__(62)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/resources/Expenses.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-fafbb220", Component.options)
+  } else {
+    hotAPI.reload("data-v-fafbb220", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 61 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      editing: false,
+      expenses: [],
+      expense: {},
+      sort: {
+        date: false,
+        name: false,
+        cost: false,
+        quantity: false,
+        description: false
+      }
+    };
+  },
+
+  methods: {
+    sortDate: function sortDate() {
+      if (!this.sort.date) {
+        this.expenses.sort(function (a, b) {
+          return new Date(a.date) - new Date(b.date);
+        });
+        this.sort.name = false;
+        this.sort.cost = false;
+        this.sort.quantity = false;
+        this.sort.date = true;
+      } else {
+        this.expenses.reverse();
+      }
+    },
+    sortCost: function sortCost() {
+      if (!this.sort.cost) {
+        this.expenses.sort(function (a, b) {
+          return a.cost - b.cost;
+        });
+        this.sort.name = false;
+        this.sort.cost = true;
+        this.sort.quantity = false;
+        this.sort.date = false;
+      } else {
+        this.expenses.reverse();
+      }
+    },
+    sortQuantity: function sortQuantity() {
+      if (!this.sort.quantity) {
+        this.expenses.sort(function (a, b) {
+          return a.quantity - b.quantity;
+        });
+        this.sort.name = false;
+        this.sort.cost = false;
+        this.sort.quantity = true;
+        this.sort.date = false;
+      } else {
+        this.expenses.reverse();
+      }
+    },
+    sortName: function sortName() {
+      if (!this.sort.name) {
+        this.expenses.sort(function (a, b) {
+          var x = a.name.toLowerCase();
+          var y = b.name.toLowerCase();
+          if (x < y) {
+            return -1;
+          }
+          if (x > y) {
+            return 1;
+          }
+          return 0;
+        });
+        this.sort.name = true;
+        this.sort.cost = false;
+        this.sort.quantity = false;
+        this.sort.date = false;
+      } else {
+        this.expenses.reverse();
+      }
+    }
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get("/api/expenses").then(function (response) {
+      _this.expenses = response.data.data;
+    }).catch(function (error) {});
+  }
+});
+
+/***/ }),
+/* 62 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("table", { staticClass: "table table-striped" }, [
+      _c("thead", [
+        _c("tr", [
+          _c(
+            "th",
+            {
+              attrs: { scope: "col" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.sortDate($event)
+                }
+              }
+            },
+            [_vm._v("Date")]
+          ),
+          _vm._v(" "),
+          _c(
+            "th",
+            {
+              attrs: { scope: "col" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.sortName($event)
+                }
+              }
+            },
+            [_vm._v("Name")]
+          ),
+          _vm._v(" "),
+          _c("th", { attrs: { scope: "col" } }, [_vm._v("Description")]),
+          _vm._v(" "),
+          _c(
+            "th",
+            {
+              attrs: { scope: "col" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.sortCost($event)
+                }
+              }
+            },
+            [_vm._v("Cost")]
+          ),
+          _vm._v(" "),
+          _c(
+            "th",
+            {
+              attrs: { scope: "col" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.sortQuantity($event)
+                }
+              }
+            },
+            [_vm._v("Quantity")]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(this.expenses, function(expense, index) {
+          return _c("tr", { key: index }, [
+            _c("td", [_vm._v(_vm._s(expense.date))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(expense.name))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(expense.description))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(expense.cost))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(expense.quantity))])
+          ])
+        })
+      )
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-fafbb220", module.exports)
+  }
+}
+
+/***/ }),
+/* 63 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -52195,15 +52462,15 @@ if (false) {
 });
 
 /***/ }),
-/* 61 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(62)
+var __vue_script__ = __webpack_require__(65)
 /* template */
-var __vue_template__ = __webpack_require__(66)
+var __vue_template__ = __webpack_require__(69)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -52242,12 +52509,12 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 62 */
+/* 65 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_general_Navbar_vue__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_general_Navbar_vue__ = __webpack_require__(66);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_general_Navbar_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_general_Navbar_vue__);
 //
 //
@@ -52283,15 +52550,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 63 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(64)
+var __vue_script__ = __webpack_require__(67)
 /* template */
-var __vue_template__ = __webpack_require__(65)
+var __vue_template__ = __webpack_require__(68)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -52330,7 +52597,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 64 */
+/* 67 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -52370,7 +52637,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
-/* 65 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -52509,7 +52776,7 @@ if (false) {
 }
 
 /***/ }),
-/* 66 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -52568,172 +52835,10 @@ if (false) {
 }
 
 /***/ }),
-/* 67 */
+/* 70 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 68 */,
-/* 69 */,
-/* 70 */,
-/* 71 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(1)
-/* script */
-var __vue_script__ = __webpack_require__(72)
-/* template */
-var __vue_template__ = __webpack_require__(73)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/js/components/resources/Expenses.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-fafbb220", Component.options)
-  } else {
-    hotAPI.reload("data-v-fafbb220", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 72 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            editing: false,
-            expenses: [],
-            expense: {}
-        };
-    },
-    mounted: function mounted() {
-        var _this = this;
-
-        axios.get('/api/expenses').then(function (response) {
-            _this.expenses = response.data.data;
-            console.log(response);
-        }).catch(function (error) {
-            console.log(error);
-        });
-    }
-});
-
-/***/ }),
-/* 73 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("table", { staticClass: "table table-striped" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "tbody",
-        _vm._l(this.expenses, function(expense, index) {
-          return _c("tr", { key: index }, [
-            _c("td", [_vm._v(_vm._s(expense.date))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(expense.name))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(expense.description))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(expense.cost))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(expense.quantity))])
-          ])
-        })
-      )
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Date")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Name")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Description")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Cost")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Quantity")])
-      ])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-fafbb220", module.exports)
-  }
-}
 
 /***/ })
 /******/ ]);
