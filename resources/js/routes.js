@@ -3,6 +3,8 @@ import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Logout from "./components/auth/Logout";
 import Welcome from "./components/main/Welcome";
+import Expenses from "./components/resources/Expenses";
+
 const routes = [
     {
         path: "/",
@@ -23,6 +25,11 @@ const routes = [
         path: "/logout",
         name: "logout",
         component: Logout
+    },
+    {
+        path: '/expenses',
+        name: "expenses",
+        component: Expenses
     }
 ];
 
