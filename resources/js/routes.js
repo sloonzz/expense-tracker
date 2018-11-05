@@ -4,6 +4,7 @@ import Login from "./components/auth/Login";
 import Logout from "./components/auth/Logout";
 import Welcome from "./components/main/Welcome";
 import Expenses from "./components/resources/Expenses";
+import Expense from "./components/resources/Expense";
 
 const routes = [
     {
@@ -29,7 +30,12 @@ const routes = [
     {
         path: '/expenses',
         name: "expenses",
-        component: Expenses
+        component: Expenses,
+    },
+    {
+        path: '/expenses/:id',
+        name: "expense",
+        component: Expense
     }
 ];
 

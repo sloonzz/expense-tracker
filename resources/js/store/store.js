@@ -6,7 +6,8 @@ export default {
         accessToken: localStorage.getItem("access_token") || null,
         validToken: false,
         errors: [],
-        messages: []
+        messages: [],
+        expense: {}
     },
     getters: {
         isLoggedIn: function(state) {
@@ -28,6 +29,9 @@ export default {
         },
         messages: function(state, messages) {
             state.messages = messages;
+        },
+        expense: function(state, expense) {
+            state.expense = expense;
         }
     },
     actions: {
@@ -123,6 +127,20 @@ export default {
                         reject(error);
                     });
             });
+        },
+        retrieveExpense: function(context, id) {
+            return new Promise((resolve, reject) => {
+                axios
+                    .get('/api/expenses/' + id)
+                    .then(response => {
+                        context.commit("expense", response.data.data);
+                        console.log(response.data.data);
+                        resolve(response);
+                    })
+                    .catch(error => {
+                        reject(error);
+                    });
+                });
         }
     }
 };
