@@ -50,10 +50,7 @@ class AuthController extends Controller
             $request->all()
         );
 
-        // $tokenRequest = $request;
         $response = Route::dispatch($tokenRequest);
-
-        // $response = app()->handle($tokenRequest);
 
         return $response;
     }

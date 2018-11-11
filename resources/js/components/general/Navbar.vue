@@ -22,6 +22,9 @@
           <li v-if="this.$store.getters.isLoggedIn" class="nav-item">
             <router-link :to="{ name: 'logout' }" class="nav-link">Logout</router-link>
           </li>
+          <li v-if="this.$store.getters.isLoggedIn" class="nav-item">
+            <router-link :to="{ name: 'expenses' }" class="nav-link">Expenses</router-link>
+          </li>
         </ul>
       </div>
     </nav>
