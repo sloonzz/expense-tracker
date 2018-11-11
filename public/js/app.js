@@ -52155,13 +52155,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       editing: false,
       expenses: [],
-      expense: {},
+      expense: {
+        date: "",
+        name: "",
+        description: "",
+        cost: 0,
+        quantity: 0
+      },
       sort: {
         date: false,
         name: false,
@@ -52182,6 +52193,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.sort.cost = false;
         this.sort.quantity = false;
         this.sort.date = true;
+        this.editing = false;
       } else {
         this.expenses.reverse();
       }
@@ -52195,6 +52207,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.sort.cost = true;
         this.sort.quantity = false;
         this.sort.date = false;
+        this.editing = false;
       } else {
         this.expenses.reverse();
       }
@@ -52208,6 +52221,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.sort.cost = false;
         this.sort.quantity = true;
         this.sort.date = false;
+        this.editing = false;
       } else {
         this.expenses.reverse();
       }
@@ -52229,9 +52243,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.sort.cost = false;
         this.sort.quantity = false;
         this.sort.date = false;
+        this.editing = false;
       } else {
         this.expenses.reverse();
       }
+    },
+    edit: function edit() {
+      this.editing = true;
+      console.log("EDIT");
     }
   },
   mounted: function mounted() {
@@ -52318,17 +52337,81 @@ var render = function() {
       _c(
         "tbody",
         _vm._l(this.expenses, function(expense, index) {
-          return _c("tr", { key: index }, [
-            _c("td", [_vm._v(_vm._s(expense.date))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(expense.name))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(expense.description))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(expense.cost))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(expense.quantity))])
-          ])
+          return _c(
+            "tr",
+            { key: index },
+            [
+              !_vm.editing
+                ? [
+                    _c(
+                      "td",
+                      {
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.edit($event)
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(expense.date))]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      {
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.edit($event)
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(expense.name))]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      {
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.edit($event)
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(expense.description))]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      {
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.edit($event)
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(expense.cost))]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      {
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.edit($event)
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(expense.quantity))]
+                    )
+                  ]
+                : [_c("input", { attrs: { type: "date", name: "date" } })]
+            ],
+            2
+          )
         })
       )
     ])

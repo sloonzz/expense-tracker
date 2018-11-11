@@ -12,11 +12,16 @@
             </thead>
             <tbody>
                 <tr v-for="(expense, index) in this.expenses" :key="index">
-                    <td>{{expense.date}}</td>
-                    <td>{{expense.name}}</td>
-                    <td>{{expense.description}}</td>
-                    <td>{{expense.cost}}</td>
-                    <td>{{expense.quantity}}</td>
+                    <template v-if="!editing">
+                      <td @click.prevent="edit">{{expense.date}}</td>
+                      <td @click.prevent="edit">{{expense.name}}</td>
+                      <td @click.prevent="edit">{{expense.description}}</td>
+                      <td @click.prevent="edit">{{expense.cost}}</td>
+                      <td @click.prevent="edit">{{expense.quantity}}</td>
+                    </template>
+                    <template v-else>
+                      <input type="date" name="date">
+                    </template>
                 </tr>
             </tbody>
         </table>
@@ -29,7 +34,13 @@ export default {
     return {
       editing: false,
       expenses: [],
-      expense: {},
+      expense: {
+        date: "",
+        name: "",
+        description: "",
+        cost: 0,
+        quantity: 0
+      },
       sort: {
         date: false,
         name: false,
@@ -49,6 +60,7 @@ export default {
         this.sort.cost = false;
         this.sort.quantity = false;
         this.sort.date = true;
+        this.editing = false;
       } else {
         this.expenses.reverse();
       }
@@ -62,6 +74,7 @@ export default {
         this.sort.cost = true;
         this.sort.quantity = false;
         this.sort.date = false;
+        this.editing = false;
       } else {
         this.expenses.reverse();
       }
@@ -75,6 +88,7 @@ export default {
         this.sort.cost = false;
         this.sort.quantity = true;
         this.sort.date = false;
+        this.editing = false;
       } else {
         this.expenses.reverse();
       }
@@ -96,9 +110,14 @@ export default {
         this.sort.cost = false;
         this.sort.quantity = false;
         this.sort.date = false;
+        this.editing = false;
       } else {
         this.expenses.reverse();
       }
+    },
+    edit() {
+      this.editing = true;
+      console.log("EDIT");
     }
   },
   mounted() {
