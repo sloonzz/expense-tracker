@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" v-if="!loading">
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -8,19 +8,38 @@
                     <th scope="col">Description</th>
                     <th @click.prevent="sortCost" scope="col">Cost</th>
                     <th @click.prevent="sortQuantity" scope="col">Quantity</th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="(expense, index) in this.expenses" :key="index">
-                    <template v-if="!editing">
-                      <td @click.prevent="edit">{{expense.date}}</td>
-                      <td @click.prevent="edit">{{expense.name}}</td>
-                      <td @click.prevent="edit">{{expense.description}}</td>
-                      <td @click.prevent="edit">{{expense.cost}}</td>
-                      <td @click.prevent="edit">{{expense.quantity}}</td>
+                    <template v-if="editableID !== expense.id">
+                      <td>{{expense.date}}</td>
+                      <td>{{expense.name}}</td>
+                      <td>{{expense.description}}</td>
+                      <td>{{expense.cost}}</td>
+                      <td>{{expense.quantity}}</td>
+                      <td @click.prevent="edit(expense.id)"><button class="btn btn-sm btn-secondary">EDIT</button></td>
                     </template>
-                    <template v-else>
-                      <input type="date" name="date">
+                    <template v-else-if="editing">
+                      <td>
+                        <input type="date" name="date" class="form-control" v-model="expense.date">
+                      </td>
+                      <td>
+                        <textarea class="form-control" v-model="expense.name"></textarea>
+                      </td>
+                      <td>
+                        <textarea class="form-control" v-model="expense.description"></textarea>
+                      </td>
+                      <td>
+                        <input type="number" name="cost" class="form-control" v-model="expense.cost">
+                      </td>
+                      <td>
+                        <input type="number" name="quantity" class="form-control" v-model="expense.quantity">
+                      </td>
+                      <td>
+                        <button @click.prevent="save(expense.id)" class="btn btn-sm btn-primary">SAVE</button>
+                      </td>
                     </template>
                 </tr>
             </tbody>
@@ -32,15 +51,18 @@
 export default {
   data() {
     return {
+      loading: false,
       editing: false,
       expenses: [],
       expense: {
+        id: 0,
         date: "",
         name: "",
         description: "",
         cost: 0,
         quantity: 0
       },
+      editableID: 0,
       sort: {
         date: false,
         name: false,
@@ -115,16 +137,23 @@ export default {
         this.expenses.reverse();
       }
     },
-    edit() {
+    edit(id) {
+      this.editableID = id;
+      console.log(this.editableID);
       this.editing = true;
       console.log("EDIT");
+    },
+    save(id) {
+      this.editing = false;
     }
   },
   mounted() {
+    this.loading = true;
     axios
       .get("/api/expenses")
       .then(response => {
         this.expenses = response.data.data;
+        this.loading = false;
       })
       .catch(error => {});
   }
