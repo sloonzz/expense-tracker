@@ -52280,11 +52280,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       console.log(this.editableID);
       this.editing = true;
       console.log("EDIT");
+      this.$store.commit("messages", null);
     },
     save: function save(expense) {
       this.editing = false;
+      var vm = this;
       axios.put("/api/expenses/" + expense.id, expense).then(function (response) {
-        console.log(response.data);
+        vm.$store.commit("messages", [["Successfully edited expense."]]);
       }).catch(function (error) {
         console.log(error.data);
       });

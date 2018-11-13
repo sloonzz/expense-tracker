@@ -147,13 +147,17 @@ export default {
       console.log(this.editableID);
       this.editing = true;
       console.log("EDIT");
+      this.$store.commit("messages", null)
     },
     save(expense) {
       this.editing = false;
+      let vm = this;
       axios
         .put("/api/expenses/" + expense.id, expense)
         .then(response => {
-          console.log(response.data);
+          vm.$store.commit("messages", [
+            ["Successfully edited expense."]
+          ]);
         })
         .catch(error => {
           console.log(error.data);
