@@ -13,7 +13,7 @@
             </thead>
             <tbody>
                 <tr v-for="(expense, index) in this.expenses" :key="index">
-                    <template v-if="editableID !== expense.id">
+                    <template v-if="editableID !== expense.id || !editing">
                       <td>{{expense.date}}</td>
                       <td>{{expense.name}}</td>
                       <td>{{expense.description}}</td>
@@ -23,7 +23,12 @@
                     </template>
                     <template v-else-if="editing">
                       <td>
-                        <input type="date" name="date" class="form-control" v-model="expense.date">
+                        <!-- 
+                          
+                          TODO: Separate this to date and time 
+                          
+                          -->
+                        <input type="datetime-local" name="date" class="form-control" v-model="expense.date">
                       </td>
                       <td>
                         <textarea class="form-control" v-model="expense.name"></textarea>
@@ -38,7 +43,7 @@
                         <input type="number" name="quantity" class="form-control" v-model="expense.quantity">
                       </td>
                       <td>
-                        <button @click.prevent="save(expense.id)" class="btn btn-sm btn-primary">SAVE</button>
+                        <button @click.prevent="save(expense)" class="btn btn-sm btn-primary">SAVE</button>
                       </td>
                     </template>
                 </tr>
@@ -143,7 +148,18 @@ export default {
       this.editing = true;
       console.log("EDIT");
     },
-    save(id) {
+    save(expense) {
+      this.editing = false;
+      axios
+        .put("/api/expenses/" + expense.id, expense)
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.log(error.data);
+        });
+    },
+    unedit() {
       this.editing = false;
     }
   },

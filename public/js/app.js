@@ -52179,6 +52179,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -52276,7 +52281,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.editing = true;
       console.log("EDIT");
     },
-    save: function save(id) {
+    save: function save(expense) {
+      this.editing = false;
+      axios.put("/api/expenses/" + expense.id, expense).then(function (response) {
+        console.log(response.data);
+      }).catch(function (error) {
+        console.log(error.data);
+      });
+    },
+    unedit: function unedit() {
       this.editing = false;
     }
   },
@@ -52373,7 +52386,7 @@ var render = function() {
                 "tr",
                 { key: index },
                 [
-                  _vm.editableID !== expense.id
+                  _vm.editableID !== expense.id || !_vm.editing
                     ? [
                         _c("td", [_vm._v(_vm._s(expense.date))]),
                         _vm._v(" "),
@@ -52417,7 +52430,7 @@ var render = function() {
                                 }
                               ],
                               staticClass: "form-control",
-                              attrs: { type: "date", name: "date" },
+                              attrs: { type: "datetime-local", name: "date" },
                               domProps: { value: expense.date },
                               on: {
                                 input: function($event) {
@@ -52540,7 +52553,7 @@ var render = function() {
                                 on: {
                                   click: function($event) {
                                     $event.preventDefault()
-                                    _vm.save(expense.id)
+                                    _vm.save(expense)
                                   }
                                 }
                               },
