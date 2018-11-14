@@ -52184,6 +52184,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -52191,7 +52193,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       loading: false,
       editing: false,
       expenses: [],
-      expense: {
+      editableExpense: {
         id: 0,
         date: "",
         name: "",
@@ -52275,18 +52277,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.expenses.reverse();
       }
     },
-    edit: function edit(id) {
-      this.editableID = id;
-      console.log(this.editableID);
+    edit: function edit(expense) {
+      this.editableID = expense.id;
+      this.editableExpense = window._.cloneDeep(expense);
       this.editing = true;
-      console.log("EDIT");
       this.$store.commit("messages", null);
     },
     save: function save(expense) {
       this.editing = false;
+      var expenseToBeSaved = this.expenses.find(function (expenseItem) {
+        expenseItem.id == expense.id;
+      });
       var vm = this;
       axios.put("/api/expenses/" + expense.id, expense).then(function (response) {
         vm.$store.commit("messages", [["Successfully edited expense."]]);
+        vm.$set(vm.expenses, vm.expenses.findIndex(function (item) {
+          return item.id == expense.id;
+        }), expense);
       }).catch(function (error) {
         console.log(error.data);
       });
@@ -52377,16 +52384,18 @@ var render = function() {
                 [_vm._v("Quantity")]
               ),
               _vm._v(" "),
+              _c("th", { attrs: { scope: "col" } }),
+              _vm._v(" "),
               _c("th", { attrs: { scope: "col" } })
             ])
           ]),
           _vm._v(" "),
           _c(
             "tbody",
-            _vm._l(this.expenses, function(expense, index) {
+            _vm._l(this.expenses, function(expense) {
               return _c(
                 "tr",
-                { key: index },
+                { key: expense.id },
                 [
                   _vm.editableID !== expense.id || !_vm.editing
                     ? [
@@ -52406,7 +52415,7 @@ var render = function() {
                             on: {
                               click: function($event) {
                                 $event.preventDefault()
-                                _vm.edit(expense.id)
+                                _vm.edit(expense)
                               }
                             }
                           },
@@ -52417,6 +52426,26 @@ var render = function() {
                               [_vm._v("EDIT")]
                             )
                           ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "td",
+                          [
+                            _c(
+                              "router-link",
+                              {
+                                staticClass: "btn btn-sm btn-primary",
+                                attrs: {
+                                  to: {
+                                    name: "expense",
+                                    params: { id: expense.id }
+                                  }
+                                }
+                              },
+                              [_vm._v("DETAILS")]
+                            )
+                          ],
+                          1
                         )
                       ]
                     : _vm.editing
@@ -52427,66 +52456,76 @@ var render = function() {
                                 {
                                   name: "model",
                                   rawName: "v-model",
-                                  value: expense.date,
-                                  expression: "expense.date"
+                                  value: _vm.editableExpense.date,
+                                  expression: "editableExpense.date"
                                 }
                               ],
                               staticClass: "form-control",
                               attrs: { type: "datetime-local", name: "date" },
-                              domProps: { value: expense.date },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(expense, "date", $event.target.value)
-                                }
-                              }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _c("textarea", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: expense.name,
-                                  expression: "expense.name"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              domProps: { value: expense.name },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(expense, "name", $event.target.value)
-                                }
-                              }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _c("textarea", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: expense.description,
-                                  expression: "expense.description"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              domProps: { value: expense.description },
+                              domProps: { value: _vm.editableExpense.date },
                               on: {
                                 input: function($event) {
                                   if ($event.target.composing) {
                                     return
                                   }
                                   _vm.$set(
-                                    expense,
+                                    _vm.editableExpense,
+                                    "date",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("textarea", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.editableExpense.name,
+                                  expression: "editableExpense.name"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              domProps: { value: _vm.editableExpense.name },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.editableExpense,
+                                    "name",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("textarea", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.editableExpense.description,
+                                  expression: "editableExpense.description"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              domProps: {
+                                value: _vm.editableExpense.description
+                              },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.editableExpense,
                                     "description",
                                     $event.target.value
                                   )
@@ -52501,19 +52540,23 @@ var render = function() {
                                 {
                                   name: "model",
                                   rawName: "v-model",
-                                  value: expense.cost,
-                                  expression: "expense.cost"
+                                  value: _vm.editableExpense.cost,
+                                  expression: "editableExpense.cost"
                                 }
                               ],
                               staticClass: "form-control",
                               attrs: { type: "number", name: "cost" },
-                              domProps: { value: expense.cost },
+                              domProps: { value: _vm.editableExpense.cost },
                               on: {
                                 input: function($event) {
                                   if ($event.target.composing) {
                                     return
                                   }
-                                  _vm.$set(expense, "cost", $event.target.value)
+                                  _vm.$set(
+                                    _vm.editableExpense,
+                                    "cost",
+                                    $event.target.value
+                                  )
                                 }
                               }
                             })
@@ -52525,20 +52568,20 @@ var render = function() {
                                 {
                                   name: "model",
                                   rawName: "v-model",
-                                  value: expense.quantity,
-                                  expression: "expense.quantity"
+                                  value: _vm.editableExpense.quantity,
+                                  expression: "editableExpense.quantity"
                                 }
                               ],
                               staticClass: "form-control",
                               attrs: { type: "number", name: "quantity" },
-                              domProps: { value: expense.quantity },
+                              domProps: { value: _vm.editableExpense.quantity },
                               on: {
                                 input: function($event) {
                                   if ($event.target.composing) {
                                     return
                                   }
                                   _vm.$set(
-                                    expense,
+                                    _vm.editableExpense,
                                     "quantity",
                                     $event.target.value
                                   )
@@ -52555,7 +52598,7 @@ var render = function() {
                                 on: {
                                   click: function($event) {
                                     $event.preventDefault()
-                                    _vm.save(expense)
+                                    _vm.save(_vm.editableExpense)
                                   }
                                 }
                               },

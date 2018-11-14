@@ -9,41 +9,43 @@
                     <th @click.prevent="sortCost" scope="col">Cost</th>
                     <th @click.prevent="sortQuantity" scope="col">Quantity</th>
                     <th scope="col"></th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(expense, index) in this.expenses" :key="index">
+                <tr v-for="expense in this.expenses" :key="expense.id">
                     <template v-if="editableID !== expense.id || !editing">
                       <td>{{expense.date}}</td>
                       <td>{{expense.name}}</td>
                       <td>{{expense.description}}</td>
                       <td>{{expense.cost}}</td>
                       <td>{{expense.quantity}}</td>
-                      <td @click.prevent="edit(expense.id)"><button class="btn btn-sm btn-secondary">EDIT</button></td>
+                      <td @click.prevent="edit(expense)"><button class="btn btn-sm btn-secondary">EDIT</button></td>
+                      <td><router-link :to="{ name: 'expense', params: { id: expense.id } }" class="btn btn-sm btn-primary">DETAILS</router-link></td>
                     </template>
                     <template v-else-if="editing">
                       <td>
-                        <!-- 
-                          
-                          TODO: Separate this to date and time 
-                          
-                          -->
-                        <input type="datetime-local" name="date" class="form-control" v-model="expense.date">
+                      <!-- 
+                        
+                        TODO: Separate this to date and time 
+                        
+                        -->
+                        <input type="datetime-local" name="date" class="form-control" v-model="editableExpense.date">
                       </td>
                       <td>
-                        <textarea class="form-control" v-model="expense.name"></textarea>
+                        <textarea class="form-control" v-model="editableExpense.name"></textarea>
                       </td>
                       <td>
-                        <textarea class="form-control" v-model="expense.description"></textarea>
+                        <textarea class="form-control" v-model="editableExpense.description"></textarea>
                       </td>
                       <td>
-                        <input type="number" name="cost" class="form-control" v-model="expense.cost">
+                        <input type="number" name="cost" class="form-control" v-model="editableExpense.cost">
                       </td>
                       <td>
-                        <input type="number" name="quantity" class="form-control" v-model="expense.quantity">
+                        <input type="number" name="quantity" class="form-control" v-model="editableExpense.quantity">
                       </td>
                       <td>
-                        <button @click.prevent="save(expense)" class="btn btn-sm btn-primary">SAVE</button>
+                        <button @click.prevent="save(editableExpense)" class="btn btn-sm btn-primary">SAVE</button>
                       </td>
                     </template>
                 </tr>
@@ -59,7 +61,7 @@ export default {
       loading: false,
       editing: false,
       expenses: [],
-      expense: {
+      editableExpense: {
         id: 0,
         date: "",
         name: "",
@@ -142,15 +144,17 @@ export default {
         this.expenses.reverse();
       }
     },
-    edit(id) {
-      this.editableID = id;
-      console.log(this.editableID);
+    edit(expense) {
+      this.editableID = expense.id;
+      this.editableExpense = window._.cloneDeep(expense);
       this.editing = true;
-      console.log("EDIT");
       this.$store.commit("messages", null)
     },
     save(expense) {
       this.editing = false;
+      let expenseToBeSaved = this.expenses.find(expenseItem => {
+        expenseItem.id == expense.id;
+      });
       let vm = this;
       axios
         .put("/api/expenses/" + expense.id, expense)
@@ -158,6 +162,7 @@ export default {
           vm.$store.commit("messages", [
             ["Successfully edited expense."]
           ]);
+          vm.$set(vm.expenses, vm.expenses.findIndex(item => item.id == expense.id), expense);
         })
         .catch(error => {
           console.log(error.data);
