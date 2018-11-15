@@ -52186,6 +52186,40 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -52222,6 +52256,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.sort.cost = false;
         this.sort.quantity = false;
         this.sort.date = true;
+        this.sort.description = false;
         this.editing = false;
       } else {
         this.expenses.reverse();
@@ -52236,6 +52271,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.sort.cost = true;
         this.sort.quantity = false;
         this.sort.date = false;
+        this.sort.description = false;
         this.editing = false;
       } else {
         this.expenses.reverse();
@@ -52250,6 +52286,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.sort.cost = false;
         this.sort.quantity = true;
         this.sort.date = false;
+        this.sort.description = false;
         this.editing = false;
       } else {
         this.expenses.reverse();
@@ -52272,6 +52309,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.sort.cost = false;
         this.sort.quantity = false;
         this.sort.date = false;
+        this.sort.description = false;
+        this.editing = false;
+      } else {
+        this.expenses.reverse();
+      }
+    },
+    sortDescription: function sortDescription() {
+      if (!this.sort.description) {
+        this.expenses.sort(function (a, b) {
+          var x = a.description.toLowerCase();
+          var y = b.description.toLowerCase();
+          if (x < y) {
+            return -1;
+          }
+          if (x > y) {
+            return 1;
+          }
+          return 0;
+        });
+        this.sort.name = false;
+        this.sort.cost = false;
+        this.sort.quantity = false;
+        this.sort.date = false;
+        this.sort.description = true;
         this.editing = false;
       } else {
         this.expenses.reverse();
@@ -52285,10 +52346,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     save: function save(expense) {
       this.editing = false;
-      var expenseToBeSaved = this.expenses.find(function (expenseItem) {
-        expenseItem.id == expense.id;
-      });
       var vm = this;
+
       axios.put("/api/expenses/" + expense.id, expense).then(function (response) {
         vm.$store.commit("messages", [["Successfully edited expense."]]);
         vm.$set(vm.expenses, vm.expenses.findIndex(function (item) {
@@ -52297,6 +52356,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }).catch(function (error) {
         console.log(error.data);
       });
+    },
+    deleteExpense: function deleteExpense(expense) {
+      this.editing = false;
+      var vm = this;
+      if (confirm("You will be deleting this expense. Are you sure?")) {
+        axios.delete("/api/expenses/" + expense.id).then(function (response) {
+          vm.$store.commit("messages", [["Successfully deleted expense."]]);
+          vm.$delete(vm.expenses, vm.expenses.findIndex(function (item) {
+            return item.id == expense.id;
+          }));
+        }).catch(function (error) {
+          console.log(error.data);
+        });
+      }
     },
     unedit: function unedit() {
       this.editing = false;
@@ -52323,272 +52396,132 @@ var render = function() {
   var _c = _vm._self._c || _h
   return !_vm.loading
     ? _c("div", { staticClass: "container" }, [
-        _c("table", { staticClass: "table table-striped" }, [
-          _c("thead", [
-            _c("tr", [
-              _c(
-                "th",
-                {
-                  attrs: { scope: "col" },
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.sortDate($event)
+        _c("h2", [_vm._v("Create new expense:")]),
+        _vm._v(" "),
+        _vm._m(0),
+        _vm._v(" "),
+        _c("h2", [_vm._v("Expenses:")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "table-responsive" }, [
+          _c("table", { staticClass: "table table-striped" }, [
+            _c("thead", [
+              _c("tr", [
+                _c(
+                  "th",
+                  {
+                    attrs: { scope: "col" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.sortDate($event)
+                      }
                     }
-                  }
-                },
-                [_vm._v("Date")]
-              ),
-              _vm._v(" "),
-              _c(
-                "th",
-                {
-                  attrs: { scope: "col" },
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.sortName($event)
+                  },
+                  [_vm._v("Date")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    attrs: { scope: "col" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.sortName($event)
+                      }
                     }
-                  }
-                },
-                [_vm._v("Name")]
-              ),
-              _vm._v(" "),
-              _c("th", { attrs: { scope: "col" } }, [_vm._v("Description")]),
-              _vm._v(" "),
-              _c(
-                "th",
-                {
-                  attrs: { scope: "col" },
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.sortCost($event)
+                  },
+                  [_vm._v("Name")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    attrs: { scope: "col" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.sortDescription($event)
+                      }
                     }
-                  }
-                },
-                [_vm._v("Cost")]
-              ),
-              _vm._v(" "),
-              _c(
-                "th",
-                {
-                  attrs: { scope: "col" },
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.sortQuantity($event)
+                  },
+                  [_vm._v("Description")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    attrs: { scope: "col" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.sortCost($event)
+                      }
                     }
-                  }
-                },
-                [_vm._v("Quantity")]
-              ),
-              _vm._v(" "),
-              _c("th", { attrs: { scope: "col" } }),
-              _vm._v(" "),
-              _c("th", { attrs: { scope: "col" } })
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(this.expenses, function(expense) {
-              return _c(
-                "tr",
-                { key: expense.id },
-                [
-                  _vm.editableID !== expense.id || !_vm.editing
-                    ? [
-                        _c("td", [_vm._v(_vm._s(expense.date))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(expense.name))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(expense.description))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(expense.cost))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(expense.quantity))]),
-                        _vm._v(" "),
-                        _c(
-                          "td",
-                          {
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                _vm.edit(expense)
-                              }
-                            }
-                          },
-                          [
-                            _c(
-                              "button",
-                              { staticClass: "btn btn-sm btn-secondary" },
-                              [_vm._v("EDIT")]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "td",
-                          [
-                            _c(
-                              "router-link",
-                              {
-                                staticClass: "btn btn-sm btn-primary",
-                                attrs: {
-                                  to: {
-                                    name: "expense",
-                                    params: { id: expense.id }
-                                  }
-                                }
-                              },
-                              [_vm._v("DETAILS")]
-                            )
-                          ],
-                          1
-                        )
-                      ]
-                    : _vm.editing
+                  },
+                  [_vm._v("Cost")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    attrs: { scope: "col" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.sortQuantity($event)
+                      }
+                    }
+                  },
+                  [_vm._v("Quantity")]
+                ),
+                _vm._v(" "),
+                _c("th", { attrs: { scope: "col" } }),
+                _vm._v(" "),
+                _c("th", { attrs: { scope: "col" } }),
+                _vm._v(" "),
+                _c("th")
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(this.expenses, function(expense) {
+                return _c(
+                  "tr",
+                  { key: expense.id },
+                  [
+                    _vm.editableID !== expense.id || !_vm.editing
                       ? [
-                          _c("td", [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.editableExpense.date,
-                                  expression: "editableExpense.date"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: { type: "datetime-local", name: "date" },
-                              domProps: { value: _vm.editableExpense.date },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.editableExpense,
-                                    "date",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            })
-                          ]),
+                          _c("td", [_vm._v(_vm._s(expense.date))]),
                           _vm._v(" "),
-                          _c("td", [
-                            _c("textarea", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.editableExpense.name,
-                                  expression: "editableExpense.name"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              domProps: { value: _vm.editableExpense.name },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.editableExpense,
-                                    "name",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            })
-                          ]),
+                          _c("td", [_vm._v(_vm._s(expense.name))]),
                           _vm._v(" "),
-                          _c("td", [
-                            _c("textarea", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.editableExpense.description,
-                                  expression: "editableExpense.description"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              domProps: {
-                                value: _vm.editableExpense.description
-                              },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.editableExpense,
-                                    "description",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            })
-                          ]),
+                          _c("td", [_vm._v(_vm._s(expense.description))]),
                           _vm._v(" "),
-                          _c("td", [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.editableExpense.cost,
-                                  expression: "editableExpense.cost"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: { type: "number", name: "cost" },
-                              domProps: { value: _vm.editableExpense.cost },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.editableExpense,
-                                    "cost",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            })
-                          ]),
+                          _c("td", [_vm._v(_vm._s(expense.cost))]),
                           _vm._v(" "),
-                          _c("td", [
-                            _c("input", {
-                              directives: [
+                          _c("td", [_vm._v(_vm._s(expense.quantity))]),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            [
+                              _c(
+                                "router-link",
                                 {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.editableExpense.quantity,
-                                  expression: "editableExpense.quantity"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: { type: "number", name: "quantity" },
-                              domProps: { value: _vm.editableExpense.quantity },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
+                                  staticClass: "btn btn-sm btn-secondary",
+                                  attrs: {
+                                    to: {
+                                      name: "expense",
+                                      params: { id: expense.id }
+                                    }
                                   }
-                                  _vm.$set(
-                                    _vm.editableExpense,
-                                    "quantity",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            })
-                          ]),
+                                },
+                                [_vm._v("DETAILS")]
+                              )
+                            ],
+                            1
+                          ),
                           _vm._v(" "),
                           _c("td", [
                             _c(
@@ -52598,25 +52531,265 @@ var render = function() {
                                 on: {
                                   click: function($event) {
                                     $event.preventDefault()
-                                    _vm.save(_vm.editableExpense)
+                                    _vm.edit(expense)
                                   }
                                 }
                               },
-                              [_vm._v("SAVE")]
+                              [_vm._v("EDIT")]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-sm btn-danger",
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    _vm.deleteExpense(expense)
+                                  }
+                                }
+                              },
+                              [_vm._v("DELETE")]
                             )
                           ])
                         ]
-                      : _vm._e()
-                ],
-                2
-              )
-            })
-          )
+                      : _vm.editing
+                        ? [
+                            _c("td", [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.editableExpense.date,
+                                    expression: "editableExpense.date"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: { type: "datetime-local", name: "date" },
+                                domProps: { value: _vm.editableExpense.date },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.editableExpense,
+                                      "date",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c("textarea", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.editableExpense.name,
+                                    expression: "editableExpense.name"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                domProps: { value: _vm.editableExpense.name },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.editableExpense,
+                                      "name",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c("textarea", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.editableExpense.description,
+                                    expression: "editableExpense.description"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                domProps: {
+                                  value: _vm.editableExpense.description
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.editableExpense,
+                                      "description",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.editableExpense.cost,
+                                    expression: "editableExpense.cost"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: { type: "number", name: "cost" },
+                                domProps: { value: _vm.editableExpense.cost },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.editableExpense,
+                                      "cost",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.editableExpense.quantity,
+                                    expression: "editableExpense.quantity"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: { type: "number", name: "quantity" },
+                                domProps: {
+                                  value: _vm.editableExpense.quantity
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.editableExpense,
+                                      "quantity",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-sm btn-primary",
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      _vm.save(_vm.editableExpense)
+                                    }
+                                  }
+                                },
+                                [_vm._v("SAVE")]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "td",
+                              [
+                                _c(
+                                  "router-link",
+                                  {
+                                    staticClass: "btn btn-sm btn-dark",
+                                    attrs: {
+                                      to: {
+                                        name: "expense",
+                                        params: { id: expense.id }
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("DETAILS")]
+                                )
+                              ],
+                              1
+                            )
+                          ]
+                        : _vm._e()
+                  ],
+                  2
+                )
+              })
+            )
+          ])
         ])
       ])
     : _vm._e()
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("form", [
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "date" } }, [_vm._v("Date")]),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "form-control",
+          attrs: { type: "date", name: "date" }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "name" } }, [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "form-control",
+          attrs: { type: "text", name: "name", placeholder: "name" }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "cost" } }, [_vm._v("Cost")]),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "form-control",
+          attrs: { type: "number", name: "cost", placeholder: "0" }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "quantity" } }, [_vm._v("Quantity")]),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "form-control",
+          attrs: { type: "number", name: "quantity", placeholder: "0" }
+        })
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -52765,7 +52938,7 @@ var render = function() {
       _c("p", [_vm._v(_vm._s(this.$store.state.expense.description))]),
       _vm._v(" "),
       _c("small", { staticClass: "small" }, [
-        _vm._v("Recorded in " + _vm._s(this.$store.state.expense.date))
+        _vm._v("Date: " + _vm._s(this.$store.state.expense.date))
       ]),
       _vm._v(" "),
       _c("br"),

@@ -4,7 +4,7 @@
     <h4>Quantity: {{this.$store.state.expense.quantity}}</h4>
     <h4>Cost: {{this.$store.state.expense.cost}}</h4>
     <p>{{this.$store.state.expense.description}}</p>
-    <small class="small">Recorded in {{this.$store.state.expense.date}}</small>
+    <small class="small">Date: {{this.$store.state.expense.date}}</small>
     <br>
     <router-link to="/expenses" class="btn btn-secondary">Back to expenses</router-link>
 </div>
