@@ -7,8 +7,16 @@
             <input type="date" name="date" class="form-control">
           </div>
           <div class="form-group">
+            <label for="time">Time</label>
+            <input type="time" name="time" class="form-control">
+          </div>
+          <div class="form-group">
             <label for="name">Name</label>
             <input type="text" name="name" class="form-control" placeholder="name">
+          </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" placeholder="description" name="description"></textarea>
           </div>
           <div class="form-group">
             <label for="cost">Cost</label>
