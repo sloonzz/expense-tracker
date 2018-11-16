@@ -22,12 +22,11 @@
 
         <h2>Expenses:</h2>
         <div class="table-responsive">
-
-        
           <table class="table table-striped">
               <thead>
                   <tr>
                       <th @click.prevent="sortDate" scope="col">Date</th>
+                      <th @click.prevent="sortDate" scope="col">Time</th>
                       <th @click.prevent="sortName" scope="col">Name</th>
                       <th @click.prevent="sortDescription" scope="col">Description</th>
                       <th @click.prevent="sortCost" scope="col">Cost</th>
@@ -35,12 +34,14 @@
                       <th scope="col"></th>
                       <th scope="col"></th>
                       <th></th>
+                      <th></th>
                   </tr>
               </thead>
               <tbody>
                   <tr v-for="expense in this.expenses" :key="expense.id">
                       <template v-if="editableID !== expense.id || !editing">
-                        <td>{{expense.date}}</td>
+                        <td>{{getDate(expense.date)}}</td>
+                        <td>{{getTime(expense.date)}}</td>
                         <td>{{expense.name}}</td>
                         <td>{{expense.description}}</td>
                         <td>{{expense.cost}}</td>
@@ -54,7 +55,9 @@
                         <td>
                           <button class="btn btn-sm btn-danger" @click.prevent="deleteExpense(expense)">DELETE</button>                        
                         </td>
+                        <td></td>
                       </template>
+
                       <template v-else-if="editing">
                         <td>
                         <!-- 
@@ -62,13 +65,16 @@
                           TODO: Separate this to date and time 
                           
                           -->
-                          <input type="datetime-local" name="date" class="form-control" v-model="editableExpense.date">
+                          <input type="date" name="date" class="form-control" v-model="editableExpense.date">
                         </td>
                         <td>
-                          <textarea class="form-control" v-model="editableExpense.name"></textarea>
+                          <input type="time" name="time" class="form-control" v-model="editableExpense.time">
                         </td>
                         <td>
-                          <textarea class="form-control" v-model="editableExpense.description"></textarea>
+                          <textarea class="form-control" cols="5" rows="4" v-model="editableExpense.name"></textarea>
+                        </td>
+                        <td>
+                          <textarea class="form-control" cols="40" rows="4" v-model="editableExpense.description"></textarea>
                         </td>
                         <td>
                           <input type="number" name="cost" class="form-control" v-model="editableExpense.cost">
@@ -76,10 +82,12 @@
                         <td>
                           <input type="number" name="quantity" class="form-control" v-model="editableExpense.quantity">
                         </td>
+                        <td><router-link :to="{ name: 'expense', params: { id: expense.id } }" class="btn btn-sm btn-dark">DETAILS</router-link></td>
+                        <td><button @click.prevent="unedit()" class="btn btn-sm btn-secondary">EXIT EDITING</button></td>
                         <td>
                           <button @click.prevent="save(editableExpense)" class="btn btn-sm btn-primary">SAVE</button>
                         </td>
-                        <td><router-link :to="{ name: 'expense', params: { id: expense.id } }" class="btn btn-sm btn-dark">DETAILS</router-link></td>
+                        <td></td>
                       </template>
                   </tr>
               </tbody>
@@ -101,7 +109,17 @@ export default {
         name: "",
         description: "",
         cost: 0,
-        quantity: 0
+        quantity: 0,
+        time: ""
+      },
+      createdExpense: {
+        id: 0,
+        date: "",
+        name: "",
+        description: "",
+        cost: 0,
+        quantity: 0,
+        time: ""
       },
       editableID: 0,
       sort: {
@@ -113,6 +131,7 @@ export default {
       }
     };
   },
+  computed: {},
   methods: {
     sortDate() {
       if (!this.sort.date) {
@@ -208,12 +227,18 @@ export default {
     edit(expense) {
       this.editableID = expense.id;
       this.editableExpense = window._.cloneDeep(expense);
+      this.editableExpense.date = expense.date.split(" ")[0];
+      this.editableExpense.time = expense.date.split(" ")[1];
       this.editing = true;
       this.$store.commit("messages", null);
     },
     save(expense) {
       this.editing = false;
       let vm = this;
+
+      if (expense.date && expense.time) {
+        expense.date = expense.date + " " + expense.time;
+      }
 
       axios
         .put("/api/expenses/" + expense.id, expense)
@@ -249,6 +274,12 @@ export default {
     },
     unedit() {
       this.editing = false;
+    },
+    getTime(dateTime) {
+      return dateTime.split(" ")[1];
+    },
+    getDate(dateTime) {
+      return dateTime.split(" ")[0];
     }
   },
   mounted() {

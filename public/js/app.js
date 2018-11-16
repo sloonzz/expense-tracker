@@ -52220,6 +52220,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -52233,7 +52241,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         name: "",
         description: "",
         cost: 0,
-        quantity: 0
+        quantity: 0,
+        time: ""
+      },
+      createdExpense: {
+        id: 0,
+        date: "",
+        name: "",
+        description: "",
+        cost: 0,
+        quantity: 0,
+        time: ""
       },
       editableID: 0,
       sort: {
@@ -52246,6 +52264,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     };
   },
 
+  computed: {},
   methods: {
     sortDate: function sortDate() {
       if (!this.sort.date) {
@@ -52341,12 +52360,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     edit: function edit(expense) {
       this.editableID = expense.id;
       this.editableExpense = window._.cloneDeep(expense);
+      this.editableExpense.date = expense.date.split(" ")[0];
+      this.editableExpense.time = expense.date.split(" ")[1];
       this.editing = true;
       this.$store.commit("messages", null);
     },
     save: function save(expense) {
       this.editing = false;
       var vm = this;
+
+      if (expense.date && expense.time) {
+        expense.date = expense.date + " " + expense.time;
+      }
 
       axios.put("/api/expenses/" + expense.id, expense).then(function (response) {
         vm.$store.commit("messages", [["Successfully edited expense."]]);
@@ -52373,6 +52398,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     unedit: function unedit() {
       this.editing = false;
+    },
+    getTime: function getTime(dateTime) {
+      return dateTime.split(" ")[1];
+    },
+    getDate: function getDate(dateTime) {
+      return dateTime.split(" ")[0];
     }
   },
   mounted: function mounted() {
@@ -52418,6 +52449,20 @@ var render = function() {
                     }
                   },
                   [_vm._v("Date")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    attrs: { scope: "col" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.sortDate($event)
+                      }
+                    }
+                  },
+                  [_vm._v("Time")]
                 ),
                 _vm._v(" "),
                 _c(
@@ -52480,6 +52525,8 @@ var render = function() {
                 _vm._v(" "),
                 _c("th", { attrs: { scope: "col" } }),
                 _vm._v(" "),
+                _c("th"),
+                _vm._v(" "),
                 _c("th")
               ])
             ]),
@@ -52493,7 +52540,9 @@ var render = function() {
                   [
                     _vm.editableID !== expense.id || !_vm.editing
                       ? [
-                          _c("td", [_vm._v(_vm._s(expense.date))]),
+                          _c("td", [_vm._v(_vm._s(_vm.getDate(expense.date)))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(_vm.getTime(expense.date)))]),
                           _vm._v(" "),
                           _c("td", [_vm._v(_vm._s(expense.name))]),
                           _vm._v(" "),
@@ -52553,7 +52602,9 @@ var render = function() {
                               },
                               [_vm._v("DELETE")]
                             )
-                          ])
+                          ]),
+                          _vm._v(" "),
+                          _c("td")
                         ]
                       : _vm.editing
                         ? [
@@ -52568,7 +52619,7 @@ var render = function() {
                                   }
                                 ],
                                 staticClass: "form-control",
-                                attrs: { type: "datetime-local", name: "date" },
+                                attrs: { type: "date", name: "date" },
                                 domProps: { value: _vm.editableExpense.date },
                                 on: {
                                   input: function($event) {
@@ -52578,6 +52629,34 @@ var render = function() {
                                     _vm.$set(
                                       _vm.editableExpense,
                                       "date",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.editableExpense.time,
+                                    expression: "editableExpense.time"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: { type: "time", name: "time" },
+                                domProps: { value: _vm.editableExpense.time },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.editableExpense,
+                                      "time",
                                       $event.target.value
                                     )
                                   }
@@ -52596,6 +52675,7 @@ var render = function() {
                                   }
                                 ],
                                 staticClass: "form-control",
+                                attrs: { cols: "5", rows: "4" },
                                 domProps: { value: _vm.editableExpense.name },
                                 on: {
                                   input: function($event) {
@@ -52623,6 +52703,7 @@ var render = function() {
                                   }
                                 ],
                                 staticClass: "form-control",
+                                attrs: { cols: "40", rows: "4" },
                                 domProps: {
                                   value: _vm.editableExpense.description
                                 },
@@ -52699,22 +52780,6 @@ var render = function() {
                               })
                             ]),
                             _vm._v(" "),
-                            _c("td", [
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-sm btn-primary",
-                                  on: {
-                                    click: function($event) {
-                                      $event.preventDefault()
-                                      _vm.save(_vm.editableExpense)
-                                    }
-                                  }
-                                },
-                                [_vm._v("SAVE")]
-                              )
-                            ]),
-                            _vm._v(" "),
                             _c(
                               "td",
                               [
@@ -52733,7 +52798,41 @@ var render = function() {
                                 )
                               ],
                               1
-                            )
+                            ),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-sm btn-secondary",
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      _vm.unedit()
+                                    }
+                                  }
+                                },
+                                [_vm._v("EXIT EDITING")]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-sm btn-primary",
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      _vm.save(_vm.editableExpense)
+                                    }
+                                  }
+                                },
+                                [_vm._v("SAVE")]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td")
                           ]
                         : _vm._e()
                   ],
