@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <form v-if="!this.$store.getters.isLoggedIn">
+        <form v-if="!this.$store.getters['auth/isLoggedIn']">
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" name="email" v-model="email" class="form-control" placeholder="username">
@@ -29,28 +29,28 @@ export default {
   methods: {
     login() {
       this.$store
-        .dispatch("loginUser", {
+        .dispatch("auth/loginUser", {
           email: this.email,
           password: this.password
         })
         .then(response => {
           this.$router.push("/");
-          this.$store.dispatch("retrieveUser");
+          this.$store.dispatch("auth/retrieveUser");
         })
         .catch(error => {});
     }
   },
   computed: {
     getUser: function() {
-      return this.$store.state.user;
+      return this.$store.state.auth.user;
     }
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
       vm.$store
-        .dispatch("retrieveUser")
+        .dispatch("auth/retrieveUser")
         .then(response => {
-          if (vm.$store.getters.isLoggedIn) {
+          if (vm.$store.getters['auth/isLoggedIn']) {
             next("/");
           } else {
             next();
@@ -62,7 +62,8 @@ export default {
     });
   },
   created() {
-    this.$store.commit("errors", null);
+    this.$store.commit("auth/errors", null);
+    this.$store.commit("auth/messages", null);
   }
 };
 </script>

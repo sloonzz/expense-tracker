@@ -51350,7 +51350,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     register: function register() {
       var _this = this;
 
-      this.$store.dispatch("registerUser", {
+      this.$store.dispatch("auth/registerUser", {
         name: this.name,
         email: this.email,
         password: this.password,
@@ -51367,8 +51367,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   beforeRouteEnter: function beforeRouteEnter(to, from, next) {
     next(function (vm) {
-      vm.$store.dispatch("retrieveUser").then(function (response) {
-        if (vm.$store.getters.isLoggedIn) {
+      vm.$store.dispatch("auth/retrieveUser").then(function (response) {
+        if (vm.$store.getters['auth/isLoggedIn']) {
           next("/");
         } else {
           next();
@@ -51390,7 +51390,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "form-group" }, [
-      !this.$store.getters.isLoggedIn
+      !this.$store.getters["user/isLoggedIn"]
         ? _c("form", [
             _c("div", { staticClass: "form-group" }, [
               _c("label", { attrs: { for: "name" } }, [_vm._v("Name")]),
@@ -51627,24 +51627,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     login: function login() {
       var _this = this;
 
-      this.$store.dispatch("loginUser", {
+      this.$store.dispatch("auth/loginUser", {
         email: this.email,
         password: this.password
       }).then(function (response) {
         _this.$router.push("/");
-        _this.$store.dispatch("retrieveUser");
+        _this.$store.dispatch("auth/retrieveUser");
       }).catch(function (error) {});
     }
   },
   computed: {
     getUser: function getUser() {
-      return this.$store.state.user;
+      return this.$store.state.auth.user;
     }
   },
   beforeRouteEnter: function beforeRouteEnter(to, from, next) {
     next(function (vm) {
-      vm.$store.dispatch("retrieveUser").then(function (response) {
-        if (vm.$store.getters.isLoggedIn) {
+      vm.$store.dispatch("auth/retrieveUser").then(function (response) {
+        if (vm.$store.getters['auth/isLoggedIn']) {
           next("/");
         } else {
           next();
@@ -51655,7 +51655,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     });
   },
   created: function created() {
-    this.$store.commit("errors", null);
+    this.$store.commit("auth/errors", null);
+    this.$store.commit("auth/messages", null);
   }
 });
 
@@ -51668,7 +51669,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    !this.$store.getters.isLoggedIn
+    !this.$store.getters["auth/isLoggedIn"]
       ? _c("form", [
           _c("div", { staticClass: "form-group" }, [
             _c("label", { attrs: { for: "email" } }, [_vm._v("Email")]),
@@ -51901,7 +51902,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     logout: function logout() {
       var _this = this;
 
-      this.$store.dispatch("logoutUser").then(function (response) {
+      this.$store.dispatch("auth/logoutUser").then(function (response) {
         _this.$router.push("/login");
       }).catch(function (error) {
         _this.$router.push("/login");
@@ -51913,8 +51914,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   beforeRouteEnter: function beforeRouteEnter(to, from, next) {
     next(function (vm) {
-      vm.$store.dispatch("retrieveUser").then(function (response) {
-        if (!vm.$store.getters.isLoggedIn) {
+      vm.$store.dispatch("auth/retrieveUser").then(function (response) {
+        if (!vm.$store.getters['auth/isLoggedIn']) {
           next("/");
         } else {
           next();
@@ -51935,7 +51936,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    this.$store.getters.isLoggedIn
+    this.$store.getters["auth/isLoggedIn"]
       ? _c(
           "button",
           { staticClass: "btn btn-danger", on: { click: _vm.logout } },
@@ -52036,10 +52037,12 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    this.$store.getters.isLoggedIn
+    this.$store.getters["auth/isLoggedIn"]
       ? _c("h1", [
           _vm._v(
-            "\n    Welcome, " + _vm._s(this.$store.state.user.name) + "\n  "
+            "\n    Welcome, " +
+              _vm._s(this.$store.state.auth.user.name) +
+              "\n  "
           )
         ])
       : _c(
@@ -52373,7 +52376,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.editableExpense.date = expense.date.split(" ")[0];
       this.editableExpense.time = expense.date.split(" ")[1];
       this.editing = true;
-      this.$store.commit("messages", null);
+      this.$store.commit("auth/messages", null);
     },
     save: function save(expense) {
       this.editing = false;
@@ -52384,7 +52387,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
 
       axios.put("/api/expenses/" + expense.id, expense).then(function (response) {
-        vm.$store.commit("messages", [["Successfully edited expense."]]);
+        vm.$store.commit("auth/messages", [["Successfully edited expense."]]);
         vm.$set(vm.expenses, vm.expenses.findIndex(function (item) {
           return item.id == expense.id;
         }), expense);
@@ -52397,7 +52400,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var vm = this;
       if (confirm("You will be deleting this expense. Are you sure?")) {
         axios.delete("/api/expenses/" + expense.id).then(function (response) {
-          vm.$store.commit("messages", [["Successfully deleted expense."]]);
+          vm.$store.commit("auth/messages", [["Successfully deleted expense."]]);
           vm.$delete(vm.expenses, vm.expenses.findIndex(function (item) {
             return item.id == expense.id;
           }));
@@ -52415,10 +52418,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
 
       axios.post("/api/expenses/", expense).then(function (response) {
-        vm.$store.commit("messages", [["Successfully created expense."]]);
+        vm.$store.commit("auth/messages", [["Successfully created expense."]]);
         vm.$set(vm.expenses, vm.expenses.findIndex(function (item) {
           return item.id == expense.id;
         }), expense);
+        expense.name = "";
+        expense.description = "";
+        expense.time = "";
+        expense.quantity = 0;
+        expense.cost = 0;
       }).catch(function (error) {
         console.log(error.data);
       });
@@ -53172,7 +53180,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     created: function created() {
-        this.$store.dispatch("retrieveExpense", this.$route.params.id);
+        this.$store.dispatch("expenses/retrieveExpense", this.$route.params.id);
     }
 });
 
@@ -53188,18 +53196,22 @@ var render = function() {
     "div",
     { staticClass: "container" },
     [
-      _c("h1", [_vm._v(_vm._s(this.$store.state.expense.name))]),
+      _c("h1", [_vm._v(_vm._s(this.$store.state.expenses.expense.name))]),
       _vm._v(" "),
       _c("h4", [
-        _vm._v("Quantity: " + _vm._s(this.$store.state.expense.quantity))
+        _vm._v(
+          "Quantity: " + _vm._s(this.$store.state.expenses.expense.quantity)
+        )
       ]),
       _vm._v(" "),
-      _c("h4", [_vm._v("Cost: " + _vm._s(this.$store.state.expense.cost))]),
+      _c("h4", [
+        _vm._v("Cost: " + _vm._s(this.$store.state.expenses.expense.cost))
+      ]),
       _vm._v(" "),
-      _c("p", [_vm._v(_vm._s(this.$store.state.expense.description))]),
+      _c("p", [_vm._v(_vm._s(this.$store.state.expenses.expense.description))]),
       _vm._v(" "),
       _c("small", { staticClass: "small" }, [
-        _vm._v("Date: " + _vm._s(this.$store.state.expense.date))
+        _vm._v("Date: " + _vm._s(this.$store.state.expenses.expense.date))
       ]),
       _vm._v(" "),
       _c("br"),
@@ -53228,139 +53240,161 @@ if (false) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__auth__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__expenses__ = __webpack_require__(80);
+
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-    state: {
-        count: 0,
-        user: {},
-        accessToken: localStorage.getItem("access_token") || null,
-        validToken: false,
-        errors: [],
-        messages: [],
-        expense: {}
-    },
-    getters: {
-        isLoggedIn: function isLoggedIn(state) {
-            return state.accessToken !== null && state.validToken;
-        }
-    },
-    mutations: {
-        accessToken: function accessToken(state) {
-            state.accessToken = localStorage.getItem("access_token");
-        },
-        user: function user(state, _user) {
-            state.user = _user;
-        },
-        isValidToken: function isValidToken(state, validToken) {
-            state.validToken = validToken;
-        },
-        errors: function errors(state, _errors) {
-            state.errors = _errors;
-        },
-        messages: function messages(state, _messages) {
-            state.messages = _messages;
-        },
-        expense: function expense(state, _expense) {
-            state.expense = _expense;
-        }
-    },
-    actions: {
-        retrieveUser: function retrieveUser(context) {
-            return new Promise(function (resolve, reject) {
-                if (context.state.accessToken) {
-                    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.headers.common.Authorization = "Bearer " + context.state.accessToken;
-                    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/api/user").then(function (response) {
-                        context.commit("user", response.data);
-                        context.commit("isValidToken", true);
-                        resolve(response);
-                    }).catch(function (error) {
-                        context.commit("isValidToken", false);
-                        localStorage.removeItem("access_token");
-                        reject(error);
-                    });
-                } else {
-                    reject(error);
-                }
-            });
-        },
-        loginUser: function loginUser(context, _ref) {
-            var email = _ref.email,
-                password = _ref.password;
-
-            return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/api/login", {
-                    email: email,
-                    password: password
-                }).then(function (response) {
-                    localStorage.setItem("access_token", response.data.access_token);
-                    context.commit("accessToken");
-                    context.commit("isValidToken", true);
-                    context.commit("errors", null);
-                    console.log(context.getters.isLoggedIn);
-                    resolve(response);
-                }).catch(function (error) {
-                    console.log(email + password);
-                    localStorage.removeItem("access_token");
-                    context.commit("accessToken");
-                    context.commit("errors", error.response.data.errors);
-                    reject(error);
-                });
-            });
-        },
-        logoutUser: function logoutUser(context) {
-            return new Promise(function (resolve, reject) {
-                context.commit("accessToken");
-                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.headers.common.Authorization = "Bearer " + context.state.accessToken;
-                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/api/logout").then(function (response) {
-                    localStorage.removeItem("access_token");
-                    context.commit("accessToken");
-                    context.commit("errors", null);
-                    context.commit("isValidToken", false);
-                    resolve(response);
-                }).catch(function (error) {
-                    context.commit("errors", error.response.data.errors);
-                    context.commit("isValidToken", false);
-                    localStorage.removeItem("access_token");
-                    reject(error);
-                });
-            });
-        },
-        registerUser: function registerUser(context, _ref2) {
-            var name = _ref2.name,
-                email = _ref2.email,
-                password = _ref2.password,
-                password_confirmation = _ref2.password_confirmation;
-
-            return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/api/register", {
-                    name: name,
-                    email: email,
-                    password: password,
-                    password_confirmation: password_confirmation
-                }).then(function (response) {
-                    context.commit("errors", null);
-                    resolve(response);
-                }).catch(function (error) {
-                    context.commit("errors", error.response.data.errors);
-                    reject(error);
-                });
-            });
-        },
-        retrieveExpense: function retrieveExpense(context, id) {
-            return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/expenses/' + id).then(function (response) {
-                    context.commit("expense", response.data.data);
-                    console.log(response.data.data);
-                    resolve(response);
-                }).catch(function (error) {
-                    reject(error);
-                });
-            });
-        }
+    modules: {
+        auth: __WEBPACK_IMPORTED_MODULE_0__auth__["a" /* default */],
+        expenses: __WEBPACK_IMPORTED_MODULE_1__expenses__["a" /* default */]
     }
 });
+
+// state: {
+//     count: 0,
+//     user: {},
+//     accessToken: localStorage.getItem("access_token") || null,
+//     validToken: false,
+//     errors: [],
+//     messages: [],
+//     expense: {}
+// },
+// getters: {
+//     isLoggedIn: function(state) {
+//         return state.accessToken !== null && state.validToken;
+//     }
+// },
+// mutations: {
+//     accessToken: function(state) {
+//         state.accessToken = localStorage.getItem("access_token");
+//     },
+//     user: function(state, user) {
+//         state.user = user;
+//     },
+//     isValidToken: function(state, validToken) {
+//         state.validToken = validToken;
+//     },
+//     errors: function(state, errors) {
+//         state.errors = errors;
+//     },
+//     messages: function(state, messages) {
+//         state.messages = messages;
+//     },
+//     expense: function(state, expense) {
+//         state.expense = expense;
+//     }
+// },
+// actions: {
+//     retrieveUser: function(context) {
+//         return new Promise((resolve, reject) => {
+//             if (context.state.accessToken) {
+//                 axios.defaults.headers.common.Authorization =
+//                     "Bearer " + context.state.accessToken;
+//                 axios
+//                     .get("/api/user")
+//                     .then(response => {
+//                         context.commit("user", response.data);
+//                         context.commit("isValidToken", true);
+//                         resolve(response);
+//                     })
+//                     .catch(error => {
+//                         context.commit("isValidToken", false);
+//                         localStorage.removeItem("access_token");
+//                         reject(error);
+//                     });
+//             } else {
+//                 reject(error);
+//             }
+//         });
+//     },
+//     loginUser: function(context, { email, password }) {
+//         return new Promise((resolve, reject) => {
+//             axios
+//                 .post("/api/login", {
+//                     email: email,
+//                     password: password
+//                 })
+//                 .then(response => {
+//                     localStorage.setItem(
+//                         "access_token",
+//                         response.data.access_token
+//                     );
+//                     context.commit("accessToken");
+//                     context.commit("isValidToken", true);
+//                     context.commit("errors", null);
+//                     console.log(context.getters.isLoggedIn);
+//                     resolve(response);
+//                 })
+//                 .catch(error => {
+//                     console.log(email + password);
+//                     localStorage.removeItem("access_token");
+//                     context.commit("accessToken");
+//                     context.commit("errors", error.response.data.errors);
+//                     reject(error);
+//                 });
+//         });
+//     },
+//     logoutUser: function(context) {
+//         return new Promise((resolve, reject) => {
+//             context.commit("accessToken");
+//             axios.defaults.headers.common.Authorization =
+//                 "Bearer " + context.state.accessToken;
+//             axios
+//                 .post("/api/logout")
+//                 .then(response => {
+//                     localStorage.removeItem("access_token");
+//                     context.commit("accessToken");
+//                     context.commit("errors", null);
+//                     context.commit("isValidToken", false);
+//                     resolve(response);
+//                 })
+//                 .catch(error => {
+//                     context.commit("errors", error.response.data.errors);
+//                     context.commit("isValidToken", false);
+//                     localStorage.removeItem("access_token");
+//                     reject(error);
+//                 });
+//         });
+//     },
+//     registerUser: function(
+//         context,
+//         { name, email, password, password_confirmation }
+//     ) {
+//         return new Promise((resolve, reject) => {
+//             axios
+//                 .post("/api/register", {
+//                     name,
+//                     email,
+//                     password,
+//                     password_confirmation
+//                 })
+//                 .then(response => {
+//                     context.commit("errors", null);
+//                     resolve(response);
+//                 })
+//                 .catch(error => {
+//                     context.commit("errors", error.response.data.errors);
+//                     reject(error);
+//                 });
+//         });
+//     },
+//     retrieveExpense: function(context, id) {
+//         return new Promise((resolve, reject) => {
+//             axios
+//                 .get('/api/expenses/' + id)
+//                 .then(response => {
+//                     context.commit("expense", response.data.data);
+//                     console.log(response.data.data);
+//                     resolve(response);
+//                 })
+//                 .catch(error => {
+//                     reject(error);
+//                 });
+//         });
+//     }
+// }
+// };
 
 /***/ }),
 /* 69 */
@@ -53444,8 +53478,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     Navbar: __WEBPACK_IMPORTED_MODULE_0__components_general_Navbar_vue___default.a
   },
   mounted: function mounted() {
-    if (this.$store.state.accessToken) {
-      this.$store.dispatch("retrieveUser");
+    if (this.$store.state.auth.accessToken) {
+      this.$store.dispatch("auth/retrieveUser");
     }
   }
 });
@@ -53587,7 +53621,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("ul", { staticClass: "navbar-nav ml-auto" }, [
-              !this.$store.getters.isLoggedIn
+              !this.$store.getters["auth/isLoggedIn"]
                 ? _c(
                     "li",
                     { staticClass: "nav-item" },
@@ -53605,7 +53639,7 @@ var render = function() {
                   )
                 : _vm._e(),
               _vm._v(" "),
-              !this.$store.getters.isLoggedIn
+              !this.$store.getters["auth/isLoggedIn"]
                 ? _c(
                     "li",
                     { staticClass: "nav-item" },
@@ -53623,7 +53657,7 @@ var render = function() {
                   )
                 : _vm._e(),
               _vm._v(" "),
-              this.$store.getters.isLoggedIn
+              this.$store.getters["auth/isLoggedIn"]
                 ? _c(
                     "li",
                     { staticClass: "nav-item" },
@@ -53641,7 +53675,7 @@ var render = function() {
                   )
                 : _vm._e(),
               _vm._v(" "),
-              this.$store.getters.isLoggedIn
+              this.$store.getters["auth/isLoggedIn"]
                 ? _c(
                     "li",
                     { staticClass: "nav-item" },
@@ -53714,7 +53748,10 @@ var render = function() {
         "div",
         { staticClass: "container" },
         [
-          _vm._l(this.$store.state.messages, function(messageObject, uIndex) {
+          _vm._l(this.$store.state.auth.messages, function(
+            messageObject,
+            uIndex
+          ) {
             return _c(
               "div",
               { key: uIndex, staticClass: "alert alert-success" },
@@ -53726,7 +53763,7 @@ var render = function() {
             )
           }),
           _vm._v(" "),
-          _vm._l(this.$store.state.errors, function(errorMessage, uIndex) {
+          _vm._l(this.$store.state.auth.errors, function(errorMessage, uIndex) {
             return _c(
               "div",
               { key: uIndex, staticClass: "alert alert-danger" },
@@ -53761,6 +53798,170 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 76 */,
+/* 77 */,
+/* 78 */,
+/* 79 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    namespaced: true,
+    state: {
+        count: 0,
+        user: {},
+        accessToken: localStorage.getItem("access_token") || null,
+        validToken: false,
+        errors: [],
+        messages: []
+    },
+    getters: {
+        isLoggedIn: function isLoggedIn(state) {
+            return state.accessToken !== null && state.validToken;
+        }
+    },
+    mutations: {
+        accessToken: function accessToken(state) {
+            state.accessToken = localStorage.getItem("access_token");
+        },
+        user: function user(state, _user) {
+            state.user = _user;
+        },
+        isValidToken: function isValidToken(state, validToken) {
+            state.validToken = validToken;
+        },
+        errors: function errors(state, _errors) {
+            state.errors = _errors;
+        },
+        messages: function messages(state, _messages) {
+            state.messages = _messages;
+        }
+    },
+    actions: {
+        retrieveUser: function retrieveUser(context) {
+            return new Promise(function (resolve, reject) {
+                if (context.state.accessToken) {
+                    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.headers.common.Authorization = "Bearer " + context.state.accessToken;
+                    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/api/user").then(function (response) {
+                        context.commit("user", response.data);
+                        context.commit("isValidToken", true);
+                        resolve(response);
+                    }).catch(function (error) {
+                        context.commit("isValidToken", false);
+                        localStorage.removeItem("access_token");
+                        reject(error);
+                    });
+                } else {
+                    reject(error);
+                }
+            });
+        },
+        loginUser: function loginUser(context, _ref) {
+            var email = _ref.email,
+                password = _ref.password;
+
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/api/login", {
+                    email: email,
+                    password: password
+                }).then(function (response) {
+                    localStorage.setItem("access_token", response.data.access_token);
+                    context.commit("accessToken");
+                    context.commit("isValidToken", true);
+                    context.commit("errors", null);
+                    console.log(context.getters.isLoggedIn);
+                    resolve(response);
+                }).catch(function (error) {
+                    console.log(email + password);
+                    localStorage.removeItem("access_token");
+                    context.commit("accessToken");
+                    context.commit("errors", error.response.data.errors);
+                    reject(error);
+                });
+            });
+        },
+        logoutUser: function logoutUser(context) {
+            return new Promise(function (resolve, reject) {
+                context.commit("accessToken");
+                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.headers.common.Authorization = "Bearer " + context.state.accessToken;
+                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/api/logout").then(function (response) {
+                    localStorage.removeItem("access_token");
+                    context.commit("accessToken");
+                    context.commit("errors", null);
+                    context.commit("isValidToken", false);
+                    resolve(response);
+                }).catch(function (error) {
+                    context.commit("errors", error.response.data.errors);
+                    context.commit("isValidToken", false);
+                    localStorage.removeItem("access_token");
+                    reject(error);
+                });
+            });
+        },
+        registerUser: function registerUser(context, _ref2) {
+            var name = _ref2.name,
+                email = _ref2.email,
+                password = _ref2.password,
+                password_confirmation = _ref2.password_confirmation;
+
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/api/register", {
+                    name: name,
+                    email: email,
+                    password: password,
+                    password_confirmation: password_confirmation
+                }).then(function (response) {
+                    context.commit("errors", null);
+                    resolve(response);
+                }).catch(function (error) {
+                    context.commit("errors", error.response.data.errors);
+                    reject(error);
+                });
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 80 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    namespaced: true,
+    state: {
+        expense: {}
+    },
+    getters: {},
+    mutations: {
+        expense: function expense(state, _expense) {
+            state.expense = _expense;
+        }
+    },
+    actions: {
+        retrieveExpense: function retrieveExpense(context, id) {
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/expenses/' + id).then(function (response) {
+                    context.commit("expense", response.data.data);
+                    console.log(response.data.data);
+                    resolve(response);
+                }).catch(function (error) {
+                    reject(error);
+                });
+            });
+        }
+    }
+});
 
 /***/ })
 /******/ ]);

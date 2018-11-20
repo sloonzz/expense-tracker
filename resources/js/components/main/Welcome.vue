@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <h1 v-if="this.$store.getters.isLoggedIn">
-      Welcome, {{ this.$store.state.user.name }}
+    <h1 v-if="this.$store.getters['auth/isLoggedIn']">
+      Welcome, {{ this.$store.state.auth.user.name }}
     </h1>
     <div v-else>
       <h1>

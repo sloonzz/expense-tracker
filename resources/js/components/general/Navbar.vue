@@ -13,16 +13,16 @@
           </li>
         </ul>
         <ul class="navbar-nav ml-auto">
-          <li v-if="!this.$store.getters.isLoggedIn" class="nav-item">
+          <li v-if="!this.$store.getters['auth/isLoggedIn']" class="nav-item">
             <router-link :to="{ name: 'login' }" class="nav-link">Login</router-link>
           </li>
-          <li v-if="!this.$store.getters.isLoggedIn" class="nav-item">
+          <li v-if="!this.$store.getters['auth/isLoggedIn']" class="nav-item">
             <router-link :to="{ name: 'register' }" class="nav-link">Register</router-link>
           </li>
-          <li v-if="this.$store.getters.isLoggedIn" class="nav-item">
+          <li v-if="this.$store.getters['auth/isLoggedIn']" class="nav-item">
             <router-link :to="{ name: 'logout' }" class="nav-link">Logout</router-link>
           </li>
-          <li v-if="this.$store.getters.isLoggedIn" class="nav-item">
+          <li v-if="this.$store.getters['auth/isLoggedIn']" class="nav-item">
             <router-link :to="{ name: 'expenses' }" class="nav-link">Expenses</router-link>
           </li>
         </ul>

@@ -240,7 +240,7 @@ export default {
       this.editableExpense.date = expense.date.split(" ")[0];
       this.editableExpense.time = expense.date.split(" ")[1];
       this.editing = true;
-      this.$store.commit("messages", null);
+      this.$store.commit("auth/messages", null);
     },
     save(expense) {
       this.editing = false;
@@ -253,7 +253,7 @@ export default {
       axios
         .put("/api/expenses/" + expense.id, expense)
         .then(response => {
-          vm.$store.commit("messages", [["Successfully edited expense."]]);
+          vm.$store.commit("auth/messages", [["Successfully edited expense."]]);
           vm.$set(
             vm.expenses,
             vm.expenses.findIndex(item => item.id == expense.id),
@@ -271,7 +271,7 @@ export default {
         axios
           .delete("/api/expenses/" + expense.id)
           .then(response => {
-            vm.$store.commit("messages", [["Successfully deleted expense."]]);
+            vm.$store.commit("auth/messages", [["Successfully deleted expense."]]);
             vm.$delete(
               vm.expenses,
               vm.expenses.findIndex(item => item.id == expense.id)
@@ -293,12 +293,17 @@ export default {
       axios
         .post("/api/expenses/", expense)
         .then(response => {
-          vm.$store.commit("messages", [["Successfully created expense."]]);
+          vm.$store.commit("auth/messages", [["Successfully created expense."]]);
           vm.$set(
             vm.expenses,
             vm.expenses.findIndex(item => item.id == expense.id),
             expense
           );
+          expense.name = "";
+          expense.description = "";
+          expense.time = "";
+          expense.quantity = 0;
+          expense.cost = 0;
         })
         .catch(error => {
           console.log(error.data);

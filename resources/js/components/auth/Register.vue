@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="form-group">
-            <form v-if="!this.$store.getters.isLoggedIn">
+            <form v-if="!this.$store.getters['user/isLoggedIn']">
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" name="name" v-model="name" class="form-control" placeholder="name">
@@ -37,7 +37,7 @@ export default {
   methods: {
     register() {
       this.$store
-        .dispatch("registerUser", {
+        .dispatch("auth/registerUser", {
           name: this.name,
           email: this.email,
           password: this.password,
@@ -57,9 +57,9 @@ export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
       vm.$store
-        .dispatch("retrieveUser")
+        .dispatch("auth/retrieveUser")
         .then(response => {
-          if (vm.$store.getters.isLoggedIn) {
+          if (vm.$store.getters['auth/isLoggedIn']) {
             next("/");
           } else {
             next();

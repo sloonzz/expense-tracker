@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <button v-on:click="logout" v-if="this.$store.getters.isLoggedIn" class="btn btn-danger">Logout</button>
+    <button v-on:click="logout" v-if="this.$store.getters['auth/isLoggedIn']" class="btn btn-danger">Logout</button>
   </div>
 </template>
 
@@ -9,7 +9,7 @@ export default {
   methods: {
     logout() {
       this.$store
-        .dispatch("logoutUser")
+        .dispatch("auth/logoutUser")
         .then(response => {
           this.$router.push("/login");
         })
@@ -24,9 +24,9 @@ export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
       vm.$store
-        .dispatch("retrieveUser")
+        .dispatch("auth/retrieveUser")
         .then(response => {
-          if (!vm.$store.getters.isLoggedIn) {
+          if (!vm.$store.getters['auth/isLoggedIn']) {
             next("/");
           } else {
             next();
