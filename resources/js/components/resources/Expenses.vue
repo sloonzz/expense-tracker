@@ -4,29 +4,31 @@
         <form>
           <div class="form-group">
             <label for="date">Date</label>
-            <input type="date" name="date" class="form-control">
+            <input type="date" name="date" class="form-control" v-model="createdExpense.date">
           </div>
           <div class="form-group">
             <label for="time">Time</label>
-            <input type="time" name="time" class="form-control">
+            <input type="time" name="time" class="form-control" v-model="createdExpense.time">
           </div>
           <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" name="name" class="form-control" placeholder="name">
+            <input type="text" name="name" class="form-control" placeholder="name" v-model="createdExpense.name">
           </div>
           <div class="form-group">
             <label for="description">Description</label>
-            <textarea class="form-control" placeholder="description" name="description"></textarea>
+            <textarea class="form-control" placeholder="description" name="description" v-model="createdExpense.description"></textarea>
           </div>
           <div class="form-group">
             <label for="cost">Cost</label>
-            <input type="number" name="cost" class="form-control" placeholder="0">
+            <input type="number" name="cost" class="form-control" placeholder="0" v-model="createdExpense.cost">
           </div>
           <div class="form-group">
             <label for="quantity">Quantity</label>
-            <input type="number" name="quantity" class="form-control" placeholder="0">
+            <input type="number" name="quantity" class="form-control" placeholder="0" v-model="createdExpense.quantity">
           </div>
+          <button @click.prevent="createExpense(createdExpense)" class="btn btn-primary">CREATE</button>
         </form>
+        <br/>
 
         <h2>Expenses:</h2>
         <div class="table-responsive">
@@ -107,7 +109,7 @@
 <script>
 export default {
   data() {
-    return {
+    return { 
       loading: false,
       editing: false,
       expenses: [],
@@ -279,6 +281,28 @@ export default {
             console.log(error.data);
           });
       }
+    },
+    createExpense(expense) {
+      this.editing = false;
+      let vm = this;
+
+      if (expense.date && expense.time) {
+        expense.date = expense.date + " " + expense.time;
+      }
+
+      axios
+        .post("/api/expenses/", expense)
+        .then(response => {
+          vm.$store.commit("messages", [["Successfully created expense."]]);
+          vm.$set(
+            vm.expenses,
+            vm.expenses.findIndex(item => item.id == expense.id),
+            expense
+          );
+        })
+        .catch(error => {
+          console.log(error.data);
+        });
     },
     unedit() {
       this.editing = false;

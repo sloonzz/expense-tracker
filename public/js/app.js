@@ -52236,6 +52236,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -52404,6 +52406,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         });
       }
     },
+    createExpense: function createExpense(expense) {
+      this.editing = false;
+      var vm = this;
+
+      if (expense.date && expense.time) {
+        expense.date = expense.date + " " + expense.time;
+      }
+
+      axios.post("/api/expenses/", expense).then(function (response) {
+        vm.$store.commit("messages", [["Successfully created expense."]]);
+        vm.$set(vm.expenses, vm.expenses.findIndex(function (item) {
+          return item.id == expense.id;
+        }), expense);
+      }).catch(function (error) {
+        console.log(error.data);
+      });
+    },
     unedit: function unedit() {
       this.editing = false;
     },
@@ -52437,7 +52456,185 @@ var render = function() {
     ? _c("div", { staticClass: "container" }, [
         _c("h2", [_vm._v("Create new expense:")]),
         _vm._v(" "),
-        _vm._m(0),
+        _c("form", [
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "date" } }, [_vm._v("Date")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.createdExpense.date,
+                  expression: "createdExpense.date"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "date", name: "date" },
+              domProps: { value: _vm.createdExpense.date },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.createdExpense, "date", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "time" } }, [_vm._v("Time")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.createdExpense.time,
+                  expression: "createdExpense.time"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "time", name: "time" },
+              domProps: { value: _vm.createdExpense.time },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.createdExpense, "time", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "name" } }, [_vm._v("Name")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.createdExpense.name,
+                  expression: "createdExpense.name"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", name: "name", placeholder: "name" },
+              domProps: { value: _vm.createdExpense.name },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.createdExpense, "name", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "description" } }, [
+              _vm._v("Description")
+            ]),
+            _vm._v(" "),
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.createdExpense.description,
+                  expression: "createdExpense.description"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { placeholder: "description", name: "description" },
+              domProps: { value: _vm.createdExpense.description },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.createdExpense,
+                    "description",
+                    $event.target.value
+                  )
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "cost" } }, [_vm._v("Cost")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.createdExpense.cost,
+                  expression: "createdExpense.cost"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "number", name: "cost", placeholder: "0" },
+              domProps: { value: _vm.createdExpense.cost },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.createdExpense, "cost", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "quantity" } }, [_vm._v("Quantity")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.createdExpense.quantity,
+                  expression: "createdExpense.quantity"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "number", name: "quantity", placeholder: "0" },
+              domProps: { value: _vm.createdExpense.quantity },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.createdExpense, "quantity", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary",
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  _vm.createExpense(_vm.createdExpense)
+                }
+              }
+            },
+            [_vm._v("CREATE")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("br"),
         _vm._v(" "),
         _c("h2", [_vm._v("Expenses:")]),
         _vm._v(" "),
@@ -52853,68 +53050,7 @@ var render = function() {
       ])
     : _vm._e()
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("form", [
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "date" } }, [_vm._v("Date")]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: { type: "date", name: "date" }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "time" } }, [_vm._v("Time")]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: { type: "time", name: "time" }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "name" } }, [_vm._v("Name")]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: { type: "text", name: "name", placeholder: "name" }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "description" } }, [_vm._v("Description")]),
-        _vm._v(" "),
-        _c("textarea", {
-          staticClass: "form-control",
-          attrs: { placeholder: "description", name: "description" }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "cost" } }, [_vm._v("Cost")]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: { type: "number", name: "cost", placeholder: "0" }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "quantity" } }, [_vm._v("Quantity")]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: { type: "number", name: "quantity", placeholder: "0" }
-        })
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
