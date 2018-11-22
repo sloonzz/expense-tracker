@@ -74,7 +74,6 @@ export default {
                         resolve(response);
                     })
                     .catch(error => {
-                        console.log(email + password);
                         localStorage.removeItem("access_token");
                         context.commit("accessToken");
                         context.commit("errors", error.response.data.errors);

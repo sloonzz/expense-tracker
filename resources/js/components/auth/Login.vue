@@ -37,7 +37,9 @@ export default {
           this.$router.push("/");
           this.$store.dispatch("auth/retrieveUser");
         })
-        .catch(error => {});
+        .catch(error => {
+          console.log(error);
+        });
     }
   },
   computed: {

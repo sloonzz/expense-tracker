@@ -25270,7 +25270,7 @@ function applyToTag (styleElement, obj) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(17);
-module.exports = __webpack_require__(75);
+module.exports = __webpack_require__(77);
 
 
 /***/ }),
@@ -25285,7 +25285,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__routes__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store_store__ = __webpack_require__(68);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__views_Home_vue__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__views_Home_vue__ = __webpack_require__(71);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__views_Home_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__views_Home_vue__);
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -51633,7 +51633,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }).then(function (response) {
         _this.$router.push("/");
         _this.$store.dispatch("auth/retrieveUser");
-      }).catch(function (error) {});
+      }).catch(function (error) {
+        console.log(error);
+      });
     }
   },
   computed: {
@@ -53240,8 +53242,8 @@ if (false) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__auth__ = __webpack_require__(79);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__expenses__ = __webpack_require__(80);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__auth__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__expenses__ = __webpack_require__(70);
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -53398,14 +53400,174 @@ if (false) {
 
 /***/ }),
 /* 69 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    namespaced: true,
+    state: {
+        count: 0,
+        user: {},
+        accessToken: localStorage.getItem("access_token") || null,
+        validToken: false,
+        errors: [],
+        messages: []
+    },
+    getters: {
+        isLoggedIn: function isLoggedIn(state) {
+            return state.accessToken !== null && state.validToken;
+        }
+    },
+    mutations: {
+        accessToken: function accessToken(state) {
+            state.accessToken = localStorage.getItem("access_token");
+        },
+        user: function user(state, _user) {
+            state.user = _user;
+        },
+        isValidToken: function isValidToken(state, validToken) {
+            state.validToken = validToken;
+        },
+        errors: function errors(state, _errors) {
+            state.errors = _errors;
+        },
+        messages: function messages(state, _messages) {
+            state.messages = _messages;
+        }
+    },
+    actions: {
+        retrieveUser: function retrieveUser(context) {
+            return new Promise(function (resolve, reject) {
+                if (context.state.accessToken) {
+                    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.headers.common.Authorization = "Bearer " + context.state.accessToken;
+                    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/api/user").then(function (response) {
+                        context.commit("user", response.data);
+                        context.commit("isValidToken", true);
+                        resolve(response);
+                    }).catch(function (error) {
+                        context.commit("isValidToken", false);
+                        localStorage.removeItem("access_token");
+                        reject(error);
+                    });
+                } else {
+                    reject(error);
+                }
+            });
+        },
+        loginUser: function loginUser(context, _ref) {
+            var email = _ref.email,
+                password = _ref.password;
+
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/api/login", {
+                    email: email,
+                    password: password
+                }).then(function (response) {
+                    localStorage.setItem("access_token", response.data.access_token);
+                    context.commit("accessToken");
+                    context.commit("isValidToken", true);
+                    context.commit("errors", null);
+                    console.log(context.getters.isLoggedIn);
+                    resolve(response);
+                }).catch(function (error) {
+                    localStorage.removeItem("access_token");
+                    context.commit("accessToken");
+                    context.commit("errors", error.response.data.errors);
+                    reject(error);
+                });
+            });
+        },
+        logoutUser: function logoutUser(context) {
+            return new Promise(function (resolve, reject) {
+                context.commit("accessToken");
+                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.headers.common.Authorization = "Bearer " + context.state.accessToken;
+                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/api/logout").then(function (response) {
+                    localStorage.removeItem("access_token");
+                    context.commit("accessToken");
+                    context.commit("errors", null);
+                    context.commit("isValidToken", false);
+                    resolve(response);
+                }).catch(function (error) {
+                    context.commit("errors", error.response.data.errors);
+                    context.commit("isValidToken", false);
+                    localStorage.removeItem("access_token");
+                    reject(error);
+                });
+            });
+        },
+        registerUser: function registerUser(context, _ref2) {
+            var name = _ref2.name,
+                email = _ref2.email,
+                password = _ref2.password,
+                password_confirmation = _ref2.password_confirmation;
+
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/api/register", {
+                    name: name,
+                    email: email,
+                    password: password,
+                    password_confirmation: password_confirmation
+                }).then(function (response) {
+                    context.commit("errors", null);
+                    resolve(response);
+                }).catch(function (error) {
+                    context.commit("errors", error.response.data.errors);
+                    reject(error);
+                });
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 70 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    namespaced: true,
+    state: {
+        expense: {}
+    },
+    getters: {},
+    mutations: {
+        expense: function expense(state, _expense) {
+            state.expense = _expense;
+        }
+    },
+    actions: {
+        retrieveExpense: function retrieveExpense(context, id) {
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/expenses/' + id).then(function (response) {
+                    context.commit("expense", response.data.data);
+                    console.log(response.data.data);
+                    resolve(response);
+                }).catch(function (error) {
+                    reject(error);
+                });
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(70)
+var __vue_script__ = __webpack_require__(72)
 /* template */
-var __vue_template__ = __webpack_require__(74)
+var __vue_template__ = __webpack_require__(76)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -53444,12 +53606,12 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 70 */
+/* 72 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_general_Navbar_vue__ = __webpack_require__(71);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_general_Navbar_vue__ = __webpack_require__(73);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_general_Navbar_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_general_Navbar_vue__);
 //
 //
@@ -53485,15 +53647,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 71 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(72)
+var __vue_script__ = __webpack_require__(74)
 /* template */
-var __vue_template__ = __webpack_require__(73)
+var __vue_template__ = __webpack_require__(75)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -53532,7 +53694,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 72 */
+/* 74 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -53575,7 +53737,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
-/* 73 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -53732,7 +53894,7 @@ if (false) {
 }
 
 /***/ }),
-/* 74 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -53794,174 +53956,10 @@ if (false) {
 }
 
 /***/ }),
-/* 75 */
+/* 77 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 76 */,
-/* 77 */,
-/* 78 */,
-/* 79 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-
-
-/* harmony default export */ __webpack_exports__["a"] = ({
-    namespaced: true,
-    state: {
-        count: 0,
-        user: {},
-        accessToken: localStorage.getItem("access_token") || null,
-        validToken: false,
-        errors: [],
-        messages: []
-    },
-    getters: {
-        isLoggedIn: function isLoggedIn(state) {
-            return state.accessToken !== null && state.validToken;
-        }
-    },
-    mutations: {
-        accessToken: function accessToken(state) {
-            state.accessToken = localStorage.getItem("access_token");
-        },
-        user: function user(state, _user) {
-            state.user = _user;
-        },
-        isValidToken: function isValidToken(state, validToken) {
-            state.validToken = validToken;
-        },
-        errors: function errors(state, _errors) {
-            state.errors = _errors;
-        },
-        messages: function messages(state, _messages) {
-            state.messages = _messages;
-        }
-    },
-    actions: {
-        retrieveUser: function retrieveUser(context) {
-            return new Promise(function (resolve, reject) {
-                if (context.state.accessToken) {
-                    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.headers.common.Authorization = "Bearer " + context.state.accessToken;
-                    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/api/user").then(function (response) {
-                        context.commit("user", response.data);
-                        context.commit("isValidToken", true);
-                        resolve(response);
-                    }).catch(function (error) {
-                        context.commit("isValidToken", false);
-                        localStorage.removeItem("access_token");
-                        reject(error);
-                    });
-                } else {
-                    reject(error);
-                }
-            });
-        },
-        loginUser: function loginUser(context, _ref) {
-            var email = _ref.email,
-                password = _ref.password;
-
-            return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/api/login", {
-                    email: email,
-                    password: password
-                }).then(function (response) {
-                    localStorage.setItem("access_token", response.data.access_token);
-                    context.commit("accessToken");
-                    context.commit("isValidToken", true);
-                    context.commit("errors", null);
-                    console.log(context.getters.isLoggedIn);
-                    resolve(response);
-                }).catch(function (error) {
-                    console.log(email + password);
-                    localStorage.removeItem("access_token");
-                    context.commit("accessToken");
-                    context.commit("errors", error.response.data.errors);
-                    reject(error);
-                });
-            });
-        },
-        logoutUser: function logoutUser(context) {
-            return new Promise(function (resolve, reject) {
-                context.commit("accessToken");
-                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.headers.common.Authorization = "Bearer " + context.state.accessToken;
-                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/api/logout").then(function (response) {
-                    localStorage.removeItem("access_token");
-                    context.commit("accessToken");
-                    context.commit("errors", null);
-                    context.commit("isValidToken", false);
-                    resolve(response);
-                }).catch(function (error) {
-                    context.commit("errors", error.response.data.errors);
-                    context.commit("isValidToken", false);
-                    localStorage.removeItem("access_token");
-                    reject(error);
-                });
-            });
-        },
-        registerUser: function registerUser(context, _ref2) {
-            var name = _ref2.name,
-                email = _ref2.email,
-                password = _ref2.password,
-                password_confirmation = _ref2.password_confirmation;
-
-            return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/api/register", {
-                    name: name,
-                    email: email,
-                    password: password,
-                    password_confirmation: password_confirmation
-                }).then(function (response) {
-                    context.commit("errors", null);
-                    resolve(response);
-                }).catch(function (error) {
-                    context.commit("errors", error.response.data.errors);
-                    reject(error);
-                });
-            });
-        }
-    }
-});
-
-/***/ }),
-/* 80 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-
-
-/* harmony default export */ __webpack_exports__["a"] = ({
-    namespaced: true,
-    state: {
-        expense: {}
-    },
-    getters: {},
-    mutations: {
-        expense: function expense(state, _expense) {
-            state.expense = _expense;
-        }
-    },
-    actions: {
-        retrieveExpense: function retrieveExpense(context, id) {
-            return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/expenses/' + id).then(function (response) {
-                    context.commit("expense", response.data.data);
-                    console.log(response.data.data);
-                    resolve(response);
-                }).catch(function (error) {
-                    reject(error);
-                });
-            });
-        }
-    }
-});
 
 /***/ })
 /******/ ]);
