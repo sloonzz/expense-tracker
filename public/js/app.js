@@ -51356,7 +51356,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         password: this.password,
         password_confirmation: this.password_confirmation
       }).then(function (response) {
-        _this.$router.push("/login");
         _this.$store.commit("auth/messages", [["Successfully registered!"]]);
       }).catch(function (error) {});
     }

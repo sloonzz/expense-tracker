@@ -44,7 +44,6 @@ export default {
           password_confirmation: this.password_confirmation
         })
         .then(response => {
-          this.$router.push("/login");
           this.$store.commit("auth/messages", [["Successfully registered!"]]);
         })
         .catch(error => {});
