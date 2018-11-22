@@ -36,6 +36,7 @@ class ExpenseController extends Controller
     public function store(ExpenseRequest $request)
     {
         $expense = Expense::create($request->all());
+        $expense->user_id = auth('api')->user()->id;
         if ($expense->save()) {
             return new ExpenseResource($expense);
         }
