@@ -53486,6 +53486,7 @@ if (false) {
                     resolve(response);
                 }).catch(function (error) {
                     localStorage.removeItem("access_token");
+                    context.commit("isValidToken", false);
                     context.commit("accessToken");
                     context.commit("errors", error.response.data.errors);
                     reject(error);

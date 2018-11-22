@@ -43,16 +43,16 @@ class AuthController extends Controller
             'scope' => '*',
         ]);
 
-        // $tokenRequest = Request::create(
-        //     env('APP_URL') . '/oauth/token',
-        //     'post',
-        //     $request->all()
-        // );
+        $tokenRequest = Request::create(
+            env('APP_URL') . '/oauth/token',
+            'post',
+            $request->all()
+        );
 
-        // $response = Route::dispatch($tokenRequest);
+        $response = Route::dispatch($tokenRequest);
 
-        // return $response;
-        return $request;
+        return $response;
+        // return $request;
     }
 
     public function logout()
