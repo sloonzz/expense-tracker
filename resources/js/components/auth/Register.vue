@@ -45,7 +45,7 @@ export default {
         })
         .then(response => {
           this.$router.push("/login");
-          this.$store.commit("messages", [["Successfully registered!"]]);
+          this.$store.commit("auth/messages", [["Successfully registered!"]]);
         })
         .catch(error => {});
     }
