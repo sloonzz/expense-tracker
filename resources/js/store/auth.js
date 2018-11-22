@@ -26,9 +26,11 @@ export default {
             state.validToken = validToken;
         },
         errors: function(state, errors) {
+            state.messages = null;
             state.errors = errors;
         },
         messages: function(state, messages) {
+            state.errors = null;
             state.messages = messages;
         }
     },

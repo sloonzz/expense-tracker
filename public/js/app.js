@@ -51357,6 +51357,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         password_confirmation: this.password_confirmation
       }).then(function (response) {
         _this.$store.commit("auth/messages", [["Successfully registered!"]]);
+        _this.name = "";
+        _this.email = "";
+        _this.password = "";
+        _this.password_confirmation = "";
       }).catch(function (error) {});
     }
   },
@@ -53438,9 +53442,11 @@ if (false) {
             state.validToken = validToken;
         },
         errors: function errors(state, _errors) {
+            state.messages = null;
             state.errors = _errors;
         },
         messages: function messages(state, _messages) {
+            state.errors = null;
             state.messages = _messages;
         }
     },

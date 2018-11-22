@@ -45,6 +45,10 @@ export default {
         })
         .then(response => {
           this.$store.commit("auth/messages", [["Successfully registered!"]]);
+          this.name = "";
+          this.email = "";
+          this.password = "";
+          this.password_confirmation = "";
         })
         .catch(error => {});
     }
