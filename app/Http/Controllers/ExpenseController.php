@@ -22,7 +22,6 @@ class ExpenseController extends Controller
      */
     public function index()
     {
-        // $expenses = Expense::all();
         $expenses = auth('api')->user()->expenses;
         return ExpenseResource::collection($expenses);
     }
@@ -39,6 +38,8 @@ class ExpenseController extends Controller
         $expense->user_id = auth('api')->user()->id;
         if ($expense->save()) {
             return new ExpenseResource($expense);
+        } else {
+            return ['message' => 'Error saving!'];
         }
     }
 
@@ -50,7 +51,13 @@ class ExpenseController extends Controller
      */
     public function show(Expense $expense)
     {
-        return new ExpenseResource(Expense::find($expense->id));
+
+        if ($expense->user_id == auth('api')->user()->id) {
+            return new ExpenseResource(Expense::find($expense->id));
+        } else {
+            return ['message' => 'Not authorized!'];
+        }
+
     }
 
     /**
@@ -62,9 +69,17 @@ class ExpenseController extends Controller
      */
     public function update(Request $request, Expense $expense)
     {
-        $expense->fill($request->all());
-        if ($expense->save()) {
-            return new ExpenseResource($expense);
+        if ($expense->user_id == auth('api')->user()->id) {
+
+            $expense->fill($request->all());
+            
+            if ($expense->save()) {
+                return new ExpenseResource($expense);
+            } else {
+                return ['message' => 'Error saving!'];
+            }
+        } else {
+            return ['message' => 'Not authorized!'];
         }
     }
 
@@ -76,11 +91,19 @@ class ExpenseController extends Controller
      */
     public function destroy(Expense $expense)
     {
-        if ($expense->delete()) {
-            return [
-                'data' => (new ExpenseResource($expense)),
-                'message' => 'Resource successfully deleted.',
-            ];
+        if ($expense->user_id == auth('api')->user()->id) {
+
+            if ($expense->delete()) {
+                return [
+                    'data' => (new ExpenseResource($expense)),
+                    'message' => 'Resource successfully deleted.',
+                ];
+            } else {
+                return ['message' => 'Error deleting!'];
+            }
+            
+        } else {
+            return ['message' => 'Not authorized!'];
         }
 
     }
