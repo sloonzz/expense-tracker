@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 
 class AuthController extends Controller
 {
@@ -44,15 +43,16 @@ class AuthController extends Controller
             'scope' => '*',
         ]);
 
-        $tokenRequest = Request::create(
-            env('APP_URL') . '/oauth/token',
-            'post',
-            $request->all()
-        );
+        // $tokenRequest = Request::create(
+        //     env('APP_URL') . '/oauth/token',
+        //     'post',
+        //     $request->all()
+        // );
 
-        $response = Route::dispatch($tokenRequest);
+        // $response = Route::dispatch($tokenRequest);
 
-        return $response;
+        // return $response;
+        return $request;
     }
 
     public function logout()
