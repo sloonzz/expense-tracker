@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 export default {
     namespaced: true,
@@ -72,7 +72,7 @@ export default {
                         context.commit("accessToken");
                         context.commit("isValidToken", true);
                         context.commit("errors", null);
-                        console.log(context.getters.isLoggedIn);
+                        console.log(response);
                         resolve(response);
                     })
                     .catch(error => {
@@ -126,6 +126,6 @@ export default {
                         reject(error);
                     });
             });
-        },
+        }
     }
-}
+};
