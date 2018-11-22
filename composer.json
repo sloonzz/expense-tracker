@@ -1,7 +1,10 @@
 {
     "name": "laravel/laravel",
     "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
     "license": "MIT",
     "type": "project",
     "require": {
@@ -38,8 +41,7 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": [
-            ]
+            "dont-discover": []
         }
     },
     "scripts": {
@@ -52,6 +54,11 @@
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
+        ],
+        "post-install-cmd": [
+            "php artisan clear-compiled",
+            "chmod -R 777 storage",
+            "php artisan passport:keys"
         ]
     },
     "config": {
