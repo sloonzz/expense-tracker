@@ -51,15 +51,15 @@ export default {
     }
   },
   created() {
-    this.$store.commit("errors", null);
-    this.$store.commit("messages", null);
+    this.$store.commit("auth/errors", null);
+    this.$store.commit("auth/messages", null);
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
       vm.$store
         .dispatch("auth/retrieveUser")
         .then(response => {
-          if (vm.$store.getters['auth/isLoggedIn']) {
+          if (vm.$store.getters["auth/isLoggedIn"]) {
             next("/");
           } else {
             next();
