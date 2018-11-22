@@ -109,7 +109,7 @@
 <script>
 export default {
   data() {
-    return { 
+    return {
       loading: false,
       editing: false,
       expenses: [],
@@ -249,7 +249,8 @@ export default {
       if (expense.date && expense.time) {
         expense.date = expense.date + " " + expense.time;
       }
-
+      axios.defaults.headers.common.Authorization =
+      "Bearer " + this.$store.state.auth.accessToken;
       axios
         .put("/api/expenses/" + expense.id, expense)
         .then(response => {
@@ -268,10 +269,14 @@ export default {
       this.editing = false;
       let vm = this;
       if (confirm("You will be deleting this expense. Are you sure?")) {
+        axios.defaults.headers.common.Authorization =
+      "Bearer " + this.$store.state.auth.accessToken;
         axios
           .delete("/api/expenses/" + expense.id)
           .then(response => {
-            vm.$store.commit("auth/messages", [["Successfully deleted expense."]]);
+            vm.$store.commit("auth/messages", [
+              ["Successfully deleted expense."]
+            ]);
             vm.$delete(
               vm.expenses,
               vm.expenses.findIndex(item => item.id == expense.id)
@@ -289,16 +294,21 @@ export default {
       if (expense.date && expense.time) {
         expense.date = expense.date + " " + expense.time;
       }
-
+      axios.defaults.headers.common.Authorization =
+        "Bearer " + this.$store.state.auth.accessToken;
       axios
         .post("/api/expenses/", expense)
         .then(response => {
-          vm.$store.commit("auth/messages", [["Successfully created expense."]]);
-          vm.$set(
-            vm.expenses,
-            vm.expenses.findIndex(item => item.id == expense.id),
-            expense
-          );
+          vm.$store.commit("auth/messages", [
+            ["Successfully created expense."]
+          ]);
+          vm.expenses.push({
+            date: expense.date,
+            name: expense.name,
+            description: expense.description,
+            quantity: expense.quantity,
+            cost: expense.cost,
+          });
           expense.name = "";
           expense.description = "";
           expense.time = "";
@@ -321,6 +331,8 @@ export default {
   },
   mounted() {
     this.loading = true;
+    axios.defaults.headers.common.Authorization =
+      "Bearer " + this.$store.state.auth.accessToken;
     axios
       .get("/api/expenses")
       .then(response => {

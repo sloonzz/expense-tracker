@@ -52387,7 +52387,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       if (expense.date && expense.time) {
         expense.date = expense.date + " " + expense.time;
       }
-
+      axios.defaults.headers.common.Authorization = "Bearer " + this.$store.state.auth.accessToken;
       axios.put("/api/expenses/" + expense.id, expense).then(function (response) {
         vm.$store.commit("auth/messages", [["Successfully edited expense."]]);
         vm.$set(vm.expenses, vm.expenses.findIndex(function (item) {
@@ -52401,6 +52401,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.editing = false;
       var vm = this;
       if (confirm("You will be deleting this expense. Are you sure?")) {
+        axios.defaults.headers.common.Authorization = "Bearer " + this.$store.state.auth.accessToken;
         axios.delete("/api/expenses/" + expense.id).then(function (response) {
           vm.$store.commit("auth/messages", [["Successfully deleted expense."]]);
           vm.$delete(vm.expenses, vm.expenses.findIndex(function (item) {
@@ -52418,12 +52419,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       if (expense.date && expense.time) {
         expense.date = expense.date + " " + expense.time;
       }
-
+      axios.defaults.headers.common.Authorization = "Bearer " + this.$store.state.auth.accessToken;
       axios.post("/api/expenses/", expense).then(function (response) {
         vm.$store.commit("auth/messages", [["Successfully created expense."]]);
-        vm.$set(vm.expenses, vm.expenses.findIndex(function (item) {
-          return item.id == expense.id;
-        }), expense);
+        vm.expenses.push({
+          date: expense.date,
+          name: expense.name,
+          description: expense.description,
+          quantity: expense.quantity,
+          cost: expense.cost
+        });
         expense.name = "";
         expense.description = "";
         expense.time = "";
@@ -52447,6 +52452,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     var _this = this;
 
     this.loading = true;
+    axios.defaults.headers.common.Authorization = "Bearer " + this.$store.state.auth.accessToken;
     axios.get("/api/expenses").then(function (response) {
       _this.expenses = response.data.data;
       _this.loading = false;
