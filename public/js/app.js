@@ -51357,18 +51357,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         password_confirmation: this.password_confirmation
       }).then(function (response) {
         _this.$router.push("/login");
-        _this.$store.commit("messages", [["Successfully registered!"]]);
+        _this.$store.commit("auth/messages", [["Successfully registered!"]]);
       }).catch(function (error) {});
     }
   },
   created: function created() {
-    this.$store.commit("errors", null);
-    this.$store.commit("messages", null);
+    this.$store.commit("auth/errors", null);
+    this.$store.commit("auth/messages", null);
   },
   beforeRouteEnter: function beforeRouteEnter(to, from, next) {
     next(function (vm) {
       vm.$store.dispatch("auth/retrieveUser").then(function (response) {
-        if (vm.$store.getters['auth/isLoggedIn']) {
+        if (vm.$store.getters["auth/isLoggedIn"]) {
           next("/");
         } else {
           next();
