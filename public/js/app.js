@@ -52391,7 +52391,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         expense.date = expense.date + " " + expense.time;
       }
       axios.defaults.headers.common.Authorization = "Bearer " + this.$store.state.auth.accessToken;
-      axios.put("/api/expenses/" + expense.id, expense).then(function (response) {
+      axios.put("/api/expenses" + expense.id, expense).then(function (response) {
         vm.$store.commit("auth/messages", [["Successfully edited expense."]]);
         vm.$set(vm.expenses, vm.expenses.findIndex(function (item) {
           return item.id == expense.id;
@@ -52405,7 +52405,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var vm = this;
       if (confirm("You will be deleting this expense. Are you sure?")) {
         axios.defaults.headers.common.Authorization = "Bearer " + this.$store.state.auth.accessToken;
-        axios.delete("/api/expenses/" + expense.id).then(function (response) {
+        axios.delete("/api/expenses" + expense.id).then(function (response) {
           vm.$store.commit("auth/messages", [["Successfully deleted expense."]]);
           vm.$delete(vm.expenses, vm.expenses.findIndex(function (item) {
             return item.id == expense.id;
@@ -52423,7 +52423,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         expense.date = expense.date + " " + expense.time;
       }
       axios.defaults.headers.common.Authorization = "Bearer " + this.$store.state.auth.accessToken;
-      axios.post("/api/expenses/", expense).then(function (response) {
+      axios.post("/api/expenses", expense).then(function (response) {
         vm.$store.commit("auth/messages", [["Successfully created expense."]]);
         vm.expenses.push({
           date: expense.date,
@@ -53462,9 +53462,13 @@ if (false) {
                     }).catch(function (error) {
                         context.commit("isValidToken", false);
                         localStorage.removeItem("access_token");
+                        context.commit("accessToken");
                         reject(error);
                     });
                 } else {
+                    context.commit("isValidToken", false);
+                    localStorage.removeItem("access_token");
+                    context.commit("accessToken");
                     reject(error);
                 }
             });
@@ -53558,7 +53562,7 @@ if (false) {
     actions: {
         retrieveExpense: function retrieveExpense(context, id) {
             return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/expenses/' + id).then(function (response) {
+                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/api/expenses" + id).then(function (response) {
                     context.commit("expense", response.data.data);
                     console.log(response.data.data);
                     resolve(response);

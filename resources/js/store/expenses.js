@@ -1,13 +1,11 @@
-import axios from 'axios';
+import axios from "axios";
 
 export default {
     namespaced: true,
     state: {
         expense: {}
     },
-    getters: {
-
-    },
+    getters: {},
     mutations: {
         expense: function(state, expense) {
             state.expense = expense;
@@ -17,7 +15,7 @@ export default {
         retrieveExpense: function(context, id) {
             return new Promise((resolve, reject) => {
                 axios
-                    .get('/api/expenses/' + id)
+                    .get("/api/expenses" + id)
                     .then(response => {
                         context.commit("expense", response.data.data);
                         console.log(response.data.data);
@@ -29,4 +27,4 @@ export default {
             });
         }
     }
-}
+};

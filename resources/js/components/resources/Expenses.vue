@@ -297,7 +297,7 @@ export default {
       axios.defaults.headers.common.Authorization =
         "Bearer " + this.$store.state.auth.accessToken;
       axios
-        .post("/api/expenses/", expense)
+        .post("/api/expenses", expense)
         .then(response => {
           vm.$store.commit("auth/messages", [
             ["Successfully created expense."]
