@@ -55,6 +55,8 @@ export default {
                         });
                 } else {
                     context.commit("isValidToken", false);
+                    localStorage.removeItem("access_token");
+                    context.commit("accessToken");
                     reject(error);
                 }
             });
