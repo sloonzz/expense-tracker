@@ -293,6 +293,8 @@ export default {
       this.loading = true;
       if (expense.date && expense.time) {
         expense.date = expense.date + " " + expense.time;
+      } else if (!expense.date && !expense.time) {
+        expense.date = moment(new Date()).format('YYYY-MM-DD HH-mm-ss')
       }
       axios.defaults.headers.common.Authorization =
         "Bearer " + this.$store.state.auth.accessToken;
@@ -333,7 +335,6 @@ export default {
     }
   },
   mounted() {
-    console.log(moment(new Date()).format("YYYY-MM-DD"));
     this.loading = true;
     axios.defaults.headers.common.Authorization =
       "Bearer " + this.$store.state.auth.accessToken;
