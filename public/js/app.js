@@ -52425,8 +52425,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       axios.defaults.headers.common.Authorization = "Bearer " + this.$store.state.auth.accessToken;
       axios.post("/api/expenses", expense).then(function (response) {
         vm.$store.commit("auth/messages", [["Successfully created expense."]]);
+        expense.id = response.data.id;
         vm.expenses.push({
-          id: response.data.id,
+          id: expense.id,
           date: expense.date,
           name: expense.name,
           description: expense.description,

@@ -302,8 +302,9 @@ export default {
           vm.$store.commit("auth/messages", [
             ["Successfully created expense."]
           ]);
+          expense.id = response.data.id;
           vm.expenses.push({
-            id: response.data.id,
+            id: expense.id,
             date: expense.date,
             name: expense.name,
             description: expense.description,
