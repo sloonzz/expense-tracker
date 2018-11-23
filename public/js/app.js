@@ -52405,7 +52405,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var vm = this;
       if (confirm("You will be deleting this expense. Are you sure?")) {
         axios.defaults.headers.common.Authorization = "Bearer " + this.$store.state.auth.accessToken;
-        axios.delete("/api/expenses" + expense.id).then(function (response) {
+        axios.delete("/api/expenses/" + expense.id).then(function (response) {
           vm.$store.commit("auth/messages", [["Successfully deleted expense."]]);
           vm.$delete(vm.expenses, vm.expenses.findIndex(function (item) {
             return item.id == expense.id;
