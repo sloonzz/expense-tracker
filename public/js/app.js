@@ -52426,6 +52426,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       axios.post("/api/expenses", expense).then(function (response) {
         vm.$store.commit("auth/messages", [["Successfully created expense."]]);
         vm.expenses.push({
+          id: response.data.id,
           date: expense.date,
           name: expense.name,
           description: expense.description,

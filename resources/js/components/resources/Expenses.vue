@@ -303,6 +303,7 @@ export default {
             ["Successfully created expense."]
           ]);
           vm.expenses.push({
+            id: response.data.id,
             date: expense.date,
             name: expense.name,
             description: expense.description,
