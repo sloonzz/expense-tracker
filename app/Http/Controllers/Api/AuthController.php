@@ -52,8 +52,8 @@ class AuthController extends Controller
 
         $response = Route::dispatch($tokenRequest);
 
-        return env('APP_URL');
-        // return $response;
+        // return env('APP_URL');
+        return $response;
 
         // return "RESPONSE";
 
