@@ -272,7 +272,7 @@ export default {
         axios.defaults.headers.common.Authorization =
           "Bearer " + this.$store.state.auth.accessToken;
         axios
-          .delete("/api/expenses" + expense.id)
+          .delete("/api/expenses/" + expense.id)
           .then(response => {
             vm.$store.commit("auth/messages", [
               ["Successfully deleted expense."]
