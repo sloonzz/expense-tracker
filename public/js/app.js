@@ -68911,6 +68911,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
   computed: {},
   methods: {
+    log: function log(expenseDate) {
+      console.log(expenseDate);
+    },
     sortDate: function sortDate() {
       if (!this.sort.date) {
         this.expenses.sort(function (a, b) {
@@ -69483,7 +69486,8 @@ var render = function() {
                                 domProps: { value: _vm.editableExpense.date },
                                 on: {
                                   click: function($event) {
-                                    _vm.console.log(_vm.editableExpense.date)
+                                    $event.preventDefault()
+                                    _vm.log(_vm.editableExpense.date)
                                   },
                                   input: function($event) {
                                     if ($event.target.composing) {

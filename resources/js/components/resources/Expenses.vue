@@ -75,7 +75,7 @@
                           TODO: Separate this to date and time 
                           
                           -->
-                          <input @click="console.log(editableExpense.date)" type="date" name="date" class="form-control" v-model="editableExpense.date">
+                          <input @click.prevent="log(editableExpense.date)" type="date" name="date" class="form-control" v-model="editableExpense.date">
                         </td>
                         <td>
                           <input type="time" name="time" class="form-control" v-model="editableExpense.time">
@@ -143,6 +143,9 @@ export default {
   },
   computed: {},
   methods: {
+    log(expenseDate) {
+      console.log(expenseDate);
+    },
     sortDate() {
       if (!this.sort.date) {
         this.expenses.sort((a, b) => {
