@@ -52416,9 +52416,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
     },
     createExpense: function createExpense(expense) {
+      var _this = this;
+
       this.editing = false;
       var vm = this;
-
+      this.loading = true;
       if (expense.date && expense.time) {
         expense.date = expense.date + " " + expense.time;
       }
@@ -52434,6 +52436,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           quantity: expense.quantity,
           cost: expense.cost
         });
+        _this.loading = false;
         expense.name = "";
         expense.description = "";
         expense.time = "";
@@ -52454,13 +52457,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
   },
   mounted: function mounted() {
-    var _this = this;
+    var _this2 = this;
 
     this.loading = true;
     axios.defaults.headers.common.Authorization = "Bearer " + this.$store.state.auth.accessToken;
     axios.get("/api/expenses").then(function (response) {
-      _this.expenses = response.data.data;
-      _this.loading = false;
+      _this2.expenses = response.data.data;
+      _this2.loading = false;
     }).catch(function (error) {});
   }
 });
@@ -53009,19 +53012,21 @@ var render = function() {
                             _c(
                               "td",
                               [
-                                _c(
-                                  "router-link",
-                                  {
-                                    staticClass: "btn btn-sm btn-dark",
-                                    attrs: {
-                                      to: {
-                                        name: "expense",
-                                        params: { id: expense.id }
-                                      }
-                                    }
-                                  },
-                                  [_vm._v("DETAILS")]
-                                )
+                                !_vm.loading
+                                  ? _c(
+                                      "router-link",
+                                      {
+                                        staticClass: "btn btn-sm btn-dark",
+                                        attrs: {
+                                          to: {
+                                            name: "expense",
+                                            params: { id: expense.id }
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("DETAILS")]
+                                    )
+                                  : _vm._e()
                               ],
                               1
                             ),

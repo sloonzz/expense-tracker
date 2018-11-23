@@ -92,7 +92,7 @@
                         <td>
                           <input type="number" name="quantity" class="form-control" v-model="editableExpense.quantity">
                         </td>
-                        <td><router-link :to="{ name: 'expense', params: { id: expense.id } }" class="btn btn-sm btn-dark">DETAILS</router-link></td>
+                        <td><router-link v-if="!loading" :to="{ name: 'expense', params: { id: expense.id } }" class="btn btn-sm btn-dark">DETAILS</router-link></td>
                         <td><button @click.prevent="unedit()" class="btn btn-sm btn-secondary">EXIT EDITING</button></td>
                         <td>
                           <button @click.prevent="save(editableExpense)" class="btn btn-sm btn-primary">SAVE</button>
@@ -290,7 +290,7 @@ export default {
     createExpense(expense) {
       this.editing = false;
       let vm = this;
-
+      this.loading = true;
       if (expense.date && expense.time) {
         expense.date = expense.date + " " + expense.time;
       }
@@ -311,6 +311,7 @@ export default {
             quantity: expense.quantity,
             cost: expense.cost
           });
+          this.loading = false;
           expense.name = "";
           expense.description = "";
           expense.time = "";
