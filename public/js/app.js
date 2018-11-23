@@ -69072,8 +69072,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         expense.quantity = 0;
         expense.cost = 0;
       }).catch(function (error) {
-        console.log(error.data);
-        _this.$store.commit[('auth/errors', error)];
+        console.log(error);
+        _this.$store.commit('auth/errors', error);
         _this.loading = false;
       });
     },

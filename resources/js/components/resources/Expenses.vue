@@ -321,8 +321,8 @@ export default {
           expense.cost = 0;
         })
         .catch(error => {
-          console.log(error.data);
-          this.$store.commit['auth/errors', error];
+          console.log(error);
+          this.$store.commit('auth/errors', error);
           this.loading = false;
         });
     },
