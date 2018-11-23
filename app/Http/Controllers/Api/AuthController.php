@@ -45,14 +45,13 @@ class AuthController extends Controller
 
         $tokenRequest = Request::create(
             env('APP_URL') . '/oauth/token',
-            // '/oauth/token',
             'post',
             $request->all()
         );
 
+        return env('APP_URL');
         $response = Route::dispatch($tokenRequest);
         // return $response;
-        return env('APP_URL');
 
         // return "RESPONSE";
 
