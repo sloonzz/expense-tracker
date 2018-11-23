@@ -15,7 +15,7 @@ export default {
         retrieveExpense: function(context, id) {
             return new Promise((resolve, reject) => {
                 axios
-                    .get("/api/expenses" + id)
+                    .get("/api/expenses/" + id)
                     .then(response => {
                         context.commit("expense", response.data.data);
                         console.log(response.data.data);

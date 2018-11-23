@@ -53166,7 +53166,7 @@ exports = module.exports = __webpack_require__(14)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -53191,9 +53191,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    created: function created() {
-        this.$store.dispatch("expenses/retrieveExpense", this.$route.params.id);
-    }
+  created: function created() {
+    this.$store.dispatch("expenses/retrieveExpense", this.$route.params.id);
+  }
 });
 
 /***/ }),
@@ -53563,7 +53563,7 @@ if (false) {
     actions: {
         retrieveExpense: function retrieveExpense(context, id) {
             return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/api/expenses" + id).then(function (response) {
+                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/api/expenses/" + id).then(function (response) {
                     context.commit("expense", response.data.data);
                     console.log(response.data.data);
                     resolve(response);

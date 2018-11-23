@@ -12,12 +12,11 @@
 
 <script>
 export default {
-    created() {
-        this.$store.dispatch("expenses/retrieveExpense", this.$route.params.id);
-    }
-}
+  created() {
+    this.$store.dispatch("expenses/retrieveExpense", this.$route.params.id);
+  }
+};
 </script>
 
 <style>
-
 </style>
