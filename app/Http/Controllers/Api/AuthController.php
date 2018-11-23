@@ -52,24 +52,7 @@ class AuthController extends Controller
 
         $response = Route::dispatch($tokenRequest);
 
-        // return env('APP_URL');
         return $response;
-
-        // return "RESPONSE";
-
-        // $client = new \GuzzleHttp\Client();
-        // $response = $client->request('POST', env('APP_URL') . '/oauth/token', [
-        //     [
-        //         'form_params' => [
-        //             'username' => $email,
-        //             'password' => $password,
-        //             'grant_type' => 'password',
-        //             'client_id' => env('PASSWORD_GRANT_CLIENT_ID'),
-        //             'client_secret' => env('PASSWORD_GRANT_CLIENT_SECRET'),
-        //             'scope' => '*',
-        //         ],
-        //     ],
-        // ]);
 
     }
 
