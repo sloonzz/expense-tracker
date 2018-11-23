@@ -33,37 +33,41 @@ class AuthController extends Controller
 
         $email = $request->email;
         $password = $request->password;
+        try {
 
-        // $request->request->add([
-        //     'username' => $email,
-        //     'password' => $password,
-        //     'grant_type' => 'password',
-        //     'client_id' => env('PASSWORD_GRANT_CLIENT_ID'),
-        //     'client_secret' => env('PASSWORD_GRANT_CLIENT_SECRET'),
-        //     'scope' => '*',
+            $request->request->add([
+                'username' => $email,
+                'password' => $password,
+                'grant_type' => 'password',
+                'client_id' => env('PASSWORD_GRANT_CLIENT_ID'),
+                'client_secret' => env('PASSWORD_GRANT_CLIENT_SECRET'),
+                'scope' => '*',
+            ]);
+
+            $tokenRequest = Request::create(
+                env('APP_URL') . '/oauth/token',
+                'post'
+            );
+
+            $response = Route::dispatch($tokenRequest);
+
+            return $response;
+        } catch (\Exception $e) {
+            return e;
+        }
+        // $client = new \GuzzleHttp\Client();
+        // $response = $client->request('POST', env('APP_URL') . '/oauth/token', [
+        //     [
+        //         'form_params' => [
+        //             'username' => $email,
+        //             'password' => $password,
+        //             'grant_type' => 'password',
+        //             'client_id' => env('PASSWORD_GRANT_CLIENT_ID'),
+        //             'client_secret' => env('PASSWORD_GRANT_CLIENT_SECRET'),
+        //             'scope' => '*',
+        //         ],
+        //     ],
         // ]);
-
-        // $tokenRequest = Request::create(
-        //     env('APP_URL') . '/oauth/token',
-        //     'post'
-        // );
-
-        // $response = Route::dispatch($tokenRequest);
-        $client = new \GuzzleHttp\Client();
-        $response = $client->request('POST', env('APP_URL') . '/oauth/token', [
-            [
-                'form_params' => [
-                    'username' => $email,
-                    'password' => $password,
-                    'grant_type' => 'password',
-                    'client_id' => env('PASSWORD_GRANT_CLIENT_ID'),
-                    'client_secret' => env('PASSWORD_GRANT_CLIENT_SECRET'),
-                    'scope' => '*',
-                ],
-            ],
-        ]);
-
-        return $response->getBody()->getContents();
 
     }
 
