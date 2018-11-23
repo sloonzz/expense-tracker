@@ -69050,7 +69050,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.loading = true;
       if (expense.date && expense.time) {
         expense.date = expense.date + " " + expense.time;
-      } else if (!expense.date && !expense.time) {
+      } else if (expense.date === "" && expense.time === "") {
         expense.date = moment(new Date()).format('YYYY-MM-DD HH-mm-ss');
       }
       axios.defaults.headers.common.Authorization = "Bearer " + this.$store.state.auth.accessToken;
@@ -69073,6 +69073,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         expense.cost = 0;
       }).catch(function (error) {
         console.log(error.data);
+        _this.$store.commit[('auth/errors', error)];
+        _this.loading = false;
       });
     },
     unedit: function unedit() {

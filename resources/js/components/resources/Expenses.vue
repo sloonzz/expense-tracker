@@ -293,7 +293,7 @@ export default {
       this.loading = true;
       if (expense.date && expense.time) {
         expense.date = expense.date + " " + expense.time;
-      } else if (!expense.date && !expense.time) {
+      } else if (expense.date === "" && expense.time === "") {
         expense.date = moment(new Date()).format('YYYY-MM-DD HH-mm-ss')
       }
       axios.defaults.headers.common.Authorization =
@@ -322,6 +322,8 @@ export default {
         })
         .catch(error => {
           console.log(error.data);
+          this.$store.commit['auth/errors', error];
+          this.loading = false;
         });
     },
     unedit() {
