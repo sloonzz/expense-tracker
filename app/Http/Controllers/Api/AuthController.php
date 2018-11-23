@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 class AuthController extends Controller
 {
@@ -49,8 +50,9 @@ class AuthController extends Controller
             $request->all()
         );
 
-        return env('APP_URL');
         $response = Route::dispatch($tokenRequest);
+
+        return env('APP_URL');
         // return $response;
 
         // return "RESPONSE";
