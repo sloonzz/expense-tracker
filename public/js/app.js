@@ -68891,7 +68891,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       },
       createdExpense: {
         id: 0,
-        date: new Date(),
+        date: new Date().toLocaleDateString(),
         name: "",
         description: "",
         cost: 0,

@@ -124,7 +124,7 @@ export default {
       },
       createdExpense: {
         id: 0,
-        date: new Date(),
+        date: new Date().toLocaleDateString(),
         name: "",
         description: "",
         cost: 0,
