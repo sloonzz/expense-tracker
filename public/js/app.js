@@ -69482,6 +69482,9 @@ var render = function() {
                                 attrs: { type: "date", name: "date" },
                                 domProps: { value: _vm.editableExpense.date },
                                 on: {
+                                  click: function($event) {
+                                    _vm.console.log(_vm.editableExpense.date)
+                                  },
                                   input: function($event) {
                                     if ($event.target.composing) {
                                       return

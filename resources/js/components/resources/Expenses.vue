@@ -75,7 +75,7 @@
                           TODO: Separate this to date and time 
                           
                           -->
-                          <input type="date" name="date" class="form-control" v-model="editableExpense.date">
+                          <input @click="console.log(editableExpense.date)" type="date" name="date" class="form-control" v-model="editableExpense.date">
                         </td>
                         <td>
                           <input type="time" name="time" class="form-control" v-model="editableExpense.time">
