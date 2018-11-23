@@ -250,7 +250,7 @@ export default {
         expense.date = expense.date + " " + expense.time;
       }
       axios.defaults.headers.common.Authorization =
-      "Bearer " + this.$store.state.auth.accessToken;
+        "Bearer " + this.$store.state.auth.accessToken;
       axios
         .put("/api/expenses/" + expense.id, expense)
         .then(response => {
@@ -270,7 +270,7 @@ export default {
       let vm = this;
       if (confirm("You will be deleting this expense. Are you sure?")) {
         axios.defaults.headers.common.Authorization =
-      "Bearer " + this.$store.state.auth.accessToken;
+          "Bearer " + this.$store.state.auth.accessToken;
         axios
           .delete("/api/expenses/" + expense.id)
           .then(response => {
@@ -307,7 +307,7 @@ export default {
             name: expense.name,
             description: expense.description,
             quantity: expense.quantity,
-            cost: expense.cost,
+            cost: expense.cost
           });
           expense.name = "";
           expense.description = "";
