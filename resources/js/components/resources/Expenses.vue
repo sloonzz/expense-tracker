@@ -124,7 +124,7 @@ export default {
       },
       createdExpense: {
         id: 0,
-        date: "",
+        date: new Date(),
         name: "",
         description: "",
         cost: 0,
@@ -337,8 +337,6 @@ export default {
     }
   },
   mounted() {
-    this.createdExpense.date = new Date();
-    this.createExpense.time = new Date();
     this.loading = true;
     axios.defaults.headers.common.Authorization =
       "Bearer " + this.$store.state.auth.accessToken;
