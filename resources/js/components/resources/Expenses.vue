@@ -333,7 +333,7 @@ export default {
     }
   },
   mounted() {
-    console.log(moment(new Date()).format("YYYYMMDD"));
+    console.log(moment(new Date()).format("YYYY-MM-DD"));
     this.loading = true;
     axios.defaults.headers.common.Authorization =
       "Bearer " + this.$store.state.auth.accessToken;
