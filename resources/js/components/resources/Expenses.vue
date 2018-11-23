@@ -75,7 +75,7 @@
                           TODO: Separate this to date and time 
                           
                           -->
-                          <input @click.prevent="log(editableExpense.date)" type="date" name="date" class="form-control" v-model="editableExpense.date">
+                          <input type="date" name="date" class="form-control" v-model="editableExpense.date">
                         </td>
                         <td>
                           <input type="time" name="time" class="form-control" v-model="editableExpense.time">
@@ -143,9 +143,6 @@ export default {
   },
   computed: {},
   methods: {
-    log(expenseDate) {
-      console.log(expenseDate);
-    },
     sortDate() {
       if (!this.sort.date) {
         this.expenses.sort((a, b) => {
@@ -294,11 +291,11 @@ export default {
       this.editing = false;
       let vm = this;
       this.loading = true;
+
       if (expense.date && expense.time) {
         expense.date = expense.date + " " + expense.time;
-      } else if (expense.date === "" && expense.time === "") {
-        expense.date = moment(new Date()).format('YYYY-MM-DD HH-mm-ss')
       }
+
       axios.defaults.headers.common.Authorization =
         "Bearer " + this.$store.state.auth.accessToken;
       axios
@@ -340,6 +337,8 @@ export default {
     }
   },
   mounted() {
+    this.createdExpense.date = new Date();
+    this.createExpense.time = new Date();
     this.loading = true;
     axios.defaults.headers.common.Authorization =
       "Bearer " + this.$store.state.auth.accessToken;

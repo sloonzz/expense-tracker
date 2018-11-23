@@ -68911,9 +68911,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
   computed: {},
   methods: {
-    log: function log(expenseDate) {
-      console.log(expenseDate);
-    },
     sortDate: function sortDate() {
       if (!this.sort.date) {
         this.expenses.sort(function (a, b) {
@@ -69051,11 +69048,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.editing = false;
       var vm = this;
       this.loading = true;
+
       if (expense.date && expense.time) {
         expense.date = expense.date + " " + expense.time;
-      } else if (expense.date === "" && expense.time === "") {
-        expense.date = moment(new Date()).format('YYYY-MM-DD HH-mm-ss');
       }
+
       axios.defaults.headers.common.Authorization = "Bearer " + this.$store.state.auth.accessToken;
       axios.post("/api/expenses", expense).then(function (response) {
         vm.$store.commit("auth/messages", [["Successfully created expense."]]);
@@ -69093,6 +69090,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   mounted: function mounted() {
     var _this2 = this;
 
+    this.createdExpense.date = new Date();
+    this.createExpense.time = new Date();
     this.loading = true;
     axios.defaults.headers.common.Authorization = "Bearer " + this.$store.state.auth.accessToken;
     axios.get("/api/expenses").then(function (response) {
@@ -69485,10 +69484,6 @@ var render = function() {
                                 attrs: { type: "date", name: "date" },
                                 domProps: { value: _vm.editableExpense.date },
                                 on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    _vm.log(_vm.editableExpense.date)
-                                  },
                                   input: function($event) {
                                     if ($event.target.composing) {
                                       return
