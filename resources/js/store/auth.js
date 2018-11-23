@@ -53,6 +53,7 @@ export default {
                             reject(error);
                         });
                 } else {
+                    context.commit("isValidToken", false);
                     reject(error);
                 }
             });
