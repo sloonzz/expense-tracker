@@ -84,6 +84,7 @@ export default {
                         context.commit("isValidToken", false);
                         context.commit("accessToken");
                         context.commit("errors", error.response.data.errors);
+                        context.commit("errors", error.response.data.error);
                         reject(error);
                     });
             });
