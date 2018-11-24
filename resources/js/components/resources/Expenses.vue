@@ -124,7 +124,7 @@ export default {
       },
       createdExpense: {
         id: 0,
-        date: "",
+        date: new Date().toLocaleDateString(),
         name: "",
         description: "",
         cost: 0,
@@ -272,7 +272,7 @@ export default {
         axios.defaults.headers.common.Authorization =
           "Bearer " + this.$store.state.auth.accessToken;
         axios
-          .delete("/api/expenses" + expense.id)
+          .delete("/api/expenses/" + expense.id)
           .then(response => {
             vm.$store.commit("auth/messages", [
               ["Successfully deleted expense."]
@@ -291,9 +291,11 @@ export default {
       this.editing = false;
       let vm = this;
       this.loading = true;
+
       if (expense.date && expense.time) {
         expense.date = expense.date + " " + expense.time;
       }
+
       axios.defaults.headers.common.Authorization =
         "Bearer " + this.$store.state.auth.accessToken;
       axios
@@ -319,7 +321,9 @@ export default {
           expense.cost = 0;
         })
         .catch(error => {
-          console.log(error.data);
+          console.log(error);
+          this.$store.commit('auth/errors', error);
+          this.loading = false;
         });
     },
     unedit() {
