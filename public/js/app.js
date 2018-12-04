@@ -70225,7 +70225,8 @@ if (false) {
 /* harmony default export */ __webpack_exports__["a"] = ({
     namespaced: true,
     state: {
-        expense: {}
+        expense: {},
+        expenses: []
     },
     getters: {},
     mutations: {
@@ -70234,6 +70235,16 @@ if (false) {
         }
     },
     actions: {
+        retrieveExpenses: function retrieveExpenses(context, id) {
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.headers.common.Authorization = "Bearer " + context.rootState.auth.accessToken;
+                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/api/expenses").then(function (response) {
+                    resolve(response);
+                }).catch(function (error) {
+                    reject(error);
+                });
+            });
+        },
         retrieveExpense: function retrieveExpense(context, id) {
             return new Promise(function (resolve, reject) {
                 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/api/expenses/" + id).then(function (response) {
@@ -70244,8 +70255,34 @@ if (false) {
                     reject(error);
                 });
             });
+        },
+        createExpense: function createExpense(context, expense) {
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.headers.common.Authorization = "Bearer " + context.rootState.auth.accessToken;
+                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/api/expenses", expense).then(function (response) {
+                    context.commit("auth/messages", [["Successfully created expense."]]);
+                    resolve(response);
+                }).catch(function (error) {
+                    context.commit('auth/errors', error);
+                    reject(error);
+                });
+            });
+        },
+        deleteExpense: function deleteExpense(context, expense) {
+            this.editing = false;
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.headers.common.Authorization = "Bearer " + context.rootState.auth.accessToken;
+                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete("/api/expenses/" + expense.id).then(function (response) {
+                    context.commit("auth/messages", [["Successfully deleted expense."]]);
+                    resolve(response);
+                }).catch(function (error) {
+                    console.log(error.data);
+                    reject(error);
+                });
+            });
         }
     }
+
 });
 
 /***/ }),
