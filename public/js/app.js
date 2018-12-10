@@ -69090,11 +69090,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -69238,20 +69233,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.$store.commit("auth/messages", null);
     },
     save: function save(expense) {
+      var _this = this;
+
       this.editing = false;
       var vm = this;
+      this.loading = true;
 
       if (expense.date && expense.time) {
         expense.date = expense.date + " " + expense.time;
       }
       axios.defaults.headers.common.Authorization = "Bearer " + this.$store.state.auth.accessToken;
-      axios.put("/api/expenses" + expense.id, expense).then(function (response) {
+      axios.put("/api/expenses/" + expense.id, expense).then(function (response) {
         vm.$store.commit("auth/messages", [["Successfully edited expense."]]);
+        _this.loading = false;
         vm.$set(vm.expenses, vm.expenses.findIndex(function (item) {
           return item.id == expense.id;
         }), expense);
       }).catch(function (error) {
         console.log(error.data);
+        _this.loading = false;
       });
     },
     deleteExpense: function deleteExpense(expense) {
@@ -69270,7 +69270,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
     },
     createExpense: function createExpense(expense) {
-      var _this = this;
+      var _this2 = this;
 
       this.editing = false;
       var vm = this;
@@ -69292,7 +69292,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           quantity: expense.quantity,
           cost: expense.cost
         });
-        _this.loading = false;
+        _this2.loading = false;
         expense.name = "";
         expense.description = "";
         expense.time = "";
@@ -69300,8 +69300,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         expense.cost = 0;
       }).catch(function (error) {
         console.log(error);
-        _this.$store.commit("auth/errors", [[error.response.data.message]]);
-        _this.loading = false;
+        _this2.$store.commit("auth/errors", [[error.response.data.message]]);
+        _this2.loading = false;
       });
     },
     unedit: function unedit() {
@@ -69314,21 +69314,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       return dateTime.split(" ")[0];
     },
     getAllExpenses: function getAllExpenses() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.loading = true;
       axios.defaults.headers.common.Authorization = "Bearer " + this.$store.state.auth.accessToken;
       axios.get("/api/expenses").then(function (response) {
-        _this2.expenses = response.data.data;
-        _this2.loading = false;
-        _this2.$store.commit("expenses/hasLoadedExpenses", true);
+        _this3.expenses = response.data.data;
+        _this3.$store.state.expenses.expenses = response.data.data;
+        _this3.$store.commit("expenses/hasLoadedExpenses", true);
+        _this3.loading = false;
       }).catch(function (error) {
-        _this2.loading = false;
+        _this3.loading = false;
       });
     }
   },
   mounted: function mounted() {
-    this.getAllExpenses();
+    if (this.$store.state.expenses.hasLoadedExpenses) {
+      this.expenses = this.$store.state.expenses.expenses;
+    } else {
+      this.getAllExpenses();
+    }
   }
 });
 

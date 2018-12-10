@@ -101,11 +101,6 @@
 
               <template v-else-if="editing">
                 <td>
-                  <!-- 
-                          
-                          TODO: Separate this to date and time 
-                          
-                  -->
                   <input
                     type="date"
                     name="date"
@@ -315,6 +310,7 @@ export default {
     save(expense) {
       this.editing = false;
       let vm = this;
+      this.loading = true;
 
       if (expense.date && expense.time) {
         expense.date = expense.date + " " + expense.time;
@@ -322,9 +318,10 @@ export default {
       axios.defaults.headers.common.Authorization =
         "Bearer " + this.$store.state.auth.accessToken;
       axios
-        .put("/api/expenses" + expense.id, expense)
+        .put("/api/expenses/" + expense.id, expense)
         .then(response => {
           vm.$store.commit("auth/messages", [["Successfully edited expense."]]);
+          this.loading = false;
           vm.$set(
             vm.expenses,
             vm.expenses.findIndex(item => item.id == expense.id),
@@ -333,6 +330,7 @@ export default {
         })
         .catch(error => {
           console.log(error.data);
+          this.loading = false;
         });
     },
     deleteExpense(expense) {
@@ -413,8 +411,9 @@ export default {
         .get("/api/expenses")
         .then(response => {
           this.expenses = response.data.data;
-          this.loading = false;
+          this.$store.state.expenses.expenses = response.data.data;
           this.$store.commit("expenses/hasLoadedExpenses", true);
+          this.loading = false;
         })
         .catch(error => {
           this.loading = false;
@@ -422,7 +421,11 @@ export default {
     }
   },
   mounted() {
-    this.getAllExpenses();
+    if (this.$store.state.expenses.hasLoadedExpenses) {
+      this.expenses = this.$store.state.expenses.expenses;
+    } else {
+      this.getAllExpenses();
+    }
   }
 };
 </script>
