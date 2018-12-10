@@ -14,6 +14,7 @@ import Vuex from "vuex";
 import routes from "./routes";
 import StoreData from "./store/store";
 import Home from "./views/Home.vue";
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
 Vue.use(VueRouter);
 Vue.use(Vuex);

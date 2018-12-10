@@ -4,16 +4,20 @@ export default {
     namespaced: true,
     state: {
         expense: {},
-        expenses: []
+        expenses: [],
+        hasLoadedExpenses: false
     },
     getters: {},
     mutations: {
-        expense: function (state, expense) {
+        expense: function(state, expense) {
             state.expense = expense;
+        },
+        hasLoadedExpenses: function(state, hasLoadedExpenses) {
+            state.hasLoadedExpenses = hasLoadedExpenses;
         }
     },
     actions: {
-        retrieveExpenses: function (context, id) {
+        retrieveExpenses: function(context, id) {
             return new Promise((resolve, reject) => {
                 axios.defaults.headers.common.Authorization =
                     "Bearer " + context.rootState.auth.accessToken;
@@ -27,7 +31,7 @@ export default {
                     });
             });
         },
-        retrieveExpense: function (context, id) {
+        retrieveExpense: function(context, id) {
             return new Promise((resolve, reject) => {
                 axios
                     .get("/api/expenses/" + id)
@@ -41,7 +45,7 @@ export default {
                     });
             });
         },
-        createExpense: function (context, expense) {
+        createExpense: function(context, expense) {
             return new Promise((resolve, reject) => {
                 axios.defaults.headers.common.Authorization =
                     "Bearer " + context.rootState.auth.accessToken;
@@ -54,7 +58,7 @@ export default {
                         resolve(response);
                     })
                     .catch(error => {
-                        context.commit('auth/errors', error);
+                        context.commit("auth/errors", error);
                         reject(error);
                     });
             });
@@ -77,8 +81,6 @@ export default {
                         reject(error);
                     });
             });
-
-        },
-    },
-
+        }
+    }
 };

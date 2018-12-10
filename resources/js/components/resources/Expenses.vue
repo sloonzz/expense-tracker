@@ -1,117 +1,187 @@
 <template>
+  <div>
+    <pulse-loader id="spinner" :loading="loading"></pulse-loader>
     <div class="container" v-if="!loading">
       <h2>Create new expense:</h2>
-        <form>
-          <div class="form-group">
-            <label for="date">Date</label>
-            <input type="date" name="date" class="form-control" v-model="createdExpense.date">
-          </div>
-          <div class="form-group">
-            <label for="time">Time</label>
-            <input type="time" name="time" class="form-control" v-model="createdExpense.time">
-          </div>
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" name="name" class="form-control" placeholder="name" v-model="createdExpense.name">
-          </div>
-          <div class="form-group">
-            <label for="description">Description</label>
-            <textarea class="form-control" placeholder="description" name="description" v-model="createdExpense.description"></textarea>
-          </div>
-          <div class="form-group">
-            <label for="cost">Cost</label>
-            <input type="number" name="cost" class="form-control" placeholder="0" v-model="createdExpense.cost">
-          </div>
-          <div class="form-group">
-            <label for="quantity">Quantity</label>
-            <input type="number" name="quantity" class="form-control" placeholder="0" v-model="createdExpense.quantity">
-          </div>
-          <button @click.prevent="createExpense(createdExpense)" class="btn btn-primary">CREATE</button>
-        </form>
-        <br/>
+      <form>
+        <div class="form-group">
+          <label for="date">Date</label>
+          <input type="date" name="date" class="form-control" v-model="createdExpense.date">
+        </div>
+        <div class="form-group">
+          <label for="time">Time</label>
+          <input type="time" name="time" class="form-control" v-model="createdExpense.time">
+        </div>
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input
+            type="text"
+            name="name"
+            class="form-control"
+            placeholder="name"
+            v-model="createdExpense.name"
+          >
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea
+            class="form-control"
+            placeholder="description"
+            name="description"
+            v-model="createdExpense.description"
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="cost">Cost</label>
+          <input
+            type="number"
+            name="cost"
+            class="form-control"
+            placeholder="0"
+            v-model="createdExpense.cost"
+          >
+        </div>
+        <div class="form-group">
+          <label for="quantity">Quantity</label>
+          <input
+            type="number"
+            name="quantity"
+            class="form-control"
+            placeholder="0"
+            v-model="createdExpense.quantity"
+          >
+        </div>
+        <button @click.prevent="createExpense(createdExpense)" class="btn btn-primary">CREATE</button>
+      </form>
+      <br>
 
-        <h2>Expenses:</h2>
-        <div class="table-responsive">
-          <table class="table table-striped">
-              <thead>
-                  <tr>
-                      <th @click.prevent="sortDate" scope="col">Date</th>
-                      <th @click.prevent="sortDate" scope="col">Time</th>
-                      <th @click.prevent="sortName" scope="col">Name</th>
-                      <th @click.prevent="sortDescription" scope="col">Description</th>
-                      <th @click.prevent="sortCost" scope="col">Cost</th>
-                      <th @click.prevent="sortQuantity" scope="col">Quantity</th>
-                      <th scope="col"></th>
-                      <th scope="col"></th>
-                      <th></th>
-                      <th></th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr v-for="expense in this.expenses" :key="expense.id">
-                      <template v-if="editableID !== expense.id || !editing">
-                        <td>{{getDate(expense.date)}}</td>
-                        <td>{{getTime(expense.date)}}</td>
-                        <td>{{expense.name}}</td>
-                        <td>{{expense.description}}</td>
-                        <td>{{expense.cost}}</td>
-                        <td>{{expense.quantity}}</td>
-                        <td>
-                          <router-link :to="{ name: 'expense', params: { id: expense.id } }" class="btn btn-sm btn-secondary">DETAILS</router-link>
-                        </td>
-                        <td>
-                          <button class="btn btn-sm btn-primary" @click.prevent="edit(expense)">EDIT</button>
-                        </td>
-                        <td>
-                          <button class="btn btn-sm btn-danger" @click.prevent="deleteExpense(expense)">DELETE</button>                        
-                        </td>
-                        <td></td>
-                      </template>
+      <h2>Expenses:</h2>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th @click.prevent="sortDate" scope="col">Date</th>
+              <th @click.prevent="sortDate" scope="col">Time</th>
+              <th @click.prevent="sortName" scope="col">Name</th>
+              <th @click.prevent="sortDescription" scope="col">Description</th>
+              <th @click.prevent="sortCost" scope="col">Cost</th>
+              <th @click.prevent="sortQuantity" scope="col">Quantity</th>
+              <th scope="col"></th>
+              <th scope="col"></th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="expense in this.expenses" :key="expense.id">
+              <template v-if="editableID !== expense.id || !editing">
+                <td>{{getDate(expense.date)}}</td>
+                <td>{{getTime(expense.date)}}</td>
+                <td>{{expense.name}}</td>
+                <td>{{expense.description}}</td>
+                <td>{{expense.cost}}</td>
+                <td>{{expense.quantity}}</td>
+                <td>
+                  <router-link
+                    :to="{ name: 'expense', params: { id: expense.id } }"
+                    class="btn btn-sm btn-secondary"
+                  >DETAILS</router-link>
+                </td>
+                <td>
+                  <button class="btn btn-sm btn-primary" @click.prevent="edit(expense)">EDIT</button>
+                </td>
+                <td>
+                  <button
+                    class="btn btn-sm btn-danger"
+                    @click.prevent="deleteExpense(expense)"
+                  >DELETE</button>
+                </td>
+                <td></td>
+              </template>
 
-                      <template v-else-if="editing">
-                        <td>
-                        <!-- 
+              <template v-else-if="editing">
+                <td>
+                  <!-- 
                           
                           TODO: Separate this to date and time 
                           
-                          -->
-                          <input type="date" name="date" class="form-control" v-model="editableExpense.date">
-                        </td>
-                        <td>
-                          <input type="time" name="time" class="form-control" v-model="editableExpense.time">
-                        </td>
-                        <td>
-                          <textarea class="form-control" cols="5" rows="4" v-model="editableExpense.name"></textarea>
-                        </td>
-                        <td>
-                          <textarea class="form-control" cols="40" rows="4" v-model="editableExpense.description"></textarea>
-                        </td>
-                        <td>
-                          <input type="number" name="cost" class="form-control" v-model="editableExpense.cost">
-                        </td>
-                        <td>
-                          <input type="number" name="quantity" class="form-control" v-model="editableExpense.quantity">
-                        </td>
-                        <td><router-link v-if="!loading" :to="{ name: 'expense', params: { id: expense.id } }" class="btn btn-sm btn-dark">DETAILS</router-link></td>
-                        <td><button @click.prevent="unedit()" class="btn btn-sm btn-secondary">EXIT EDITING</button></td>
-                        <td>
-                          <button @click.prevent="save(editableExpense)" class="btn btn-sm btn-primary">SAVE</button>
-                        </td>
-                        <td></td>
-                      </template>
-                  </tr>
-              </tbody>
-          </table>
-        </div>
+                  -->
+                  <input
+                    type="date"
+                    name="date"
+                    class="form-control"
+                    v-model="editableExpense.date"
+                  >
+                </td>
+                <td>
+                  <input
+                    type="time"
+                    name="time"
+                    class="form-control"
+                    v-model="editableExpense.time"
+                  >
+                </td>
+                <td>
+                  <textarea class="form-control" cols="5" rows="4" v-model="editableExpense.name"></textarea>
+                </td>
+                <td>
+                  <textarea
+                    class="form-control"
+                    cols="40"
+                    rows="4"
+                    v-model="editableExpense.description"
+                  ></textarea>
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    name="cost"
+                    class="form-control"
+                    v-model="editableExpense.cost"
+                  >
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    name="quantity"
+                    class="form-control"
+                    v-model="editableExpense.quantity"
+                  >
+                </td>
+                <td>
+                  <router-link
+                    v-if="!loading"
+                    :to="{ name: 'expense', params: { id: expense.id } }"
+                    class="btn btn-sm btn-dark"
+                  >DETAILS</router-link>
+                </td>
+                <td>
+                  <button @click.prevent="unedit()" class="btn btn-sm btn-secondary">EXIT EDITING</button>
+                </td>
+                <td>
+                  <button @click.prevent="save(editableExpense)" class="btn btn-sm btn-primary">SAVE</button>
+                </td>
+                <td></td>
+              </template>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 export default {
+  components: {
+    PulseLoader
+  },
   data() {
     return {
       loading: false,
       editing: false,
+      hasLoadedExpenses: false,
       expenses: [],
       editableExpense: {
         id: 0,
@@ -322,7 +392,7 @@ export default {
         })
         .catch(error => {
           console.log(error);
-          this.$store.commit('auth/errors', error);
+          this.$store.commit("auth/errors", [[error.response.data.message]]);
           this.loading = false;
         });
     },
@@ -334,19 +404,26 @@ export default {
     },
     getDate(dateTime) {
       return dateTime.split(" ")[0];
+    },
+    getAllExpenses() {
+      this.loading = true;
+      axios.defaults.headers.common.Authorization =
+        "Bearer " + this.$store.state.auth.accessToken;
+      axios
+        .get("/api/expenses")
+        .then(response => {
+          this.expenses = response.data.data;
+          this.loading = false;
+          this.$store.commit("expenses/hasLoadedExpenses", true);
+        })
+        .catch(error => {
+          this.loading = false;
+        });
     }
   },
   mounted() {
-    this.loading = true;
-    axios.defaults.headers.common.Authorization =
-      "Bearer " + this.$store.state.auth.accessToken;
-    axios
-      .get("/api/expenses")
-      .then(response => {
-        this.expenses = response.data.data;
-        this.loading = false;
-      })
-      .catch(error => {});
+    this.getAllExpenses();
   }
 };
 </script>
+

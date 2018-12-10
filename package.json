@@ -22,6 +22,7 @@
     "dependencies": {
         "moment": "^2.22.2",
         "vue-router": "^3.0.2",
+        "vue-spinner": "^1.0.3",
         "vuex": "^3.0.1"
     }
 }
