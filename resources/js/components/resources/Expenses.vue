@@ -7,6 +7,7 @@
         <div class="form-group">
           <label for="date">Date</label>
           <datetime
+            use12-hour
             type="datetime"
             name="date"
             input-class="form-control"
@@ -85,8 +86,8 @@
           <tbody>
             <tr v-for="expense in this.expenses" :key="expense.id">
               <template v-if="editableID !== expense.id || !editing">
-                <td>{{getDate(expense.date)}}</td>
-                <td>{{getTime(expense.date)}}</td>
+                <td>{{this.moment(getDate(expense.date)).format('MMMM Do YYYY')}}</td>
+                <td>{{this.moment(expense.date).format('h:mm a')}}</td>
                 <td>{{expense.name}}</td>
                 <td>{{expense.description}}</td>
                 <td>{{expense.cost}}</td>
@@ -325,6 +326,7 @@ export default {
       if (expense.date && expense.time) {
         expense.date = expense.date + " " + expense.time;
       }
+
       axios.defaults.headers.common.Authorization =
         "Bearer " + this.$store.state.auth.accessToken;
       axios
@@ -369,12 +371,8 @@ export default {
       this.editing = false;
       let vm = this;
       this.loading = true;
-      console.log(expense.date);
 
-      if (expense.date && expense.time) {
-        expense.date = expense.date + " " + expense.time;
-      }
-      // expense.date = new Date(expense.date);
+      expense.date = window.moment(expense.date).format("YYYY-MM-DD HH:mm:ss");
 
       axios.defaults.headers.common.Authorization =
         "Bearer " + this.$store.state.auth.accessToken;
@@ -407,7 +405,6 @@ export default {
           } else if (error.request) {
             this.$store.commit("auth/errors", error.request.data.errors);
           }
-          // this.$store.commit("auth/errors", error.response.data.errors);
           this.loading = false;
         });
     },

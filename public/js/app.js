@@ -41777,6 +41777,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 __webpack_require__(144);
 
 window.Vue = __webpack_require__(141);
+window.moment = __webpack_require__(0);
 
 
 
@@ -69316,6 +69317,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -69468,6 +69470,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       if (expense.date && expense.time) {
         expense.date = expense.date + " " + expense.time;
       }
+
       axios.defaults.headers.common.Authorization = "Bearer " + this.$store.state.auth.accessToken;
       axios.put("/api/expenses/" + expense.id, expense).then(function (response) {
         vm.$store.commit("auth/messages", [["Successfully edited expense."]]);
@@ -69501,12 +69504,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.editing = false;
       var vm = this;
       this.loading = true;
-      console.log(expense.date);
 
-      if (expense.date && expense.time) {
-        expense.date = expense.date + " " + expense.time;
-      }
-      // expense.date = new Date(expense.date);
+      expense.date = window.moment(expense.date).format("YYYY-MM-DD HH:mm:ss");
 
       axios.defaults.headers.common.Authorization = "Bearer " + this.$store.state.auth.accessToken;
       axios.post("/api/expenses", expense).then(function (response) {
@@ -69533,7 +69532,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         } else if (error.request) {
           _this2.$store.commit("auth/errors", error.request.data.errors);
         }
-        // this.$store.commit("auth/errors", error.response.data.errors);
         _this2.loading = false;
       });
     },
@@ -78241,6 +78239,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("datetime", {
                     attrs: {
+                      "use12-hour": "",
                       type: "datetime",
                       name: "date",
                       "input-class": "form-control"
@@ -78514,11 +78513,21 @@ var render = function() {
                         _vm.editableID !== expense.id || !_vm.editing
                           ? [
                               _c("td", [
-                                _vm._v(_vm._s(_vm.getDate(expense.date)))
+                                _vm._v(
+                                  _vm._s(
+                                    this.moment(
+                                      _vm.getDate(expense.date)
+                                    ).format("MMMM Do YYYY")
+                                  )
+                                )
                               ]),
                               _vm._v(" "),
                               _c("td", [
-                                _vm._v(_vm._s(_vm.getTime(expense.date)))
+                                _vm._v(
+                                  _vm._s(
+                                    this.moment(expense.date).format("h:mm a")
+                                  )
+                                )
                               ]),
                               _vm._v(" "),
                               _c("td", [_vm._v(_vm._s(expense.name))]),
