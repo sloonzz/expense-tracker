@@ -7,11 +7,14 @@
         <div class="form-group">
           <label for="date">Date</label>
           <datetime
+            :placeholder="createdExpense.date"
+            id="datetime"
             use12-hour
             type="datetime"
-            name="date"
             input-class="form-control"
+            name="date"
             v-model="createdExpense.date"
+            auto
           ></datetime>
         </div>
         <!-- <div class="form-group">
@@ -28,7 +31,7 @@
             type="text"
             name="name"
             class="form-control"
-            placeholder="name"
+            placeholder="Expense Name"
             v-model="createdExpense.name"
           >
         </div>
@@ -36,7 +39,7 @@
           <label for="description">Description</label>
           <textarea
             class="form-control"
-            placeholder="description"
+            placeholder="Description"
             name="description"
             v-model="createdExpense.description"
           ></textarea>
@@ -47,7 +50,7 @@
             type="number"
             name="cost"
             class="form-control"
-            placeholder="0"
+            placeholder="1"
             v-model="createdExpense.cost"
           >
         </div>
@@ -57,7 +60,7 @@
             type="number"
             name="quantity"
             class="form-control"
-            placeholder="0"
+            placeholder="1"
             v-model="createdExpense.quantity"
           >
         </div>
@@ -200,7 +203,7 @@ export default {
       },
       createdExpense: {
         id: 0,
-        date: new Date().toLocaleDateString(),
+        date: moment().format(),
         name: "",
         description: "",
         cost: 0,
@@ -371,7 +374,7 @@ export default {
       this.editing = false;
       let vm = this;
       this.loading = true;
-
+      let oldDate = expense.date;
       expense.date = window.moment(expense.date).format("YYYY-MM-DD HH:mm:ss");
 
       axios.defaults.headers.common.Authorization =
@@ -382,9 +385,8 @@ export default {
           vm.$store.commit("auth/messages", [
             ["Successfully created expense."]
           ]);
-          expense.id = response.data.id;
           vm.expenses.push({
-            id: expense.id,
+            id: response.data.data.id,
             date: expense.date,
             name: expense.name,
             description: expense.description,
@@ -394,7 +396,7 @@ export default {
           this.loading = false;
           expense.name = "";
           expense.description = "";
-          expense.time = "";
+          expense.date = moment().format();
           expense.quantity = 0;
           expense.cost = 0;
         })
@@ -406,6 +408,7 @@ export default {
             this.$store.commit("auth/errors", error.request.data.errors);
           }
           this.loading = false;
+          expense.date = oldDate;
         });
     },
     unedit() {
@@ -428,6 +431,8 @@ export default {
           this.$store.state.expenses.expenses = response.data.data;
           this.$store.commit("expenses/hasLoadedExpenses", true);
           this.loading = false;
+          this.sortDate();
+          this.sortDate();
         })
         .catch(error => {
           this.loading = false;

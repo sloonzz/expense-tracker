@@ -69318,6 +69318,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -69341,7 +69344,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       },
       createdExpense: {
         id: 0,
-        date: new Date().toLocaleDateString(),
+        date: moment().format(),
         name: "",
         description: "",
         cost: 0,
@@ -69504,15 +69507,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.editing = false;
       var vm = this;
       this.loading = true;
-
+      var oldDate = expense.date;
       expense.date = window.moment(expense.date).format("YYYY-MM-DD HH:mm:ss");
 
       axios.defaults.headers.common.Authorization = "Bearer " + this.$store.state.auth.accessToken;
       axios.post("/api/expenses", expense).then(function (response) {
         vm.$store.commit("auth/messages", [["Successfully created expense."]]);
-        expense.id = response.data.id;
         vm.expenses.push({
-          id: expense.id,
+          id: response.data.data.id,
           date: expense.date,
           name: expense.name,
           description: expense.description,
@@ -69522,7 +69524,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         _this2.loading = false;
         expense.name = "";
         expense.description = "";
-        expense.time = "";
+        expense.date = moment().format();
         expense.quantity = 0;
         expense.cost = 0;
       }).catch(function (error) {
@@ -69533,6 +69535,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           _this2.$store.commit("auth/errors", error.request.data.errors);
         }
         _this2.loading = false;
+        expense.date = oldDate;
       });
     },
     unedit: function unedit() {
@@ -69554,6 +69557,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         _this3.$store.state.expenses.expenses = response.data.data;
         _this3.$store.commit("expenses/hasLoadedExpenses", true);
         _this3.loading = false;
+        _this3.sortDate();
+        _this3.sortDate();
       }).catch(function (error) {
         _this3.loading = false;
       });
@@ -78239,10 +78244,13 @@ var render = function() {
                   _vm._v(" "),
                   _c("datetime", {
                     attrs: {
+                      placeholder: _vm.createdExpense.date,
+                      id: "datetime",
                       "use12-hour": "",
                       type: "datetime",
+                      "input-class": "form-control",
                       name: "date",
-                      "input-class": "form-control"
+                      auto: ""
                     },
                     model: {
                       value: _vm.createdExpense.date,
@@ -78269,7 +78277,11 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-control",
-                  attrs: { type: "text", name: "name", placeholder: "name" },
+                  attrs: {
+                    type: "text",
+                    name: "name",
+                    placeholder: "Expense Name"
+                  },
                   domProps: { value: _vm.createdExpense.name },
                   on: {
                     input: function($event) {
@@ -78297,7 +78309,7 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-control",
-                  attrs: { placeholder: "description", name: "description" },
+                  attrs: { placeholder: "Description", name: "description" },
                   domProps: { value: _vm.createdExpense.description },
                   on: {
                     input: function($event) {
@@ -78327,7 +78339,7 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-control",
-                  attrs: { type: "number", name: "cost", placeholder: "0" },
+                  attrs: { type: "number", name: "cost", placeholder: "1" },
                   domProps: { value: _vm.createdExpense.cost },
                   on: {
                     input: function($event) {
@@ -78355,7 +78367,7 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-control",
-                  attrs: { type: "number", name: "quantity", placeholder: "0" },
+                  attrs: { type: "number", name: "quantity", placeholder: "1" },
                   domProps: { value: _vm.createdExpense.quantity },
                   on: {
                     input: function($event) {
