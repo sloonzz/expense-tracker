@@ -83,7 +83,14 @@ export default {
                         localStorage.removeItem("access_token");
                         context.commit("isValidToken", false);
                         context.commit("accessToken");
-                        context.commit("errors", [[error.response.data.error]]);
+                        if (error.response) {
+                            context.commit(
+                                "errors",
+                                error.response.data.errors
+                            );
+                        } else if (error.request) {
+                            context.commit("errors", error.request.data.errors);
+                        }
                         reject(error);
                     });
             });
@@ -103,7 +110,14 @@ export default {
                         resolve(response);
                     })
                     .catch(error => {
-                        context.commit("errors", error.response.data.errors);
+                        if (error.response) {
+                            context.commit(
+                                "errors",
+                                error.response.data.errors
+                            );
+                        } else if (error.request) {
+                            context.commit("errors", error.request.data.errors);
+                        }
                         context.commit("isValidToken", false);
                         localStorage.removeItem("access_token");
                         reject(error);

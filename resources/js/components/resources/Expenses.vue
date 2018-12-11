@@ -6,12 +6,21 @@
       <form>
         <div class="form-group">
           <label for="date">Date</label>
-          <input type="date" name="date" class="form-control" v-model="createdExpense.date">
+          <datetime
+            type="datetime"
+            name="date"
+            input-class="form-control"
+            v-model="createdExpense.date"
+          ></datetime>
         </div>
-        <div class="form-group">
+        <!-- <div class="form-group">
+          <label for="date">Date</label>
+          <input type="date" name="date" class="form-control" v-model="createdExpense.date">
+        </div>-->
+        <!-- <div class="form-group">
           <label for="time">Time</label>
           <input type="time" name="time" class="form-control" v-model="createdExpense.time">
-        </div>
+        </div>-->
         <div class="form-group">
           <label for="name">Name</label>
           <input
@@ -52,6 +61,7 @@
           >
         </div>
         <button @click.prevent="createExpense(createdExpense)" class="btn btn-primary">CREATE</button>
+        <button @click.prevent="getAllExpenses()" class="btn btn-secondary float-right">Refresh</button>
       </form>
       <br>
 
@@ -359,10 +369,12 @@ export default {
       this.editing = false;
       let vm = this;
       this.loading = true;
+      console.log(expense.date);
 
       if (expense.date && expense.time) {
         expense.date = expense.date + " " + expense.time;
       }
+      // expense.date = new Date(expense.date);
 
       axios.defaults.headers.common.Authorization =
         "Bearer " + this.$store.state.auth.accessToken;
@@ -390,7 +402,12 @@ export default {
         })
         .catch(error => {
           console.log(error);
-          this.$store.commit("auth/errors", [[error.response.data.message]]);
+          if (error.response) {
+            this.$store.commit("auth/errors", error.response.data.errors);
+          } else if (error.request) {
+            this.$store.commit("auth/errors", error.request.data.errors);
+          }
+          // this.$store.commit("auth/errors", error.response.data.errors);
           this.loading = false;
         });
     },

@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-    <h1
-      v-if="this.$store.getters['auth/isLoggedIn']"
-    >Welcome, {{ this.$store.state.auth.user.name }}.</h1>
+    <div v-if="this.$store.getters['auth/isLoggedIn']">
+      <h1>Welcome, {{ this.$store.state.auth.user.name }}.</h1>
+    </div>
     <div v-else>
       <h1>Create an account now!</h1>
       <router-link to="/register" class="btn btn-primary">Register</router-link>

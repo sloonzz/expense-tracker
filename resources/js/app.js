@@ -14,10 +14,13 @@ import Vuex from "vuex";
 import routes from "./routes";
 import StoreData from "./store/store";
 import Home from "./views/Home.vue";
-import PulseLoader from "vue-spinner/src/PulseLoader.vue";
+import { Datetime } from "vue-datetime";
+
+import "vue-datetime/dist/vue-datetime.css";
 
 Vue.use(VueRouter);
 Vue.use(Vuex);
+Vue.use(Datetime);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -27,6 +30,7 @@ Vue.use(Vuex);
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue'));
 // Vue.component('Master', require('./components/main/Master.vue'));
+Vue.component("datetime", Datetime);
 
 const router = new VueRouter({
     routes,
