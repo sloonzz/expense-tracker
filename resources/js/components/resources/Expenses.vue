@@ -1,9 +1,21 @@
 <template>
   <div>
     <pulse-loader id="spinner" :loading="loading"></pulse-loader>
-    <div class="container" v-if="!loading">
-      <h2>Create new expense:</h2>
-      <form>
+    <div class="container-fluid" v-if="!loading">
+      <div data-toggle="collapse" data-target="#createExpensesForm">
+        <h2
+          data-toggle="collapse"
+          data-target="#createExpensesForm"
+          style="display:inline-block"
+        >Create new expense:</h2>
+        <button
+          class="btn float-right"
+          data-toggle="collapse"
+          data-target="#createExpensesForm"
+          style="display:inline-block"
+        >Expand</button>
+      </div>
+      <form class="collapse" id="createExpensesForm">
         <div class="form-group">
           <label for="date">Date</label>
           <datetime
@@ -17,14 +29,6 @@
             auto
           ></datetime>
         </div>
-        <!-- <div class="form-group">
-          <label for="date">Date</label>
-          <input type="date" name="date" class="form-control" v-model="createdExpense.date">
-        </div>-->
-        <!-- <div class="form-group">
-          <label for="time">Time</label>
-          <input type="time" name="time" class="form-control" v-model="createdExpense.time">
-        </div>-->
         <div class="form-group">
           <label for="name">Name</label>
           <input
@@ -71,7 +75,7 @@
 
       <h2>Expenses:</h2>
       <div class="table-responsive">
-        <table class="table table-striped">
+        <table class="table table-hover">
           <thead>
             <tr>
               <th @click.prevent="sortDate" scope="col">Date</th>
@@ -80,99 +84,124 @@
               <th @click.prevent="sortDescription" scope="col">Description</th>
               <th @click.prevent="sortCost" scope="col">Cost</th>
               <th @click.prevent="sortQuantity" scope="col">Quantity</th>
-              <th scope="col"></th>
-              <th scope="col"></th>
-              <th></th>
-              <th></th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="expense in this.expenses" :key="expense.id">
-              <template v-if="editableID !== expense.id || !editing">
-                <td>{{this.moment(getDate(expense.date)).format('MMMM Do YYYY')}}</td>
-                <td>{{this.moment(expense.date).format('h:mm a')}}</td>
-                <td>{{expense.name}}</td>
-                <td>{{expense.description}}</td>
-                <td>{{expense.cost}}</td>
-                <td>{{expense.quantity}}</td>
-                <td>
-                  <router-link
-                    :to="{ name: 'expense', params: { id: expense.id } }"
-                    class="btn btn-sm btn-secondary"
-                  >DETAILS</router-link>
-                </td>
-                <td>
-                  <button class="btn btn-sm btn-primary" @click.prevent="edit(expense)">EDIT</button>
-                </td>
-                <td>
-                  <button
-                    class="btn btn-sm btn-danger"
-                    @click.prevent="deleteExpense(expense)"
-                  >DELETE</button>
-                </td>
-                <td></td>
-              </template>
-
-              <template v-else-if="editing">
-                <td>
-                  <input
-                    type="date"
-                    name="date"
-                    class="form-control"
-                    v-model="editableExpense.date"
-                  >
-                </td>
-                <td>
-                  <input
-                    type="time"
-                    name="time"
-                    class="form-control"
-                    v-model="editableExpense.time"
-                  >
-                </td>
-                <td>
-                  <textarea class="form-control" cols="5" rows="4" v-model="editableExpense.name"></textarea>
-                </td>
-                <td>
-                  <textarea
-                    class="form-control"
-                    cols="40"
-                    rows="4"
-                    v-model="editableExpense.description"
-                  ></textarea>
-                </td>
-                <td>
-                  <input
-                    type="number"
-                    name="cost"
-                    class="form-control"
-                    v-model="editableExpense.cost"
-                  >
-                </td>
-                <td>
-                  <input
-                    type="number"
-                    name="quantity"
-                    class="form-control"
-                    v-model="editableExpense.quantity"
-                  >
-                </td>
-                <td>
-                  <router-link
-                    v-if="!loading"
-                    :to="{ name: 'expense', params: { id: expense.id } }"
-                    class="btn btn-sm btn-dark"
-                  >DETAILS</router-link>
-                </td>
-                <td>
-                  <button @click.prevent="unedit()" class="btn btn-sm btn-secondary">EXIT EDITING</button>
-                </td>
-                <td>
-                  <button @click.prevent="save(editableExpense)" class="btn btn-sm btn-primary">SAVE</button>
-                </td>
-                <td></td>
-              </template>
-            </tr>
+            <template v-for="expense in this.expenses">
+              <tr @click="expand('expensesDetails' + expense.id)" :key="expense.id">
+                <!-- IF NOT EDITING -->
+                <template v-if="editableID !== expense.id || !editing">
+                  <td>{{this.moment(getDate(expense.date)).format('MMMM Do YYYY')}}</td>
+                  <td>{{this.moment(expense.date).format('h:mm a')}}</td>
+                  <td>{{expense.name}}</td>
+                  <td>{{expense.description}}</td>
+                  <td>{{expense.cost}}</td>
+                  <td>{{expense.quantity}}</td>
+                </template>
+                <!-- EDITING -->
+                <template v-else-if="editing">
+                  <td>
+                    <input
+                      type="date"
+                      name="date"
+                      class="form-control"
+                      v-model="editableExpense.date"
+                    >
+                  </td>
+                  <td>
+                    <input
+                      type="time"
+                      name="time"
+                      class="form-control"
+                      v-model="editableExpense.time"
+                    >
+                  </td>
+                  <td>
+                    <textarea class="form-control" cols="5" rows="4" v-model="editableExpense.name"></textarea>
+                  </td>
+                  <td>
+                    <textarea
+                      class="form-control"
+                      cols="40"
+                      rows="4"
+                      v-model="editableExpense.description"
+                    ></textarea>
+                  </td>
+                  <td>
+                    <input
+                      type="number"
+                      name="cost"
+                      class="form-control"
+                      v-model="editableExpense.cost"
+                    >
+                  </td>
+                  <td>
+                    <input
+                      type="number"
+                      name="quantity"
+                      class="form-control"
+                      v-model="editableExpense.quantity"
+                    >
+                  </td>
+                </template>
+              </tr>
+              <!-- COLLAPSING ROW -->
+              <tr
+                class="custom-invisible custom-toggleable"
+                :id="'expensesDetails' + expense.id"
+                :key="expense.id + expense.name"
+              >
+                <!-- IF NOT EDITING -->
+                <template v-if="editableID !== expense.id || !editing">
+                  <td>
+                    <router-link
+                      :id="'expensesDetails' + expense.id"
+                      :to="{ name: 'expense', params: { id: expense.id } }"
+                      class="btn btn-sm btn-secondary"
+                    >DETAILS</router-link>
+                  </td>
+                  <td>
+                    <button
+                      class="btn btn-sm btn-primary"
+                      :id="'expensesDetails' + expense.id"
+                      @click.prevent="edit(expense)"
+                    >EDIT</button>
+                  </td>
+                  <td>
+                    <button
+                      class="btn btn-sm btn-danger"
+                      :id="'expensesDetails' + expense.id"
+                      @click.prevent="deleteExpense(expense)"
+                    >DELETE</button>
+                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </template>
+                <!-- IF EDITING -->
+                <template v-else-if="editing">
+                  <td>
+                    <router-link
+                      v-if="!loading"
+                      :to="{ name: 'expense', params: { id: expense.id } }"
+                      class="btn btn-sm btn-dark"
+                    >DETAILS</router-link>
+                  </td>
+                  <td>
+                    <button @click.prevent="unedit()" class="btn btn-sm btn-secondary">EXIT EDITING</button>
+                  </td>
+                  <td>
+                    <button
+                      @click.prevent="save(editableExpense)"
+                      class="btn btn-sm btn-primary"
+                    >SAVE</button>
+                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </template>
+              </tr>
+            </template>
           </tbody>
         </table>
       </div>
@@ -437,6 +466,25 @@ export default {
         .catch(error => {
           this.loading = false;
         });
+    },
+    expand(id) {
+      let element = document.getElementById(id);
+      if (element.classList.contains("custom-invisible")) {
+        element.classList.remove("custom-invisible");
+        console.log("REMOVED");
+      } else {
+        element.classList.add("custom-invisible");
+        console.log("ADDED");
+      }
+      // element.style.height = "100px";
+      // // if (element.style.display == "none") {
+      // //   element.style.display = "none";
+      // //   element.style.opacity = "0";
+      // // } else {
+      // //   element.style.display = "";
+      // //   element.style.opacity = "1";
+      // // }
+      // element.style.opacity = "1";
     }
   },
   mounted() {
@@ -448,4 +496,52 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+/* table,
+th,
+td {
+  position: relative;
+}
+td button {
+  bottom: 0;
+} */
+
+* {
+  box-sizing: border-box;
+}
+
+.custom-toggleable {
+  height: 50px;
+  transition: all 0.3s ease-in;
+}
+
+.custom-toggleable > * {
+  height: auto;
+  transition-property: all;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-in;
+}
+
+.custom-invisible {
+  height: 0px;
+  transition-property: all;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-in;
+}
+
+.custom-invisible > * {
+  display: none;
+  height: 0px;
+  transition-property: all;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-in;
+}
+
+.custom-visible {
+  height: auto;
+  transition: all 0.3s ease-in;
+}
+</style>
+
 
