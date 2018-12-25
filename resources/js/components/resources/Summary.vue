@@ -47,8 +47,6 @@ export default {
     if (!this.$store.state.expenses.hasLoadedExpenses) {
       this.$store.dispatch("expenses/retrieveExpenses");
     }
-    console.log(moment(this.dateMin).format("MMMM Do YYYY"));
-    console.log(moment(this.dateMax).format("MMMM Do YYYY"));
   },
   methods: {
     moment: function() {
