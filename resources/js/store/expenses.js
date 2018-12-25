@@ -14,16 +14,21 @@ export default {
         },
         hasLoadedExpenses: function(state, hasLoadedExpenses) {
             state.hasLoadedExpenses = hasLoadedExpenses;
+        },
+        expenses: function(state, expenses) {
+            state.expenses = expenses;
         }
     },
     actions: {
-        retrieveExpenses: function(context, id) {
+        retrieveExpenses: function(context) {
             return new Promise((resolve, reject) => {
                 axios.defaults.headers.common.Authorization =
                     "Bearer " + context.rootState.auth.accessToken;
                 axios
                     .get("/api/expenses")
                     .then(response => {
+                        context.commit("expenses", response.data.data);
+                        context.commit("hasLoadedExpenses", true);
                         resolve(response);
                     })
                     .catch(error => {

@@ -2,6 +2,7 @@
   <div>
     <pulse-loader id="spinner" :loading="loading"></pulse-loader>
     <div class="container-fluid" v-if="!loading">
+      <Summary class="mb-2"></Summary>
       <div data-toggle="collapse" data-target="#createExpensesForm">
         <h2
           data-toggle="collapse"
@@ -211,9 +212,11 @@
 
 <script>
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
+import Summary from "./Summary.vue";
 export default {
   components: {
-    PulseLoader
+    PulseLoader,
+    Summary
   },
   data() {
     return {
@@ -451,14 +454,9 @@ export default {
     },
     getAllExpenses() {
       this.loading = true;
-      axios.defaults.headers.common.Authorization =
-        "Bearer " + this.$store.state.auth.accessToken;
-      axios
-        .get("/api/expenses")
+      this.$store
+        .dispatch("expenses/retrieveExpenses")
         .then(response => {
-          this.expenses = response.data.data;
-          this.$store.state.expenses.expenses = response.data.data;
-          this.$store.commit("expenses/hasLoadedExpenses", true);
           this.loading = false;
           this.sortDate();
           this.sortDate();
@@ -476,15 +474,6 @@ export default {
         element.classList.add("custom-invisible");
         console.log("ADDED");
       }
-      // element.style.height = "100px";
-      // // if (element.style.display == "none") {
-      // //   element.style.display = "none";
-      // //   element.style.opacity = "0";
-      // // } else {
-      // //   element.style.display = "";
-      // //   element.style.opacity = "1";
-      // // }
-      // element.style.opacity = "1";
     }
   },
   mounted() {
@@ -498,15 +487,6 @@ export default {
 </script>
 
 <style scoped>
-/* table,
-th,
-td {
-  position: relative;
-}
-td button {
-  bottom: 0;
-} */
-
 * {
   box-sizing: border-box;
 }

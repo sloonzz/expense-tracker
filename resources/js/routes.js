@@ -1,4 +1,3 @@
-// import Home from "./components/general/Home";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Logout from "./components/auth/Logout";
@@ -28,12 +27,12 @@ const routes = [
         component: Logout
     },
     {
-        path: '/expenses',
+        path: "/expenses",
         name: "expenses",
-        component: Expenses,
+        component: Expenses
     },
     {
-        path: '/expenses/:id',
+        path: "/expenses/:id",
         name: "expense",
         component: Expense
     }

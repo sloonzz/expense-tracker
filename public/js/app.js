@@ -4999,84 +4999,6 @@ module.exports = function normalizeComponent (
 /* 3 */
 /***/ (function(module, exports) {
 
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(173)
-}
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(176)
-/* template */
-var __vue_template__ = __webpack_require__(177)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "node_modules/vue-spinner/src/PulseLoader.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-bc13a466", Component.options)
-  } else {
-    hotAPI.reload("data-v-bc13a466", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports) {
-
 /*
 	MIT License http://www.opensource.org/licenses/mit-license.php
 	Author Tobias Koppers @sokra
@@ -5156,13 +5078,58 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 6 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(148);
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(173)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(176)
+/* template */
+var __vue_template__ = __webpack_require__(177)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "node_modules/vue-spinner/src/PulseLoader.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-bc13a466", Component.options)
+  } else {
+    hotAPI.reload("data-v-bc13a466", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
 
 /***/ }),
-/* 7 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -5388,6 +5355,39 @@ function applyToTag (styleElement, obj) {
   }
 }
 
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(148);
 
 /***/ }),
 /* 8 */
@@ -8100,7 +8100,7 @@ Popper.Defaults = Defaults;
 /* harmony default export */ __webpack_exports__["default"] = (Popper);
 //# sourceMappingURL=popper.js.map
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(6)))
 
 /***/ }),
 /* 11 */
@@ -41740,14 +41740,14 @@ Vue.compile = compileToFunctions;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(166).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(166).setImmediate))
 
 /***/ }),
 /* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(143);
-module.exports = __webpack_require__(219);
+module.exports = __webpack_require__(226);
 
 
 /***/ }),
@@ -41761,12 +41761,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(168);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(169);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__routes__ = __webpack_require__(170);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store_store__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__views_Home_vue__ = __webpack_require__(201);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store_store__ = __webpack_require__(205);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__views_Home_vue__ = __webpack_require__(208);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__views_Home_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__views_Home_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vue_datetime__ = __webpack_require__(209);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vue_datetime__ = __webpack_require__(216);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vue_datetime___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_vue_datetime__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vue_datetime_dist_vue_datetime_css__ = __webpack_require__(215);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vue_datetime_dist_vue_datetime_css__ = __webpack_require__(222);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vue_datetime_dist_vue_datetime_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_vue_datetime_dist_vue_datetime_css__);
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -41844,7 +41844,7 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = __webpack_require__(6);
+window.axios = __webpack_require__(7);
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -58992,7 +58992,7 @@ if (token) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(9)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(9)(module)))
 
 /***/ }),
 /* 146 */
@@ -64162,7 +64162,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ }),
 /* 167 */
@@ -64355,7 +64355,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(136)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(136)))
 
 /***/ }),
 /* 168 */
@@ -67942,9 +67942,8 @@ var index_esm = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_main_Welcome___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_main_Welcome__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_resources_Expenses__ = __webpack_require__(190);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_resources_Expenses___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_resources_Expenses__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_resources_Expense__ = __webpack_require__(193);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_resources_Expense__ = __webpack_require__(200);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_resources_Expense___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_resources_Expense__);
-// import Home from "./components/general/Home";
 
 
 
@@ -67969,11 +67968,11 @@ var routes = [{
     name: "logout",
     component: __WEBPACK_IMPORTED_MODULE_2__components_auth_Logout___default.a
 }, {
-    path: '/expenses',
+    path: "/expenses",
     name: "expenses",
     component: __WEBPACK_IMPORTED_MODULE_4__components_resources_Expenses___default.a
 }, {
-    path: '/expenses/:id',
+    path: "/expenses/:id",
     name: "expense",
     component: __WEBPACK_IMPORTED_MODULE_5__components_resources_Expense___default.a
 }];
@@ -68147,7 +68146,7 @@ var content = __webpack_require__(174);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(7)("7da931fb", content, false, {});
+var update = __webpack_require__(5)("7da931fb", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -68166,7 +68165,7 @@ if(false) {
 /* 174 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(5)(false);
+exports = module.exports = __webpack_require__(3)(false);
 // imports
 
 
@@ -68554,7 +68553,7 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_spinner_src_PulseLoader_vue__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_spinner_src_PulseLoader_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_spinner_src_PulseLoader_vue__);
@@ -68830,7 +68829,7 @@ var content = __webpack_require__(184);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(7)("228f1dea", content, false, {});
+var update = __webpack_require__(5)("228f1dea", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -68849,7 +68848,7 @@ if(false) {
 /* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(5)(false);
+exports = module.exports = __webpack_require__(3)(false);
 // imports
 
 
@@ -69091,13 +69090,13 @@ if (false) {
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(221)
+  __webpack_require__(191)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(191)
+var __vue_script__ = __webpack_require__(193)
 /* template */
-var __vue_template__ = __webpack_require__(223)
+var __vue_template__ = __webpack_require__(199)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -69137,12 +69136,54 @@ module.exports = Component.exports
 
 /***/ }),
 /* 191 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(192);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(5)("7684be5f", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-fafbb220\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Expenses.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-fafbb220\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Expenses.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 192 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n*[data-v-fafbb220] {\r\n  -webkit-box-sizing: border-box;\r\n          box-sizing: border-box;\n}\n.custom-toggleable[data-v-fafbb220] {\r\n  height: 50px;\r\n  -webkit-transition: all 0.3s ease-in;\r\n  transition: all 0.3s ease-in;\n}\n.custom-toggleable > *[data-v-fafbb220] {\r\n  height: auto;\r\n  -webkit-transition-property: all;\r\n  transition-property: all;\r\n  -webkit-transition-duration: 0.3s;\r\n          transition-duration: 0.3s;\r\n  -webkit-transition-timing-function: ease-in;\r\n          transition-timing-function: ease-in;\n}\n.custom-invisible[data-v-fafbb220] {\r\n  height: 0px;\r\n  -webkit-transition-property: all;\r\n  transition-property: all;\r\n  -webkit-transition-duration: 0.3s;\r\n          transition-duration: 0.3s;\r\n  -webkit-transition-timing-function: ease-in;\r\n          transition-timing-function: ease-in;\n}\n.custom-invisible > *[data-v-fafbb220] {\r\n  display: none;\r\n  height: 0px;\r\n  -webkit-transition-property: all;\r\n  transition-property: all;\r\n  -webkit-transition-duration: 0.3s;\r\n          transition-duration: 0.3s;\r\n  -webkit-transition-timing-function: ease-in;\r\n          transition-timing-function: ease-in;\n}\n.custom-visible[data-v-fafbb220] {\r\n  height: auto;\r\n  -webkit-transition: all 0.3s ease-in;\r\n  transition: all 0.3s ease-in;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 193 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_spinner_src_PulseLoader_vue__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_spinner_src_PulseLoader_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_spinner_src_PulseLoader_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Summary_vue__ = __webpack_require__(194);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Summary_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Summary_vue__);
 //
 //
 //
@@ -69354,11 +69395,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    PulseLoader: __WEBPACK_IMPORTED_MODULE_0_vue_spinner_src_PulseLoader_vue___default.a
+    PulseLoader: __WEBPACK_IMPORTED_MODULE_0_vue_spinner_src_PulseLoader_vue___default.a,
+    Summary: __WEBPACK_IMPORTED_MODULE_1__Summary_vue___default.a
   },
   data: function data() {
     return {
@@ -69584,11 +69628,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this3 = this;
 
       this.loading = true;
-      axios.defaults.headers.common.Authorization = "Bearer " + this.$store.state.auth.accessToken;
-      axios.get("/api/expenses").then(function (response) {
-        _this3.expenses = response.data.data;
-        _this3.$store.state.expenses.expenses = response.data.data;
-        _this3.$store.commit("expenses/hasLoadedExpenses", true);
+      this.$store.dispatch("expenses/retrieveExpenses").then(function (response) {
         _this3.loading = false;
         _this3.sortDate();
         _this3.sortDate();
@@ -69605,15 +69645,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         element.classList.add("custom-invisible");
         console.log("ADDED");
       }
-      // element.style.height = "100px";
-      // // if (element.style.display == "none") {
-      // //   element.style.display = "none";
-      // //   element.style.opacity = "0";
-      // // } else {
-      // //   element.style.display = "";
-      // //   element.style.opacity = "1";
-      // // }
-      // element.style.opacity = "1";
     }
   },
   mounted: function mounted() {
@@ -69626,20 +69657,1073 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 192 */,
-/* 193 */
+/* 194 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(194)
+  __webpack_require__(195)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(196)
+var __vue_script__ = __webpack_require__(197)
 /* template */
-var __vue_template__ = __webpack_require__(197)
+var __vue_template__ = __webpack_require__(198)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/resources/Summary.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-27bed63e", Component.options)
+  } else {
+    hotAPI.reload("data-v-27bed63e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 195 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(196);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(5)("ce3edd7a", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-27bed63e\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Summary.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-27bed63e\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Summary.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 196 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 197 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      dateMin: moment().subtract(1, "months").format(),
+      dateMax: moment().format()
+    };
+  },
+  mounted: function mounted() {
+    var vm = this;
+    if (!this.$store.state.expenses.hasLoadedExpenses) {
+      this.$store.dispatch("expenses/retrieveExpenses");
+    }
+    console.log(moment(this.dateMin).format("MMMM Do YYYY"));
+    console.log(moment(this.dateMax).format("MMMM Do YYYY"));
+  },
+
+  methods: {
+    moment: function (_moment) {
+      function moment() {
+        return _moment.apply(this, arguments);
+      }
+
+      moment.toString = function () {
+        return _moment.toString();
+      };
+
+      return moment;
+    }(function () {
+      return moment();
+    }),
+    dateToFormat: function dateToFormat(date, format) {
+      return moment(date).format(format);
+    },
+    totalExpenseToDate: function totalExpenseToDate(dateMin, dateMax) {
+      var recordsToDate = this.$store.state.expenses.expenses.filter(function (expense) {
+        var date = new Date(expense.date);
+        return date > dateMin && date < dateMax;
+      });
+      return recordsToDate.reduce(function (total, expense) {
+        return total + expense.cost * expense.quantity;
+      }, 0);
+    }
+  },
+  computed: {
+    totalExpense: function totalExpense() {
+      var totalExpense = this.$store.state.expenses.expenses.reduce(function (total, expense) {
+        return total + expense.cost * expense.quantity;
+      }, 0);
+      return totalExpense;
+    }
+  }
+});
+
+/***/ }),
+/* 198 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("h1", [_vm._v("Summary:")]),
+    _vm._v(" "),
+    _c("h2", [
+      _vm._v("You spent a total of " + _vm._s(_vm.totalExpense) + ".")
+    ]),
+    _vm._v(" "),
+    _c("h3", [
+      _vm._v(
+        "And " +
+          _vm._s(
+            _vm.totalExpenseToDate(new Date(_vm.dateMin), new Date(_vm.dateMax))
+          ) +
+          " between " +
+          _vm._s(_vm.dateToFormat(_vm.dateMin, "MMMM Do YYYY")) +
+          " and " +
+          _vm._s(_vm.dateToFormat(_vm.dateMax, "MMMM Do YYYY"))
+      )
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "form-group" },
+      [
+        _c("label", { attrs: { for: "dateMin" } }, [_vm._v("From:")]),
+        _vm._v(" "),
+        _c("datetime", {
+          attrs: {
+            placeholder: _vm.dateMin,
+            id: "datetime",
+            "use12-hour": "",
+            type: "datetime",
+            "input-class": "form-control",
+            name: "dateMin",
+            auto: ""
+          },
+          model: {
+            value: _vm.dateMin,
+            callback: function($$v) {
+              _vm.dateMin = $$v
+            },
+            expression: "dateMin"
+          }
+        })
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "form-group" },
+      [
+        _c("label", { attrs: { for: "dateMax" } }, [_vm._v("To:")]),
+        _vm._v(" "),
+        _c("datetime", {
+          attrs: {
+            placeholder: _vm.dateMax,
+            id: "datetime",
+            "use12-hour": "",
+            type: "datetime",
+            "input-class": "form-control",
+            name: "dateMax",
+            auto: ""
+          },
+          model: {
+            value: _vm.dateMax,
+            callback: function($$v) {
+              _vm.dateMax = $$v
+            },
+            expression: "dateMax"
+          }
+        })
+      ],
+      1
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-27bed63e", module.exports)
+  }
+}
+
+/***/ }),
+/* 199 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("pulse-loader", { attrs: { id: "spinner", loading: _vm.loading } }),
+      _vm._v(" "),
+      !_vm.loading
+        ? _c(
+            "div",
+            { staticClass: "container-fluid" },
+            [
+              _c("Summary", { staticClass: "mb-2" }),
+              _vm._v(" "),
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "form",
+                {
+                  staticClass: "collapse",
+                  attrs: { id: "createExpensesForm" }
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "form-group" },
+                    [
+                      _c("label", { attrs: { for: "date" } }, [_vm._v("Date")]),
+                      _vm._v(" "),
+                      _c("datetime", {
+                        attrs: {
+                          placeholder: _vm.createdExpense.date,
+                          id: "datetime",
+                          "use12-hour": "",
+                          type: "datetime",
+                          "input-class": "form-control",
+                          name: "date",
+                          auto: ""
+                        },
+                        model: {
+                          value: _vm.createdExpense.date,
+                          callback: function($$v) {
+                            _vm.$set(_vm.createdExpense, "date", $$v)
+                          },
+                          expression: "createdExpense.date"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "name" } }, [_vm._v("Name")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.createdExpense.name,
+                          expression: "createdExpense.name"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        name: "name",
+                        placeholder: "Expense Name"
+                      },
+                      domProps: { value: _vm.createdExpense.name },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.createdExpense,
+                            "name",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "description" } }, [
+                      _vm._v("Description")
+                    ]),
+                    _vm._v(" "),
+                    _c("textarea", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.createdExpense.description,
+                          expression: "createdExpense.description"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        placeholder: "Description",
+                        name: "description"
+                      },
+                      domProps: { value: _vm.createdExpense.description },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.createdExpense,
+                            "description",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "cost" } }, [_vm._v("Cost")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.createdExpense.cost,
+                          expression: "createdExpense.cost"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "number", name: "cost", placeholder: "1" },
+                      domProps: { value: _vm.createdExpense.cost },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.createdExpense,
+                            "cost",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "quantity" } }, [
+                      _vm._v("Quantity")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.createdExpense.quantity,
+                          expression: "createdExpense.quantity"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "number",
+                        name: "quantity",
+                        placeholder: "1"
+                      },
+                      domProps: { value: _vm.createdExpense.quantity },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.createdExpense,
+                            "quantity",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.createExpense(_vm.createdExpense)
+                        }
+                      }
+                    },
+                    [_vm._v("CREATE")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-secondary float-right",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.getAllExpenses()
+                        }
+                      }
+                    },
+                    [_vm._v("Refresh")]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("h2", [_vm._v("Expenses:")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "table-responsive" }, [
+                _c("table", { staticClass: "table table-hover" }, [
+                  _c("thead", [
+                    _c("tr", [
+                      _c(
+                        "th",
+                        {
+                          attrs: { scope: "col" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.sortDate($event)
+                            }
+                          }
+                        },
+                        [_vm._v("Date")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "th",
+                        {
+                          attrs: { scope: "col" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.sortDate($event)
+                            }
+                          }
+                        },
+                        [_vm._v("Time")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "th",
+                        {
+                          attrs: { scope: "col" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.sortName($event)
+                            }
+                          }
+                        },
+                        [_vm._v("Name")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "th",
+                        {
+                          attrs: { scope: "col" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.sortDescription($event)
+                            }
+                          }
+                        },
+                        [_vm._v("Description")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "th",
+                        {
+                          attrs: { scope: "col" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.sortCost($event)
+                            }
+                          }
+                        },
+                        [_vm._v("Cost")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "th",
+                        {
+                          attrs: { scope: "col" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.sortQuantity($event)
+                            }
+                          }
+                        },
+                        [_vm._v("Quantity")]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    [
+                      _vm._l(this.expenses, function(expense) {
+                        return [
+                          _c(
+                            "tr",
+                            {
+                              key: expense.id,
+                              on: {
+                                click: function($event) {
+                                  _vm.expand("expensesDetails" + expense.id)
+                                }
+                              }
+                            },
+                            [
+                              _vm.editableID !== expense.id || !_vm.editing
+                                ? [
+                                    _c("td", [
+                                      _vm._v(
+                                        _vm._s(
+                                          this.moment(
+                                            _vm.getDate(expense.date)
+                                          ).format("MMMM Do YYYY")
+                                        )
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(
+                                        _vm._s(
+                                          this.moment(expense.date).format(
+                                            "h:mm a"
+                                          )
+                                        )
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [_vm._v(_vm._s(expense.name))]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(expense.description))
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [_vm._v(_vm._s(expense.cost))]),
+                                    _vm._v(" "),
+                                    _c("td", [_vm._v(_vm._s(expense.quantity))])
+                                  ]
+                                : _vm.editing
+                                  ? [
+                                      _c("td", [
+                                        _c("input", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: _vm.editableExpense.date,
+                                              expression: "editableExpense.date"
+                                            }
+                                          ],
+                                          staticClass: "form-control",
+                                          attrs: { type: "date", name: "date" },
+                                          domProps: {
+                                            value: _vm.editableExpense.date
+                                          },
+                                          on: {
+                                            input: function($event) {
+                                              if ($event.target.composing) {
+                                                return
+                                              }
+                                              _vm.$set(
+                                                _vm.editableExpense,
+                                                "date",
+                                                $event.target.value
+                                              )
+                                            }
+                                          }
+                                        })
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _c("input", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: _vm.editableExpense.time,
+                                              expression: "editableExpense.time"
+                                            }
+                                          ],
+                                          staticClass: "form-control",
+                                          attrs: { type: "time", name: "time" },
+                                          domProps: {
+                                            value: _vm.editableExpense.time
+                                          },
+                                          on: {
+                                            input: function($event) {
+                                              if ($event.target.composing) {
+                                                return
+                                              }
+                                              _vm.$set(
+                                                _vm.editableExpense,
+                                                "time",
+                                                $event.target.value
+                                              )
+                                            }
+                                          }
+                                        })
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _c("textarea", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: _vm.editableExpense.name,
+                                              expression: "editableExpense.name"
+                                            }
+                                          ],
+                                          staticClass: "form-control",
+                                          attrs: { cols: "5", rows: "4" },
+                                          domProps: {
+                                            value: _vm.editableExpense.name
+                                          },
+                                          on: {
+                                            input: function($event) {
+                                              if ($event.target.composing) {
+                                                return
+                                              }
+                                              _vm.$set(
+                                                _vm.editableExpense,
+                                                "name",
+                                                $event.target.value
+                                              )
+                                            }
+                                          }
+                                        })
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _c("textarea", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value:
+                                                _vm.editableExpense.description,
+                                              expression:
+                                                "editableExpense.description"
+                                            }
+                                          ],
+                                          staticClass: "form-control",
+                                          attrs: { cols: "40", rows: "4" },
+                                          domProps: {
+                                            value:
+                                              _vm.editableExpense.description
+                                          },
+                                          on: {
+                                            input: function($event) {
+                                              if ($event.target.composing) {
+                                                return
+                                              }
+                                              _vm.$set(
+                                                _vm.editableExpense,
+                                                "description",
+                                                $event.target.value
+                                              )
+                                            }
+                                          }
+                                        })
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _c("input", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: _vm.editableExpense.cost,
+                                              expression: "editableExpense.cost"
+                                            }
+                                          ],
+                                          staticClass: "form-control",
+                                          attrs: {
+                                            type: "number",
+                                            name: "cost"
+                                          },
+                                          domProps: {
+                                            value: _vm.editableExpense.cost
+                                          },
+                                          on: {
+                                            input: function($event) {
+                                              if ($event.target.composing) {
+                                                return
+                                              }
+                                              _vm.$set(
+                                                _vm.editableExpense,
+                                                "cost",
+                                                $event.target.value
+                                              )
+                                            }
+                                          }
+                                        })
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _c("input", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value:
+                                                _vm.editableExpense.quantity,
+                                              expression:
+                                                "editableExpense.quantity"
+                                            }
+                                          ],
+                                          staticClass: "form-control",
+                                          attrs: {
+                                            type: "number",
+                                            name: "quantity"
+                                          },
+                                          domProps: {
+                                            value: _vm.editableExpense.quantity
+                                          },
+                                          on: {
+                                            input: function($event) {
+                                              if ($event.target.composing) {
+                                                return
+                                              }
+                                              _vm.$set(
+                                                _vm.editableExpense,
+                                                "quantity",
+                                                $event.target.value
+                                              )
+                                            }
+                                          }
+                                        })
+                                      ])
+                                    ]
+                                  : _vm._e()
+                            ],
+                            2
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "tr",
+                            {
+                              key: expense.id + expense.name,
+                              staticClass: "custom-invisible custom-toggleable",
+                              attrs: { id: "expensesDetails" + expense.id }
+                            },
+                            [
+                              _vm.editableID !== expense.id || !_vm.editing
+                                ? [
+                                    _c(
+                                      "td",
+                                      [
+                                        _c(
+                                          "router-link",
+                                          {
+                                            staticClass:
+                                              "btn btn-sm btn-secondary",
+                                            attrs: {
+                                              id:
+                                                "expensesDetails" + expense.id,
+                                              to: {
+                                                name: "expense",
+                                                params: { id: expense.id }
+                                              }
+                                            }
+                                          },
+                                          [_vm._v("DETAILS")]
+                                        )
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass: "btn btn-sm btn-primary",
+                                          attrs: {
+                                            id: "expensesDetails" + expense.id
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              $event.preventDefault()
+                                              _vm.edit(expense)
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("EDIT")]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass: "btn btn-sm btn-danger",
+                                          attrs: {
+                                            id: "expensesDetails" + expense.id
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              $event.preventDefault()
+                                              _vm.deleteExpense(expense)
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("DELETE")]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td"),
+                                    _vm._v(" "),
+                                    _c("td"),
+                                    _vm._v(" "),
+                                    _c("td")
+                                  ]
+                                : _vm.editing
+                                  ? [
+                                      _c(
+                                        "td",
+                                        [
+                                          !_vm.loading
+                                            ? _c(
+                                                "router-link",
+                                                {
+                                                  staticClass:
+                                                    "btn btn-sm btn-dark",
+                                                  attrs: {
+                                                    to: {
+                                                      name: "expense",
+                                                      params: { id: expense.id }
+                                                    }
+                                                  }
+                                                },
+                                                [_vm._v("DETAILS")]
+                                              )
+                                            : _vm._e()
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _c(
+                                          "button",
+                                          {
+                                            staticClass:
+                                              "btn btn-sm btn-secondary",
+                                            on: {
+                                              click: function($event) {
+                                                $event.preventDefault()
+                                                _vm.unedit()
+                                              }
+                                            }
+                                          },
+                                          [_vm._v("EXIT EDITING")]
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _c(
+                                          "button",
+                                          {
+                                            staticClass:
+                                              "btn btn-sm btn-primary",
+                                            on: {
+                                              click: function($event) {
+                                                $event.preventDefault()
+                                                _vm.save(_vm.editableExpense)
+                                              }
+                                            }
+                                          },
+                                          [_vm._v("SAVE")]
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td"),
+                                      _vm._v(" "),
+                                      _c("td"),
+                                      _vm._v(" "),
+                                      _c("td")
+                                    ]
+                                  : _vm._e()
+                            ],
+                            2
+                          )
+                        ]
+                      })
+                    ],
+                    2
+                  )
+                ])
+              ])
+            ],
+            1
+          )
+        : _vm._e()
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        attrs: {
+          "data-toggle": "collapse",
+          "data-target": "#createExpensesForm"
+        }
+      },
+      [
+        _c(
+          "h2",
+          {
+            staticStyle: { display: "inline-block" },
+            attrs: {
+              "data-toggle": "collapse",
+              "data-target": "#createExpensesForm"
+            }
+          },
+          [_vm._v("Create new expense:")]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn float-right",
+            staticStyle: { display: "inline-block" },
+            attrs: {
+              "data-toggle": "collapse",
+              "data-target": "#createExpensesForm"
+            }
+          },
+          [_vm._v("Expand")]
+        )
+      ]
+    )
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-fafbb220", module.exports)
+  }
+}
+
+/***/ }),
+/* 200 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(201)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(203)
+/* template */
+var __vue_template__ = __webpack_require__(204)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -69678,17 +70762,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 194 */
+/* 201 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(195);
+var content = __webpack_require__(202);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(7)("749a9025", content, false, {});
+var update = __webpack_require__(5)("749a9025", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -69704,10 +70788,10 @@ if(false) {
 }
 
 /***/ }),
-/* 195 */
+/* 202 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(5)(false);
+exports = module.exports = __webpack_require__(3)(false);
 // imports
 
 
@@ -69718,7 +70802,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 
 /***/ }),
-/* 196 */
+/* 203 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -69771,7 +70855,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 197 */
+/* 204 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -69844,12 +70928,12 @@ if (false) {
 }
 
 /***/ }),
-/* 198 */
+/* 205 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__auth__ = __webpack_require__(199);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__expenses__ = __webpack_require__(200);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__auth__ = __webpack_require__(206);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__expenses__ = __webpack_require__(207);
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -70005,11 +71089,11 @@ if (false) {
 // };
 
 /***/ }),
-/* 199 */
+/* 206 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 
 
@@ -70145,11 +71229,11 @@ if (false) {
 });
 
 /***/ }),
-/* 200 */
+/* 207 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 
 
@@ -70167,13 +71251,18 @@ if (false) {
         },
         hasLoadedExpenses: function hasLoadedExpenses(state, _hasLoadedExpenses) {
             state.hasLoadedExpenses = _hasLoadedExpenses;
+        },
+        expenses: function expenses(state, _expenses) {
+            state.expenses = _expenses;
         }
     },
     actions: {
-        retrieveExpenses: function retrieveExpenses(context, id) {
+        retrieveExpenses: function retrieveExpenses(context) {
             return new Promise(function (resolve, reject) {
                 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.headers.common.Authorization = "Bearer " + context.rootState.auth.accessToken;
                 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/api/expenses").then(function (response) {
+                    context.commit("expenses", response.data.data);
+                    context.commit("hasLoadedExpenses", true);
                     resolve(response);
                 }).catch(function (error) {
                     reject(error);
@@ -70220,19 +71309,19 @@ if (false) {
 });
 
 /***/ }),
-/* 201 */
+/* 208 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(202)
+  __webpack_require__(209)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(204)
+var __vue_script__ = __webpack_require__(211)
 /* template */
-var __vue_template__ = __webpack_require__(208)
+var __vue_template__ = __webpack_require__(215)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -70271,17 +71360,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 202 */
+/* 209 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(203);
+var content = __webpack_require__(210);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(7)("7745cbf7", content, false, {});
+var update = __webpack_require__(5)("7745cbf7", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -70297,10 +71386,10 @@ if(false) {
 }
 
 /***/ }),
-/* 203 */
+/* 210 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(5)(false);
+exports = module.exports = __webpack_require__(3)(false);
 // imports
 
 
@@ -70311,12 +71400,12 @@ exports.push([module.i, "\n#spinner {\r\n  text-align: center;\r\n  padding-top:
 
 
 /***/ }),
-/* 204 */
+/* 211 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_general_Navbar_vue__ = __webpack_require__(205);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_general_Navbar_vue__ = __webpack_require__(212);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_general_Navbar_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_general_Navbar_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_spinner_src_PulseLoader_vue__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_spinner_src_PulseLoader_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_spinner_src_PulseLoader_vue__);
@@ -70377,15 +71466,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 205 */
+/* 212 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(206)
+var __vue_script__ = __webpack_require__(213)
 /* template */
-var __vue_template__ = __webpack_require__(207)
+var __vue_template__ = __webpack_require__(214)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -70424,7 +71513,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 206 */
+/* 213 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -70467,7 +71556,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
-/* 207 */
+/* 214 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -70624,7 +71713,7 @@ if (false) {
 }
 
 /***/ }),
-/* 208 */
+/* 215 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -70699,7 +71788,7 @@ if (false) {
 }
 
 /***/ }),
-/* 209 */
+/* 216 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -70709,7 +71798,7 @@ if (false) {
  */
 
 (function (global, factory) {
-	 true ? factory(exports, __webpack_require__(210)) :
+	 true ? factory(exports, __webpack_require__(217)) :
 	typeof define === 'function' && define.amd ? define(['exports', 'luxon'], factory) :
 	(factory((global.VueDatetime = global.VueDatetime || {}),global.luxon));
 }(this, (function (exports,luxon) { 'use strict';
@@ -70854,7 +71943,7 @@ function weekStart () {
   var weekstart;
 
   try {
-    weekstart = __webpack_require__(211);
+    weekstart = __webpack_require__(218);
   } catch (e) {
     weekstart = window.weekstart;
   }
@@ -71526,7 +72615,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 
 /***/ }),
-/* 210 */
+/* 217 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78947,16 +80036,16 @@ exports.Settings = Settings;
 
 
 /***/ }),
-/* 211 */
+/* 218 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getWeekStartByRegion", function() { return getWeekStartByRegion$1; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getWeekStartByLocale", function() { return getWeekStartByLocale$1; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__api_js__ = __webpack_require__(212);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__langRegionMap_js__ = __webpack_require__(213);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__regionDayMap_js__ = __webpack_require__(214);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__api_js__ = __webpack_require__(219);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__langRegionMap_js__ = __webpack_require__(220);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__regionDayMap_js__ = __webpack_require__(221);
 
 
 
@@ -78974,7 +80063,7 @@ function getWeekStartByLocale$1(locale) {
 
 
 /***/ }),
-/* 212 */
+/* 219 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -79011,7 +80100,7 @@ function getWeekStartByLocale(locale, langRegionMap, regionDayMap) {
 
 
 /***/ }),
-/* 213 */
+/* 220 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -79101,7 +80190,7 @@ var langRegionMap = {
 
 
 /***/ }),
-/* 214 */
+/* 221 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -79344,13 +80433,13 @@ var regionDayMap = {
 
 
 /***/ }),
-/* 215 */
+/* 222 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(216);
+var content = __webpack_require__(223);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -79358,7 +80447,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(217)(content, options);
+var update = __webpack_require__(224)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -79375,10 +80464,10 @@ if(false) {
 }
 
 /***/ }),
-/* 216 */
+/* 223 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(5)(false);
+exports = module.exports = __webpack_require__(3)(false);
 // imports
 
 
@@ -79389,7 +80478,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 
 /***/ }),
-/* 217 */
+/* 224 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -79435,7 +80524,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(218);
+var	fixUrls = __webpack_require__(225);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -79748,7 +80837,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 218 */
+/* 225 */
 /***/ (function(module, exports) {
 
 
@@ -79843,805 +80932,10 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 219 */
+/* 226 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 220 */,
-/* 221 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(222);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(7)("7684be5f", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-fafbb220\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Expenses.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-fafbb220\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Expenses.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 222 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(5)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* table,\r\nth,\r\ntd {\r\n  position: relative;\r\n}\r\ntd button {\r\n  bottom: 0;\r\n} */\n*[data-v-fafbb220] {\r\n  -webkit-box-sizing: border-box;\r\n          box-sizing: border-box;\n}\n.custom-toggleable[data-v-fafbb220] {\r\n  height: 50px;\r\n  -webkit-transition: all 0.3s ease-in;\r\n  transition: all 0.3s ease-in;\n}\n.custom-toggleable > *[data-v-fafbb220] {\r\n  height: auto;\r\n  -webkit-transition-property: all;\r\n  transition-property: all;\r\n  -webkit-transition-duration: 0.3s;\r\n          transition-duration: 0.3s;\r\n  -webkit-transition-timing-function: ease-in;\r\n          transition-timing-function: ease-in;\n}\n.custom-invisible[data-v-fafbb220] {\r\n  height: 0px;\r\n  -webkit-transition-property: all;\r\n  transition-property: all;\r\n  -webkit-transition-duration: 0.3s;\r\n          transition-duration: 0.3s;\r\n  -webkit-transition-timing-function: ease-in;\r\n          transition-timing-function: ease-in;\n}\n.custom-invisible > *[data-v-fafbb220] {\r\n  display: none;\r\n  height: 0px;\r\n  -webkit-transition-property: all;\r\n  transition-property: all;\r\n  -webkit-transition-duration: 0.3s;\r\n          transition-duration: 0.3s;\r\n  -webkit-transition-timing-function: ease-in;\r\n          transition-timing-function: ease-in;\n}\n.custom-visible[data-v-fafbb220] {\r\n  height: auto;\r\n  -webkit-transition: all 0.3s ease-in;\r\n  transition: all 0.3s ease-in;\n}\r\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 223 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("pulse-loader", { attrs: { id: "spinner", loading: _vm.loading } }),
-      _vm._v(" "),
-      !_vm.loading
-        ? _c("div", { staticClass: "container-fluid" }, [
-            _vm._m(0),
-            _vm._v(" "),
-            _c(
-              "form",
-              { staticClass: "collapse", attrs: { id: "createExpensesForm" } },
-              [
-                _c(
-                  "div",
-                  { staticClass: "form-group" },
-                  [
-                    _c("label", { attrs: { for: "date" } }, [_vm._v("Date")]),
-                    _vm._v(" "),
-                    _c("datetime", {
-                      attrs: {
-                        placeholder: _vm.createdExpense.date,
-                        id: "datetime",
-                        "use12-hour": "",
-                        type: "datetime",
-                        "input-class": "form-control",
-                        name: "date",
-                        auto: ""
-                      },
-                      model: {
-                        value: _vm.createdExpense.date,
-                        callback: function($$v) {
-                          _vm.$set(_vm.createdExpense, "date", $$v)
-                        },
-                        expression: "createdExpense.date"
-                      }
-                    })
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "name" } }, [_vm._v("Name")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.createdExpense.name,
-                        expression: "createdExpense.name"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      name: "name",
-                      placeholder: "Expense Name"
-                    },
-                    domProps: { value: _vm.createdExpense.name },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.createdExpense,
-                          "name",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "description" } }, [
-                    _vm._v("Description")
-                  ]),
-                  _vm._v(" "),
-                  _c("textarea", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.createdExpense.description,
-                        expression: "createdExpense.description"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { placeholder: "Description", name: "description" },
-                    domProps: { value: _vm.createdExpense.description },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.createdExpense,
-                          "description",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "cost" } }, [_vm._v("Cost")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.createdExpense.cost,
-                        expression: "createdExpense.cost"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "number", name: "cost", placeholder: "1" },
-                    domProps: { value: _vm.createdExpense.cost },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.createdExpense,
-                          "cost",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "quantity" } }, [
-                    _vm._v("Quantity")
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.createdExpense.quantity,
-                        expression: "createdExpense.quantity"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "number",
-                      name: "quantity",
-                      placeholder: "1"
-                    },
-                    domProps: { value: _vm.createdExpense.quantity },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.createdExpense,
-                          "quantity",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-primary",
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        _vm.createExpense(_vm.createdExpense)
-                      }
-                    }
-                  },
-                  [_vm._v("CREATE")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-secondary float-right",
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        _vm.getAllExpenses()
-                      }
-                    }
-                  },
-                  [_vm._v("Refresh")]
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c("br"),
-            _vm._v(" "),
-            _c("h2", [_vm._v("Expenses:")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "table-responsive" }, [
-              _c("table", { staticClass: "table table-hover" }, [
-                _c("thead", [
-                  _c("tr", [
-                    _c(
-                      "th",
-                      {
-                        attrs: { scope: "col" },
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            return _vm.sortDate($event)
-                          }
-                        }
-                      },
-                      [_vm._v("Date")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "th",
-                      {
-                        attrs: { scope: "col" },
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            return _vm.sortDate($event)
-                          }
-                        }
-                      },
-                      [_vm._v("Time")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "th",
-                      {
-                        attrs: { scope: "col" },
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            return _vm.sortName($event)
-                          }
-                        }
-                      },
-                      [_vm._v("Name")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "th",
-                      {
-                        attrs: { scope: "col" },
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            return _vm.sortDescription($event)
-                          }
-                        }
-                      },
-                      [_vm._v("Description")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "th",
-                      {
-                        attrs: { scope: "col" },
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            return _vm.sortCost($event)
-                          }
-                        }
-                      },
-                      [_vm._v("Cost")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "th",
-                      {
-                        attrs: { scope: "col" },
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            return _vm.sortQuantity($event)
-                          }
-                        }
-                      },
-                      [_vm._v("Quantity")]
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c(
-                  "tbody",
-                  [
-                    _vm._l(this.expenses, function(expense) {
-                      return [
-                        _c(
-                          "tr",
-                          {
-                            key: expense.id,
-                            on: {
-                              click: function($event) {
-                                _vm.expand("expensesDetails" + expense.id)
-                              }
-                            }
-                          },
-                          [
-                            _vm.editableID !== expense.id || !_vm.editing
-                              ? [
-                                  _c("td", [
-                                    _vm._v(
-                                      _vm._s(
-                                        this.moment(
-                                          _vm.getDate(expense.date)
-                                        ).format("MMMM Do YYYY")
-                                      )
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("td", [
-                                    _vm._v(
-                                      _vm._s(
-                                        this.moment(expense.date).format(
-                                          "h:mm a"
-                                        )
-                                      )
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("td", [_vm._v(_vm._s(expense.name))]),
-                                  _vm._v(" "),
-                                  _c("td", [
-                                    _vm._v(_vm._s(expense.description))
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("td", [_vm._v(_vm._s(expense.cost))]),
-                                  _vm._v(" "),
-                                  _c("td", [_vm._v(_vm._s(expense.quantity))])
-                                ]
-                              : _vm.editing
-                                ? [
-                                    _c("td", [
-                                      _c("input", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: _vm.editableExpense.date,
-                                            expression: "editableExpense.date"
-                                          }
-                                        ],
-                                        staticClass: "form-control",
-                                        attrs: { type: "date", name: "date" },
-                                        domProps: {
-                                          value: _vm.editableExpense.date
-                                        },
-                                        on: {
-                                          input: function($event) {
-                                            if ($event.target.composing) {
-                                              return
-                                            }
-                                            _vm.$set(
-                                              _vm.editableExpense,
-                                              "date",
-                                              $event.target.value
-                                            )
-                                          }
-                                        }
-                                      })
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _c("input", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: _vm.editableExpense.time,
-                                            expression: "editableExpense.time"
-                                          }
-                                        ],
-                                        staticClass: "form-control",
-                                        attrs: { type: "time", name: "time" },
-                                        domProps: {
-                                          value: _vm.editableExpense.time
-                                        },
-                                        on: {
-                                          input: function($event) {
-                                            if ($event.target.composing) {
-                                              return
-                                            }
-                                            _vm.$set(
-                                              _vm.editableExpense,
-                                              "time",
-                                              $event.target.value
-                                            )
-                                          }
-                                        }
-                                      })
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _c("textarea", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: _vm.editableExpense.name,
-                                            expression: "editableExpense.name"
-                                          }
-                                        ],
-                                        staticClass: "form-control",
-                                        attrs: { cols: "5", rows: "4" },
-                                        domProps: {
-                                          value: _vm.editableExpense.name
-                                        },
-                                        on: {
-                                          input: function($event) {
-                                            if ($event.target.composing) {
-                                              return
-                                            }
-                                            _vm.$set(
-                                              _vm.editableExpense,
-                                              "name",
-                                              $event.target.value
-                                            )
-                                          }
-                                        }
-                                      })
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _c("textarea", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value:
-                                              _vm.editableExpense.description,
-                                            expression:
-                                              "editableExpense.description"
-                                          }
-                                        ],
-                                        staticClass: "form-control",
-                                        attrs: { cols: "40", rows: "4" },
-                                        domProps: {
-                                          value: _vm.editableExpense.description
-                                        },
-                                        on: {
-                                          input: function($event) {
-                                            if ($event.target.composing) {
-                                              return
-                                            }
-                                            _vm.$set(
-                                              _vm.editableExpense,
-                                              "description",
-                                              $event.target.value
-                                            )
-                                          }
-                                        }
-                                      })
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _c("input", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: _vm.editableExpense.cost,
-                                            expression: "editableExpense.cost"
-                                          }
-                                        ],
-                                        staticClass: "form-control",
-                                        attrs: { type: "number", name: "cost" },
-                                        domProps: {
-                                          value: _vm.editableExpense.cost
-                                        },
-                                        on: {
-                                          input: function($event) {
-                                            if ($event.target.composing) {
-                                              return
-                                            }
-                                            _vm.$set(
-                                              _vm.editableExpense,
-                                              "cost",
-                                              $event.target.value
-                                            )
-                                          }
-                                        }
-                                      })
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _c("input", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: _vm.editableExpense.quantity,
-                                            expression:
-                                              "editableExpense.quantity"
-                                          }
-                                        ],
-                                        staticClass: "form-control",
-                                        attrs: {
-                                          type: "number",
-                                          name: "quantity"
-                                        },
-                                        domProps: {
-                                          value: _vm.editableExpense.quantity
-                                        },
-                                        on: {
-                                          input: function($event) {
-                                            if ($event.target.composing) {
-                                              return
-                                            }
-                                            _vm.$set(
-                                              _vm.editableExpense,
-                                              "quantity",
-                                              $event.target.value
-                                            )
-                                          }
-                                        }
-                                      })
-                                    ])
-                                  ]
-                                : _vm._e()
-                          ],
-                          2
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "tr",
-                          {
-                            key: expense.id + expense.name,
-                            staticClass: "custom-invisible custom-toggleable",
-                            attrs: { id: "expensesDetails" + expense.id }
-                          },
-                          [
-                            _vm.editableID !== expense.id || !_vm.editing
-                              ? [
-                                  _c(
-                                    "td",
-                                    [
-                                      _c(
-                                        "router-link",
-                                        {
-                                          staticClass:
-                                            "btn btn-sm btn-secondary",
-                                          attrs: {
-                                            id: "expensesDetails" + expense.id,
-                                            to: {
-                                              name: "expense",
-                                              params: { id: expense.id }
-                                            }
-                                          }
-                                        },
-                                        [_vm._v("DETAILS")]
-                                      )
-                                    ],
-                                    1
-                                  ),
-                                  _vm._v(" "),
-                                  _c("td", [
-                                    _c(
-                                      "button",
-                                      {
-                                        staticClass: "btn btn-sm btn-primary",
-                                        attrs: {
-                                          id: "expensesDetails" + expense.id
-                                        },
-                                        on: {
-                                          click: function($event) {
-                                            $event.preventDefault()
-                                            _vm.edit(expense)
-                                          }
-                                        }
-                                      },
-                                      [_vm._v("EDIT")]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("td", [
-                                    _c(
-                                      "button",
-                                      {
-                                        staticClass: "btn btn-sm btn-danger",
-                                        attrs: {
-                                          id: "expensesDetails" + expense.id
-                                        },
-                                        on: {
-                                          click: function($event) {
-                                            $event.preventDefault()
-                                            _vm.deleteExpense(expense)
-                                          }
-                                        }
-                                      },
-                                      [_vm._v("DELETE")]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("td"),
-                                  _vm._v(" "),
-                                  _c("td"),
-                                  _vm._v(" "),
-                                  _c("td")
-                                ]
-                              : _vm.editing
-                                ? [
-                                    _c(
-                                      "td",
-                                      [
-                                        !_vm.loading
-                                          ? _c(
-                                              "router-link",
-                                              {
-                                                staticClass:
-                                                  "btn btn-sm btn-dark",
-                                                attrs: {
-                                                  to: {
-                                                    name: "expense",
-                                                    params: { id: expense.id }
-                                                  }
-                                                }
-                                              },
-                                              [_vm._v("DETAILS")]
-                                            )
-                                          : _vm._e()
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _c(
-                                        "button",
-                                        {
-                                          staticClass:
-                                            "btn btn-sm btn-secondary",
-                                          on: {
-                                            click: function($event) {
-                                              $event.preventDefault()
-                                              _vm.unedit()
-                                            }
-                                          }
-                                        },
-                                        [_vm._v("EXIT EDITING")]
-                                      )
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _c(
-                                        "button",
-                                        {
-                                          staticClass: "btn btn-sm btn-primary",
-                                          on: {
-                                            click: function($event) {
-                                              $event.preventDefault()
-                                              _vm.save(_vm.editableExpense)
-                                            }
-                                          }
-                                        },
-                                        [_vm._v("SAVE")]
-                                      )
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td"),
-                                    _vm._v(" "),
-                                    _c("td"),
-                                    _vm._v(" "),
-                                    _c("td")
-                                  ]
-                                : _vm._e()
-                          ],
-                          2
-                        )
-                      ]
-                    })
-                  ],
-                  2
-                )
-              ])
-            ])
-          ])
-        : _vm._e()
-    ],
-    1
-  )
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        attrs: {
-          "data-toggle": "collapse",
-          "data-target": "#createExpensesForm"
-        }
-      },
-      [
-        _c(
-          "h2",
-          {
-            staticStyle: { display: "inline-block" },
-            attrs: {
-              "data-toggle": "collapse",
-              "data-target": "#createExpensesForm"
-            }
-          },
-          [_vm._v("Create new expense:")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn float-right",
-            staticStyle: { display: "inline-block" },
-            attrs: {
-              "data-toggle": "collapse",
-              "data-target": "#createExpensesForm"
-            }
-          },
-          [_vm._v("Expand")]
-        )
-      ]
-    )
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-fafbb220", module.exports)
-  }
-}
 
 /***/ })
 /******/ ]);
