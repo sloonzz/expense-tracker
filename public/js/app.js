@@ -69573,6 +69573,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           vm.$delete(vm.expenses, vm.expenses.findIndex(function (item) {
             return item.id == expense.id;
           }));
+          vm.$store.commit("expenses/expenses", vm.expenses);
         }).catch(function (error) {
           console.log(error.data);
         });
@@ -69598,6 +69599,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           quantity: expense.quantity,
           cost: expense.cost
         });
+        vm.$store.commit("expenses/expenses", vm.expenses);
         _this2.loading = false;
         expense.name = "";
         expense.description = "";
@@ -70255,7 +70257,9 @@ var render = function() {
                   _c(
                     "tbody",
                     [
-                      _vm._l(this.expenses, function(expense) {
+                      _vm._l(this.$store.state.expenses.expenses, function(
+                        expense
+                      ) {
                         return [
                           _c(
                             "tr",

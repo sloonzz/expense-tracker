@@ -88,7 +88,7 @@
             </tr>
           </thead>
           <tbody>
-            <template v-for="expense in this.expenses">
+            <template v-for="expense in this.$store.state.expenses.expenses">
               <tr @click="expand('expensesDetails' + expense.id)" :key="expense.id">
                 <!-- IF NOT EDITING -->
                 <template v-if="editableID !== expense.id || !editing">
@@ -396,6 +396,7 @@ export default {
               vm.expenses,
               vm.expenses.findIndex(item => item.id == expense.id)
             );
+            vm.$store.commit("expenses/expenses", vm.expenses);
           })
           .catch(error => {
             console.log(error.data);
@@ -425,6 +426,7 @@ export default {
             quantity: expense.quantity,
             cost: expense.cost
           });
+          vm.$store.commit("expenses/expenses", vm.expenses);
           this.loading = false;
           expense.name = "";
           expense.description = "";
