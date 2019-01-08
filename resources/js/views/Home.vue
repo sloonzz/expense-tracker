@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div v-if="!loading">
+  <div id="container">
+    <div id="body" v-if="!loading">
       <Navbar class="mb-4"></Navbar>
       <div class="container">
         <div
@@ -21,6 +21,8 @@
       </div>
       <router-view></router-view>
     </div>
+
+    <Footer id="footer" v-if="!loading"></Footer>
     <pulse-loader id="spinner" :loading="loading"></pulse-loader>
   </div>
 </template>
@@ -28,10 +30,12 @@
 <script>
 import Navbar from "../components/general/Navbar.vue";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
+import Footer from "../components/general/Footer.vue";
 export default {
   components: {
     Navbar,
-    PulseLoader
+    PulseLoader,
+    Footer
   },
   data() {
     return {
@@ -54,7 +58,41 @@ export default {
   }
 };
 </script>
-<style>
+<style lang="scss">
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+$green: #38c172;
+$white: #f9f9e8;
+$footer-height: 100px;
+
+#app {
+  height: 100%;
+  min-height: 100%;
+}
+
+#container {
+  min-height: 100%;
+  position: relative;
+}
+
+#body {
+  padding-bottom: $footer-height; /* Height of the footer */
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: $footer-height; /* Height of the footer */
+  background-color: darken($color: $green, $amount: 30);
+  color: $white;
+}
+
 #spinner {
   text-align: center;
   padding-top: 25%;

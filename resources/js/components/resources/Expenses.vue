@@ -471,10 +471,8 @@ export default {
       let element = document.getElementById(id);
       if (element.classList.contains("custom-invisible")) {
         element.classList.remove("custom-invisible");
-        console.log("REMOVED");
       } else {
         element.classList.add("custom-invisible");
-        console.log("ADDED");
       }
     }
   },

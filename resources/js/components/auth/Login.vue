@@ -2,6 +2,7 @@
   <div class="container">
     <template v-if="!loading">
       <form v-if="!this.$store.getters['auth/isLoggedIn']">
+        <h1 class="mb-3">Login to access your records.</h1>
         <div class="form-group">
           <label for="email">Email</label>
           <input
@@ -23,6 +24,10 @@
           >
         </div>
         <button @click.prevent v-on:click="login" class="btn btn-primary">Submit</button>
+        <hr>
+        <small>...or if you don't have an account yet,
+          <router-link :to="{name: 'register'}">register here.</router-link>
+        </small>
       </form>
       <div v-else>
         <h1>You are already logged in, {{ this.getUser.name }}</h1>
