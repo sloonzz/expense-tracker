@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UserPasswordNullableToUsersTable extends Migration
+class CreateUserCurrencyTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class UserPasswordNullableToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('password')->nullable()->change();
+        Schema::create('user_currency', function (Blueprint $table) {
+            $table->increments('id');
+            $table->timestamps();
+            $table->string('currency_name');
+            $table->integer('user_id');
         });
     }
 
@@ -25,8 +28,6 @@ class UserPasswordNullableToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('password')->nullable(false)->change();
-        });
+        Schema::dropIfExists('user_currency');
     }
 }
