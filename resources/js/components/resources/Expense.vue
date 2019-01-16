@@ -4,7 +4,7 @@
     <div v-if="!loading" class="container">
       <h1>{{this.$store.state.expenses.expense.name}}</h1>
       <h4>Quantity: {{this.$store.state.expenses.expense.quantity}}</h4>
-      <h4>Cost: {{this.$store.state.expenses.expense.cost}}</h4>
+      <h4>Cost: {{this.$store.state.expenses.expense.cost}} {{this.$store.state.auth.currency}}</h4>
       <p>{{this.$store.state.expenses.expense.description}}</p>
       <small class="small">Date: {{this.$store.state.expenses.expense.date}}</small>
       <br>

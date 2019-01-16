@@ -7,7 +7,11 @@ export default {
         expenses: [],
         hasLoadedExpenses: false
     },
-    getters: {},
+    getters: {
+        costWithCurrency: function(state, cost) {
+            return cost + " " + state.currency;
+        }
+    },
     mutations: {
         expense: function(state, expense) {
             state.expense = expense;
@@ -42,7 +46,6 @@ export default {
                     .get("/api/expenses/" + id)
                     .then(response => {
                         context.commit("expense", response.data.data);
-                        console.log(response.data.data);
                         resolve(response);
                     })
                     .catch(error => {
@@ -82,7 +85,6 @@ export default {
                         resolve(response);
                     })
                     .catch(error => {
-                        console.log(error.data);
                         reject(error);
                     });
             });

@@ -68616,13 +68616,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         email: this.email,
         password: this.password
       }).then(function (response) {
-        _this.$router.push("/");
-        _this.$store.dispatch("auth/retrieveUser");
-        _this.loading = false;
+        _this.$store.dispatch("auth/retrieveUserDetails").then(function (response2) {
+          _this.loading = false;
+          _this.$router.push("/");
+        }).catch(function (error2) {
+          console.log(error2);
+          _this.loading = false;
+        });
       }).catch(function (error) {
         console.log(error);
         _this.loading = false;
       });
+      // this.$store.dispatch("auth/retrieveCurrency");
+      // this.$store
+      //   .dispatch("auth/loginUser", {
+      //     email: this.email,
+      //     password: this.password
+      //   })
+      //   .then(response => {
+      //     this.$router.push("/");
+      //     this.$store
+      //       .dispatch("auth/retrieveUser")
+      //       .then(secondResponse => {
+      //         this.loading = false;
+      //       })
+      //       .catch(secondError => {
+      //         console.log(secondError);
+      //         this.loading = false;
+      //       });
+      //   })
+      //   .catch(error => {
+      //     console.log(error);
+      //     this.loading = false;
+      //   });
     }
   },
   computed: {
@@ -69455,6 +69481,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -69866,7 +69899,13 @@ var render = function() {
     _c("h1", [_vm._v("Summary:")]),
     _vm._v(" "),
     _c("h2", [
-      _vm._v("You spent a total of " + _vm._s(_vm.totalExpense) + ".")
+      _vm._v(
+        "You spent a total of " +
+          _vm._s(_vm.totalExpense) +
+          " " +
+          _vm._s(this.$store.state.auth.currency || "units") +
+          "."
+      )
     ]),
     _vm._v(" "),
     _c("h3", [
@@ -69875,6 +69914,8 @@ var render = function() {
           _vm._s(
             _vm.totalExpenseToDate(new Date(_vm.dateMin), new Date(_vm.dateMax))
           ) +
+          " " +
+          _vm._s(this.$store.state.auth.currency || "units") +
           " between " +
           _vm._s(_vm.dateToFormat(_vm.dateMin, "MMMM Do YYYY")) +
           " and " +
@@ -69969,7 +70010,36 @@ var render = function() {
             [
               _c("Summary", { staticClass: "mb-2" }),
               _vm._v(" "),
-              _vm._m(0),
+              _c("div", { staticClass: "container" }, [
+                _c("div", { staticClass: "row justify-content-between" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary mb-2 col-sm-4 col-lg-2",
+                      attrs: {
+                        type: "button",
+                        "data-toggle": "modal",
+                        "data-target": "#createExpensesForm"
+                      }
+                    },
+                    [_vm._v("Create New Expense")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-secondary mb-2 col-sm-3 col-lg-1",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.getAllExpenses()
+                        }
+                      }
+                    },
+                    [_vm._v("Refresh")]
+                  )
+                ])
+              ]),
               _vm._v(" "),
               _c(
                 "form",
@@ -69983,7 +70053,7 @@ var render = function() {
                     { staticClass: "modal-dialog modal-dialog-centered" },
                     [
                       _c("div", { staticClass: "modal-content" }, [
-                        _vm._m(1),
+                        _vm._m(0),
                         _vm._v(" "),
                         _c("div", { staticClass: "modal-body" }, [
                           _c(
@@ -70091,7 +70161,11 @@ var render = function() {
                           _vm._v(" "),
                           _c("div", { staticClass: "form-group" }, [
                             _c("label", { attrs: { for: "cost" } }, [
-                              _vm._v("Cost")
+                              _vm._v(
+                                "Cost (" +
+                                  _vm._s(this.$store.state.auth.currency) +
+                                  ")"
+                              )
                             ]),
                             _vm._v(" "),
                             _c("input", {
@@ -70259,7 +70333,13 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("Cost")]
+                        [
+                          _vm._v(
+                            "Cost (" +
+                              _vm._s(_vm.$store.state.auth.currency) +
+                              ")"
+                          )
+                        ]
                       ),
                       _vm._v(" "),
                       _c(
@@ -70324,7 +70404,13 @@ var render = function() {
                                       _vm._v(_vm._s(expense.description))
                                     ]),
                                     _vm._v(" "),
-                                    _c("td", [_vm._v(_vm._s(expense.cost))]),
+                                    _c("td", [
+                                      _vm._v(
+                                        _vm._s(expense.cost) +
+                                          " " +
+                                          _vm._s(_vm.$store.state.auth.currency)
+                                      )
+                                    ]),
                                     _vm._v(" "),
                                     _c("td", [_vm._v(_vm._s(expense.quantity))])
                                   ]
@@ -70692,26 +70778,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          staticStyle: { display: "inline-block" },
-          attrs: {
-            type: "button",
-            "data-toggle": "modal",
-            "data-target": "#createExpensesForm"
-          }
-        },
-        [_vm._v("Create New Expense")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-header" }, [
       _c("h4", { staticClass: "modal-title" }, [_vm._v("Create new expense")]),
       _vm._v(" "),
@@ -70914,7 +70980,10 @@ var render = function() {
               _vm._v(" "),
               _c("h4", [
                 _vm._v(
-                  "Cost: " + _vm._s(this.$store.state.expenses.expense.cost)
+                  "Cost: " +
+                    _vm._s(this.$store.state.expenses.expense.cost) +
+                    " " +
+                    _vm._s(this.$store.state.auth.currency)
                 )
               ]),
               _vm._v(" "),
@@ -71133,6 +71202,7 @@ if (false) {
         user: {},
         accessToken: localStorage.getItem("access_token") || null,
         validToken: false,
+        currency: "units",
         errors: [],
         messages: []
     },
@@ -71158,6 +71228,9 @@ if (false) {
         messages: function messages(state, _messages) {
             state.errors = null;
             state.messages = _messages;
+        },
+        currency: function currency(state, _currency) {
+            state.currency = _currency;
         }
     },
     actions: {
@@ -71196,7 +71269,6 @@ if (false) {
                     context.commit("accessToken");
                     context.commit("isValidToken", true);
                     context.commit("errors", null);
-                    console.log(response);
                     resolve(response);
                 }).catch(function (error) {
                     localStorage.removeItem("access_token");
@@ -71253,6 +71325,26 @@ if (false) {
                     reject(error);
                 });
             });
+        },
+        retrieveCurrency: function retrieveCurrency(context) {
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.headers.common.Authorization = "Bearer " + context.state.accessToken;
+                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/api/currency").then(function (response) {
+                    context.commit("currency", response.data.data.name);
+                    resolve(response);
+                }).catch(function (error) {
+                    reject(error);
+                });
+            });
+        },
+        retrieveUserDetails: function retrieveUserDetails(context) {
+            return new Promise(function (resolve, reject) {
+                Promise.all([context.dispatch("retrieveUser"), context.dispatch("retrieveCurrency")]).then(function (responses) {
+                    resolve(responses);
+                }).catch(function (errors) {
+                    reject(errors);
+                });
+            });
         }
     }
 });
@@ -71273,7 +71365,11 @@ if (false) {
         expenses: [],
         hasLoadedExpenses: false
     },
-    getters: {},
+    getters: {
+        costWithCurrency: function costWithCurrency(state, cost) {
+            return cost + " " + state.currency;
+        }
+    },
     mutations: {
         expense: function expense(state, _expense) {
             state.expense = _expense;
@@ -71302,7 +71398,6 @@ if (false) {
             return new Promise(function (resolve, reject) {
                 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/api/expenses/" + id).then(function (response) {
                     context.commit("expense", response.data.data);
-                    console.log(response.data.data);
                     resolve(response);
                 }).catch(function (error) {
                     reject(error);
@@ -71329,7 +71424,6 @@ if (false) {
                     context.commit("auth/messages", [["Successfully deleted expense."]]);
                     resolve(response);
                 }).catch(function (error) {
-                    console.log(error.data);
                     reject(error);
                 });
             });
@@ -71496,7 +71590,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     if (this.$store.state.auth.accessToken) {
       this.loading = true;
-      this.$store.dispatch("auth/retrieveUser").then(function (response) {
+      this.$store.dispatch("auth/retrieveUserDetails").then(function (response) {
         _this.loading = false;
       }).catch(function (error) {
         console.log(error);

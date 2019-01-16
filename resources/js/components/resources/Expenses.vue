@@ -4,13 +4,20 @@
     <div class="container-fluid" v-if="!loading">
       <Summary class="mb-2"></Summary>
       <div class="container">
-        <button
-          type="button"
-          class="btn btn-primary"
-          data-toggle="modal"
-          data-target="#createExpensesForm"
-          style="display:inline-block"
-        >Create New Expense</button>
+        <div class="row justify-content-between">
+          <button
+            type="button"
+            class="btn btn-primary mb-2 col-sm-4 col-lg-2"
+            data-toggle="modal"
+            data-target="#createExpensesForm"
+          >Create New Expense</button>
+          
+          <button
+            type="button"
+            class="btn btn-secondary mb-2 col-sm-3 col-lg-1"
+            @click="getAllExpenses()"
+          >Refresh</button>
+        </div>
       </div>
       <form class="modal fade container" id="createExpensesForm">
         <div class="modal-dialog modal-dialog-centered">
@@ -56,7 +63,7 @@
                 ></textarea>
               </div>
               <div class="form-group">
-                <label for="cost">Cost</label>
+                <label for="cost">Cost ({{this.$store.state.auth.currency}})</label>
                 <input
                   type="number"
                   name="cost"
@@ -97,7 +104,7 @@
               <th @click.prevent="sortDate" scope="col">Time</th>
               <th @click.prevent="sortName" scope="col">Name</th>
               <th @click.prevent="sortDescription" scope="col">Description</th>
-              <th @click.prevent="sortCost" scope="col">Cost</th>
+              <th @click.prevent="sortCost" scope="col">Cost ({{$store.state.auth.currency}})</th>
               <th @click.prevent="sortQuantity" scope="col">Quantity</th>
             </tr>
           </thead>
@@ -110,7 +117,7 @@
                   <td>{{this.moment(expense.date).format('h:mm a')}}</td>
                   <td>{{expense.name}}</td>
                   <td>{{expense.description}}</td>
-                  <td>{{expense.cost}}</td>
+                  <td>{{expense.cost}} {{$store.state.auth.currency}}</td>
                   <td>{{expense.quantity}}</td>
                 </template>
                 <!-- EDITING -->

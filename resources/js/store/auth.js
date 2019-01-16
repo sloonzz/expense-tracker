@@ -7,6 +7,7 @@ export default {
         user: {},
         accessToken: localStorage.getItem("access_token") || null,
         validToken: false,
+        currency: "units",
         errors: [],
         messages: []
     },
@@ -32,6 +33,9 @@ export default {
         messages: function(state, messages) {
             state.errors = null;
             state.messages = messages;
+        },
+        currency: function(state, currency) {
+            state.currency = currency;
         }
     },
     actions: {
@@ -76,7 +80,6 @@ export default {
                         context.commit("accessToken");
                         context.commit("isValidToken", true);
                         context.commit("errors", null);
-                        console.log(response);
                         resolve(response);
                     })
                     .catch(error => {
@@ -143,6 +146,35 @@ export default {
                     .catch(error => {
                         context.commit("errors", error.response.data.errors);
                         reject(error);
+                    });
+            });
+        },
+        retrieveCurrency: function(context) {
+            return new Promise((resolve, reject) => {
+                axios.defaults.headers.common.Authorization =
+                    "Bearer " + context.state.accessToken;
+                axios
+                    .get("/api/currency")
+                    .then(response => {
+                        context.commit("currency", response.data.data.name);
+                        resolve(response);
+                    })
+                    .catch(error => {
+                        reject(error);
+                    });
+            });
+        },
+        retrieveUserDetails: function(context) {
+            return new Promise((resolve, reject) => {
+                Promise.all([
+                    context.dispatch("retrieveUser"),
+                    context.dispatch("retrieveCurrency")
+                ])
+                    .then(responses => {
+                        resolve(responses);
+                    })
+                    .catch(errors => {
+                        reject(errors);
                     });
             });
         }

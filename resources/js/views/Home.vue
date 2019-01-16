@@ -52,7 +52,7 @@ export default {
     if (this.$store.state.auth.accessToken) {
       this.loading = true;
       this.$store
-        .dispatch("auth/retrieveUser")
+        .dispatch("auth/retrieveUserDetails")
         .then(response => {
           this.loading = false;
         })

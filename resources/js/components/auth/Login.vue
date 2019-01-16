@@ -61,9 +61,16 @@ export default {
           password: this.password
         })
         .then(response => {
-          this.$router.push("/");
-          this.$store.dispatch("auth/retrieveUser");
-          this.loading = false;
+          this.$store
+            .dispatch("auth/retrieveUserDetails")
+            .then(response2 => {
+              this.loading = false;
+              this.$router.push("/");
+            })
+            .catch(error2 => {
+              console.log(error2);
+              this.loading = false;
+            });
         })
         .catch(error => {
           console.log(error);

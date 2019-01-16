@@ -25,7 +25,7 @@ class UserCurrencyController extends Controller
     {
         $request = new Request();
         if ($this->userCurrencyService->alreadyHasCurrency()) {
-            return auth('api')->user()->currency;
+            return new UserCurrencyResource(auth('api')->user()->currency);
         } else {
             return $this->userCurrencyService->make($request);
         }

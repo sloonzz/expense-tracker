@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <h1>Summary:</h1>
-    <h2>You spent a total of {{totalExpense}}.</h2>
-    <h3>And {{totalExpenseToDate(new Date(dateMin), new Date(dateMax))}} between {{dateToFormat(dateMin, 'MMMM Do YYYY')}} and {{dateToFormat(dateMax, 'MMMM Do YYYY')}}</h3>
+    <h2>You spent a total of {{totalExpense}} {{this.$store.state.auth.currency || 'units'}}.</h2>
+    <h3>And {{totalExpenseToDate(new Date(dateMin), new Date(dateMax))}} {{this.$store.state.auth.currency || 'units'}} between {{dateToFormat(dateMin, 'MMMM Do YYYY')}} and {{dateToFormat(dateMax, 'MMMM Do YYYY')}}</h3>
     <div class="form-group">
       <label for="dateMin">From:</label>
       <datetime
