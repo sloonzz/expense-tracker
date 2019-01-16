@@ -4,18 +4,24 @@
       <Navbar class="mb-4"></Navbar>
       <div class="container">
         <div
-          class="alert alert-success"
+          class="alert alert-success show alert-dismissible fade"
           v-for="(messageObject, uIndex) in this.$store.state.auth.messages"
           :key="uIndex"
         >
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
           <div class v-for="(message, index) in messageObject" :key="index">{{ message }}</div>
         </div>
 
         <div
-          class="alert alert-danger"
+          class="alert alert-danger show alert-dismissible fade"
           v-for="(errorMessage, uIndex) in this.$store.state.auth.errors"
           :key="uIndex"
         >
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
           <div class v-for="(error, index) in errorMessage" :key="index">{{ error }}</div>
         </div>
       </div>
@@ -86,9 +92,12 @@ $footer-height: 100px;
 
 #footer {
   position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   bottom: 0;
   width: 100%;
-  height: $footer-height; /* Height of the footer */
+  min-height: $footer-height; /* Height of the footer */
   background-color: darken($color: $green, $amount: 30);
   color: $white;
 }

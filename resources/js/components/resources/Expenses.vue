@@ -3,79 +3,93 @@
     <pulse-loader id="spinner" :loading="loading"></pulse-loader>
     <div class="container-fluid" v-if="!loading">
       <Summary class="mb-2"></Summary>
-      <div data-toggle="collapse" data-target="#createExpensesForm">
-        <h2
-          data-toggle="collapse"
-          data-target="#createExpensesForm"
-          style="display:inline-block"
-        >Create new expense:</h2>
+      <div class="container">
         <button
-          class="btn float-right"
-          data-toggle="collapse"
+          type="button"
+          class="btn btn-primary"
+          data-toggle="modal"
           data-target="#createExpensesForm"
           style="display:inline-block"
-        >Expand</button>
+        >Create New Expense</button>
       </div>
-      <form class="collapse" id="createExpensesForm">
-        <div class="form-group">
-          <label for="date">Date</label>
-          <datetime
-            :placeholder="createdExpense.date"
-            id="datetime"
-            use12-hour
-            type="datetime"
-            input-class="form-control"
-            name="date"
-            v-model="createdExpense.date"
-            auto
-          ></datetime>
-        </div>
-        <div class="form-group">
-          <label for="name">Name</label>
-          <input
-            type="text"
-            name="name"
-            class="form-control"
-            placeholder="Expense Name"
-            v-model="createdExpense.name"
-          >
-        </div>
-        <div class="form-group">
-          <label for="description">Description</label>
-          <textarea
-            class="form-control"
-            placeholder="Description"
-            name="description"
-            v-model="createdExpense.description"
-          ></textarea>
-        </div>
-        <div class="form-group">
-          <label for="cost">Cost</label>
-          <input
-            type="number"
-            name="cost"
-            class="form-control"
-            placeholder="1"
-            v-model="createdExpense.cost"
-          >
-        </div>
-        <div class="form-group">
-          <label for="quantity">Quantity</label>
-          <input
-            type="number"
-            name="quantity"
-            class="form-control"
-            placeholder="1"
-            v-model="createdExpense.quantity"
-          >
-        </div>
-        <button @click.prevent="createExpense(createdExpense)" class="btn btn-primary">CREATE</button>
-        <button @click.prevent="getAllExpenses()" class="btn btn-secondary float-right">Refresh</button>
-      </form>
-      <br>
+      <form class="modal fade container" id="createExpensesForm">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Create new expense</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
 
-      <h2>Expenses:</h2>
-      <div class="table-responsive">
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="date">Date</label>
+                <datetime
+                  :placeholder="createdExpense.date"
+                  id="datetime"
+                  use12-hour
+                  type="datetime"
+                  input-class="form-control"
+                  name="date"
+                  v-model="createdExpense.date"
+                  auto
+                ></datetime>
+              </div>
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  class="form-control"
+                  placeholder="Expense Name"
+                  v-model="createdExpense.name"
+                >
+              </div>
+              <div class="form-group">
+                <label for="description">Description</label>
+                <textarea
+                  class="form-control"
+                  placeholder="Description"
+                  name="description"
+                  v-model="createdExpense.description"
+                ></textarea>
+              </div>
+              <div class="form-group">
+                <label for="cost">Cost</label>
+                <input
+                  type="number"
+                  name="cost"
+                  class="form-control"
+                  placeholder="1"
+                  v-model="createdExpense.cost"
+                >
+              </div>
+              <div class="form-group">
+                <label for="quantity">Quantity</label>
+                <input
+                  type="number"
+                  name="quantity"
+                  class="form-control"
+                  placeholder="1"
+                  v-model="createdExpense.quantity"
+                >
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                @click.prevent="createExpense(createdExpense)"
+                data-dismiss="modal"
+                class="btn btn-primary"
+              >CREATE</button>
+            </div>
+          </div>
+        </div>
+      </form>
+      <hr class="container">
+
+      <h2 class="container">Expenses:</h2>
+      <div class="table-responsive container">
         <table class="table table-hover">
           <thead>
             <tr>
@@ -486,26 +500,26 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 * {
   box-sizing: border-box;
 }
 
 .custom-toggleable {
   height: 50px;
-  transition: all 0.3s ease-in;
+  transition: height 0.3s ease-in;
 }
 
 .custom-toggleable > * {
   height: auto;
-  transition-property: all;
+  transition-property: height;
   transition-duration: 0.3s;
   transition-timing-function: ease-in;
 }
 
 .custom-invisible {
   height: 0px;
-  transition-property: all;
+  transition-property: height;
   transition-duration: 0.3s;
   transition-timing-function: ease-in;
 }
@@ -513,14 +527,14 @@ export default {
 .custom-invisible > * {
   display: none;
   height: 0px;
-  transition-property: all;
+  transition-property: height;
   transition-duration: 0.3s;
   transition-timing-function: ease-in;
 }
 
 .custom-visible {
   height: auto;
-  transition: all 0.3s ease-in;
+  transition: height 0.3s ease-in;
 }
 </style>
 

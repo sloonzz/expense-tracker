@@ -1,14 +1,18 @@
 <template>
   <div>
-    <div class="container mt-4 footer-container">
+    <div class="container footer-container">
       <div class="footer-message">
-        This expense tracker is still a work in progress. You can check out its github page
-        <a
-          href="https://github.com/sloonzz/expense-tracker"
-        >here.</a>
+        <small>
+          This expense tracker is still a work in progress. You can check out its github page
+          <a
+            href="https://github.com/sloonzz/expense-tracker"
+          >here.</a>
+        </small>
       </div>
       <div class="footer-contacts">
-        <p>You can contact the creator through these links:</p>
+        <small>
+          <p>You can contact the creator through these links:</p>
+        </small>
         <small>
           <a href="https://github.com/sloonzz/expense-tracker">github</a>
           <a href="https://www.linkedin.com/in/kendall-rancis-segovia/">linkedin</a>
@@ -31,10 +35,17 @@ export default {};
 }
 
 .footer-message {
-}
-.footer-contacts {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+}
+.footer-contacts {
+  padding: 12px 10px;
+  font-size: 90%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
 </style>

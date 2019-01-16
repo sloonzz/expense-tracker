@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <h1>Summary:</h1>
     <h2>You spent a total of {{totalExpense}}.</h2>
     <h3>And {{totalExpenseToDate(new Date(dateMin), new Date(dateMax))}} between {{dateToFormat(dateMin, 'MMMM Do YYYY')}} and {{dateToFormat(dateMax, 'MMMM Do YYYY')}}</h3>
