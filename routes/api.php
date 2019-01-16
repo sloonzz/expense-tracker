@@ -20,6 +20,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::middleware('auth:api')->post('/logout', 'Api\AuthController@logout');
 
 Route::apiResource('expenses', 'ExpenseController');
+Route::resource('currency', 'UserCurrencyController')->only([
+    'index',
+]);
+
+Route::put('currency', 'UserCurrencyController@update')->name('currency.update');
 
 Route::post('/register', 'Api\AuthController@register');
 Route::post('/login', 'Api\AuthController@login');

@@ -32,4 +32,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Expense');
     }
+
+    public function currency()
+    {
+        return $this->hasOne('App\UserCurrency');
+    }
 }

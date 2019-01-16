@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Expense extends Model
+class UserCurrency extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,7 +12,7 @@ class Expense extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'cost', 'quantity', 'description', 'date',
+        'name',
     ];
 
     /**
@@ -21,11 +21,12 @@ class Expense extends Model
      * @var array
      */
     protected $attributes = [
-        'description' => '',
+        'name' => 'units',
     ];
 
     public function user()
     {
         return $this->belongsTo('App\User');
     }
+
 }

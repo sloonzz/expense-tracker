@@ -34,7 +34,7 @@ class ExpenseController extends Controller
      */
     public function store(ExpenseRequest $request)
     {
-        $expense = Expense::create($request->all());
+        $expense = Expense::make($request->all());
         $expense->user_id = auth('api')->user()->id;
         if ($expense->save()) {
             return new ExpenseResource($expense);
@@ -72,7 +72,7 @@ class ExpenseController extends Controller
         if ($expense->user_id == auth('api')->user()->id) {
 
             $expense->fill($request->all());
-            
+
             if ($expense->save()) {
                 return new ExpenseResource($expense);
             } else {
@@ -101,7 +101,7 @@ class ExpenseController extends Controller
             } else {
                 return ['message' => 'Error deleting!'];
             }
-            
+
         } else {
             return ['message' => 'Not authorized!'];
         }
