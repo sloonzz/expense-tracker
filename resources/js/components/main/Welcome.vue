@@ -6,6 +6,14 @@
       <p>You can get started recording your expenses
         <router-link :to="{name:'expenses'}">here.</router-link>
       </p>
+      <p>
+        You can also change your currency units
+        <a
+          href
+          data-toggle="modal"
+          data-target="#editCurrencyForm"
+        >here.</a>
+      </p>
     </div>
     <div v-else>
       <h1>Create an account now!</h1>
@@ -18,5 +26,7 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {}
+};
 </script>

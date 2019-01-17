@@ -1,5 +1,37 @@
 <template>
   <div id="container">
+    <!-- EDIT CURRENCY MODAL -->
+    <div class="modal fade container" id="editCurrencyForm">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Edit currency</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="currency">Currency</label>
+              <input
+                type="text"
+                name="currency"
+                class="form-control"
+                placeholder="units"
+                v-model="$store.state.auth.currency"
+              >
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              @click.prevent="saveCurrency()"
+              data-dismiss="modal"
+              class="btn btn-primary"
+            >SAVE</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <div id="body" v-if="!loading">
       <Navbar class="mb-4"></Navbar>
       <div class="container">
@@ -47,6 +79,23 @@ export default {
     return {
       loading: false
     };
+  },
+  methods: {
+    saveCurrency() {
+      let vm = this;
+      vm.$store
+        .dispatch("auth/editCurrency", {
+          name: vm.$store.state.auth.currency
+        })
+        .then(response => {
+          vm.$store.commit("auth/messages", [
+            ["Successfully edited currency!"]
+          ]);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
   },
   mounted: function() {
     if (this.$store.state.auth.accessToken) {

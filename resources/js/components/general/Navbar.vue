@@ -34,6 +34,14 @@
           <li v-if="this.$store.getters['auth/isLoggedIn']" class="nav-item">
             <router-link :to="{ name: 'expenses' }" class="nav-link">Expenses</router-link>
           </li>
+          <li v-if="this.$store.getters['auth/isLoggedIn']" class="nav-item">
+            <a
+              data-toggle="modal"
+              data-target="#editCurrencyForm"
+              class="nav-link"
+              href
+            >Change Currency</a>
+          </li>
         </ul>
       </div>
     </nav>

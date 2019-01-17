@@ -23,7 +23,7 @@
             placeholder="password"
           >
         </div>
-        <button @click.prevent v-on:click="login" class="btn btn-primary">Submit</button>
+        <button @click.prevent="login" class="btn btn-primary">Submit</button>
         <hr>
         <small>...or if you don't have an account yet,
           <router-link :to="{name: 'register'}">register here.</router-link>

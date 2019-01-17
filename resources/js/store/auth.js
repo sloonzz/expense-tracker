@@ -164,6 +164,23 @@ export default {
                     });
             });
         },
+        editCurrency: function(context, { name }) {
+            return new Promise((resolve, reject) => {
+                axios.defaults.headers.common.Authorization =
+                    "Bearer " + context.state.accessToken;
+                axios
+                    .put("/api/currency", {
+                        name: name
+                    })
+                    .then(response => {
+                        context.commit("currency", response.data.data.name);
+                        resolve(response);
+                    })
+                    .catch(error => {
+                        reject(error);
+                    });
+            });
+        },
         retrieveUserDetails: function(context) {
             return new Promise((resolve, reject) => {
                 Promise.all([
