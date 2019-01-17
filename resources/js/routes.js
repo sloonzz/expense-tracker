@@ -1,6 +1,5 @@
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
-import Logout from "./components/auth/Logout";
 import Welcome from "./components/main/Welcome";
 import Expenses from "./components/resources/Expenses";
 import Expense from "./components/resources/Expense";

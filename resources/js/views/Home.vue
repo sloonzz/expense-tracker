@@ -54,7 +54,17 @@ export default {
       this.$store
         .dispatch("auth/retrieveUserDetails")
         .then(response => {
-          this.loading = false;
+          if (!this.$store.state.expenses.hasLoadedExpenses) {
+            this.$store
+              .dispatch("expenses/retrieveExpenses")
+              .then(response2 => {
+                this.loading = false;
+                this.$store.commit("expenses/sort", "date");
+                this.$store.commit("expenses/sort", "date");
+              });
+          } else {
+            this.loading = false;
+          }
         })
         .catch(error => {
           console.log(error);

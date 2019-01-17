@@ -42,12 +42,7 @@ export default {
       dateMax: moment().format()
     };
   },
-  mounted() {
-    let vm = this;
-    if (!this.$store.state.expenses.hasLoadedExpenses) {
-      this.$store.dispatch("expenses/retrieveExpenses");
-    }
-  },
+  mounted() {},
   methods: {
     moment: function() {
       return moment();
@@ -62,6 +57,7 @@ export default {
           return date > dateMin && date < dateMax;
         }
       );
+
       return recordsToDate.reduce((total, expense) => {
         return total + expense.cost * expense.quantity;
       }, 0);

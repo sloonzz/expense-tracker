@@ -19,7 +19,7 @@
           >Refresh</button>
         </div>
       </div>
-      <form class="modal fade container" id="createExpensesForm">
+      <!-- <form class="modal fade container" id="createExpensesForm">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
@@ -92,7 +92,8 @@
             </div>
           </div>
         </div>
-      </form>
+      </form>-->
+      <create-expense id="createExpensesForm"></create-expense>
       <hr class="container">
 
       <h2 class="container">Expenses:</h2>
@@ -100,12 +101,18 @@
         <table class="table table-hover">
           <thead>
             <tr>
-              <th @click.prevent="sortDate" scope="col">Date</th>
-              <th @click.prevent="sortDate" scope="col">Time</th>
-              <th @click.prevent="sortName" scope="col">Name</th>
-              <th @click.prevent="sortDescription" scope="col">Description</th>
-              <th @click.prevent="sortCost" scope="col">Cost ({{$store.state.auth.currency}})</th>
-              <th @click.prevent="sortQuantity" scope="col">Quantity</th>
+              <th @click.prevent="$store.commit('expenses/sort', 'date')" scope="col">Date</th>
+              <th @click.prevent="$store.commit('expenses/sort', 'date')" scope="col">Time</th>
+              <th @click.prevent="$store.commit('expenses/sort', 'name')" scope="col">Name</th>
+              <th
+                @click.prevent="$store.commit('expenses/sort', 'description')"
+                scope="col"
+              >Description</th>
+              <th
+                @click.prevent="$store.commit('expenses/sort', 'cost')"
+                scope="col"
+              >Cost ({{$store.state.auth.currency}})</th>
+              <th @click.prevent="$store.commit('expenses/sort', 'quantity')" scope="col">Quantity</th>
             </tr>
           </thead>
           <tbody>
@@ -234,10 +241,12 @@
 <script>
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import Summary from "./Summary.vue";
+import CreateExpense from "./CreateExpense.vue";
 export default {
   components: {
     PulseLoader,
-    Summary
+    Summary,
+    CreateExpense
   },
   data() {
     return {
@@ -275,97 +284,6 @@ export default {
   },
   computed: {},
   methods: {
-    sortDate() {
-      if (!this.sort.date) {
-        this.expenses.sort((a, b) => {
-          return new Date(a.date) - new Date(b.date);
-        });
-        this.sort.name = false;
-        this.sort.cost = false;
-        this.sort.quantity = false;
-        this.sort.date = true;
-        this.sort.description = false;
-        this.editing = false;
-      } else {
-        this.expenses.reverse();
-      }
-    },
-    sortCost() {
-      if (!this.sort.cost) {
-        this.expenses.sort((a, b) => {
-          return a.cost - b.cost;
-        });
-        this.sort.name = false;
-        this.sort.cost = true;
-        this.sort.quantity = false;
-        this.sort.date = false;
-        this.sort.description = false;
-        this.editing = false;
-      } else {
-        this.expenses.reverse();
-      }
-    },
-    sortQuantity() {
-      if (!this.sort.quantity) {
-        this.expenses.sort((a, b) => {
-          return a.quantity - b.quantity;
-        });
-        this.sort.name = false;
-        this.sort.cost = false;
-        this.sort.quantity = true;
-        this.sort.date = false;
-        this.sort.description = false;
-        this.editing = false;
-      } else {
-        this.expenses.reverse();
-      }
-    },
-    sortName() {
-      if (!this.sort.name) {
-        this.expenses.sort((a, b) => {
-          var x = a.name.toLowerCase();
-          var y = b.name.toLowerCase();
-          if (x < y) {
-            return -1;
-          }
-          if (x > y) {
-            return 1;
-          }
-          return 0;
-        });
-        this.sort.name = true;
-        this.sort.cost = false;
-        this.sort.quantity = false;
-        this.sort.date = false;
-        this.sort.description = false;
-        this.editing = false;
-      } else {
-        this.expenses.reverse();
-      }
-    },
-    sortDescription() {
-      if (!this.sort.description) {
-        this.expenses.sort((a, b) => {
-          var x = a.description.toLowerCase();
-          var y = b.description.toLowerCase();
-          if (x < y) {
-            return -1;
-          }
-          if (x > y) {
-            return 1;
-          }
-          return 0;
-        });
-        this.sort.name = false;
-        this.sort.cost = false;
-        this.sort.quantity = false;
-        this.sort.date = false;
-        this.sort.description = true;
-        this.editing = false;
-      } else {
-        this.expenses.reverse();
-      }
-    },
     edit(expense) {
       this.editableID = expense.id;
       this.editableExpense = window._.cloneDeep(expense);
@@ -390,14 +308,15 @@ export default {
         .then(response => {
           vm.$store.commit("auth/messages", [["Successfully edited expense."]]);
           this.loading = false;
-          vm.$set(
-            vm.expenses,
-            vm.expenses.findIndex(item => item.id == expense.id),
-            expense
-          );
+          vm.$store.commit("expenses/replaceExpense", {
+            index: vm.$store.state.expenses.expenses.findIndex(
+              item => item.id == expense.id
+            ),
+            expense: expense
+          });
         })
         .catch(error => {
-          console.log(error.data);
+          console.log(error);
           this.loading = false;
         });
     },
@@ -405,6 +324,7 @@ export default {
       this.editing = false;
       let vm = this;
       if (confirm("You will be deleting this expense. Are you sure?")) {
+        this.loading = true;
         axios.defaults.headers.common.Authorization =
           "Bearer " + this.$store.state.auth.accessToken;
         axios
@@ -413,58 +333,19 @@ export default {
             vm.$store.commit("auth/messages", [
               ["Successfully deleted expense."]
             ]);
-            vm.$delete(
-              vm.expenses,
-              vm.expenses.findIndex(item => item.id == expense.id)
+            vm.$store.commit(
+              "expenses/deleteExpense",
+              vm.$store.state.expenses.expenses.findIndex(
+                item => item.id === expense.id
+              )
             );
-            vm.$store.commit("expenses/expenses", vm.expenses);
+            this.loading = false;
           })
           .catch(error => {
-            console.log(error.data);
+            console.log(error);
+            this.loading = false;
           });
       }
-    },
-    createExpense(expense) {
-      this.editing = false;
-      let vm = this;
-      this.loading = true;
-      let oldDate = expense.date;
-      expense.date = window.moment(expense.date).format("YYYY-MM-DD HH:mm:ss");
-
-      axios.defaults.headers.common.Authorization =
-        "Bearer " + this.$store.state.auth.accessToken;
-      axios
-        .post("/api/expenses", expense)
-        .then(response => {
-          vm.$store.commit("auth/messages", [
-            ["Successfully created expense."]
-          ]);
-          vm.expenses.push({
-            id: response.data.data.id,
-            date: expense.date,
-            name: expense.name,
-            description: expense.description,
-            quantity: expense.quantity,
-            cost: expense.cost
-          });
-          vm.$store.commit("expenses/expenses", vm.expenses);
-          this.loading = false;
-          expense.name = "";
-          expense.description = "";
-          expense.date = moment().format();
-          expense.quantity = 0;
-          expense.cost = 0;
-        })
-        .catch(error => {
-          console.log(error);
-          if (error.response) {
-            this.$store.commit("auth/errors", error.response.data.errors);
-          } else if (error.request) {
-            this.$store.commit("auth/errors", error.request.data.errors);
-          }
-          this.loading = false;
-          expense.date = oldDate;
-        });
     },
     unedit() {
       this.editing = false;
@@ -480,9 +361,9 @@ export default {
       this.$store
         .dispatch("expenses/retrieveExpenses")
         .then(response => {
+          this.$store.commit("expenses/sort", "date");
+          this.$store.commit("expenses/sort", "date");
           this.loading = false;
-          this.sortDate();
-          this.sortDate();
         })
         .catch(error => {
           this.loading = false;
@@ -497,13 +378,7 @@ export default {
       }
     }
   },
-  mounted() {
-    if (this.$store.state.expenses.hasLoadedExpenses) {
-      this.expenses = this.$store.state.expenses.expenses;
-    } else {
-      this.getAllExpenses();
-    }
-  }
+  mounted() {}
 };
 </script>
 

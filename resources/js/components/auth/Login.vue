@@ -64,8 +64,16 @@ export default {
           this.$store
             .dispatch("auth/retrieveUserDetails")
             .then(response2 => {
-              this.loading = false;
-              this.$router.push("/");
+              this.$store
+                .dispatch("expenses/retrieveExpenses")
+                .then(response3 => {
+                  this.loading = false;
+                  this.$router.push("/");
+                })
+                .catch(error3 => {
+                  console.log(error3);
+                  this.loading = false;
+                });
             })
             .catch(error2 => {
               console.log(error2);

@@ -67936,15 +67936,12 @@ var index_esm = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_auth_Register___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_auth_Register__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_auth_Login__ = __webpack_require__(179);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_auth_Login___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_auth_Login__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_auth_Logout__ = __webpack_require__(182);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_auth_Logout___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_auth_Logout__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_main_Welcome__ = __webpack_require__(187);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_main_Welcome___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_main_Welcome__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_resources_Expenses__ = __webpack_require__(190);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_resources_Expenses___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_resources_Expenses__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_resources_Expense__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_resources_Expense___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_resources_Expense__);
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_main_Welcome__ = __webpack_require__(182);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_main_Welcome___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_main_Welcome__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_resources_Expenses__ = __webpack_require__(185);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_resources_Expenses___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_resources_Expenses__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_resources_Expense__ = __webpack_require__(198);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_resources_Expense___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_resources_Expense__);
 
 
 
@@ -67954,7 +67951,7 @@ var index_esm = {
 var routes = [{
     path: "/",
     name: "welcome",
-    component: __WEBPACK_IMPORTED_MODULE_3__components_main_Welcome___default.a
+    component: __WEBPACK_IMPORTED_MODULE_2__components_main_Welcome___default.a
 }, {
     path: "/register",
     name: "register",
@@ -67966,11 +67963,11 @@ var routes = [{
 }, {
     path: "/expenses",
     name: "expenses",
-    component: __WEBPACK_IMPORTED_MODULE_4__components_resources_Expenses___default.a
+    component: __WEBPACK_IMPORTED_MODULE_3__components_resources_Expenses___default.a
 }, {
     path: "/expenses/:id",
     name: "expense",
-    component: __WEBPACK_IMPORTED_MODULE_5__components_resources_Expense___default.a
+    component: __WEBPACK_IMPORTED_MODULE_4__components_resources_Expense___default.a
 }];
 
 /* harmony default export */ __webpack_exports__["a"] = (routes);
@@ -68617,8 +68614,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         password: this.password
       }).then(function (response) {
         _this.$store.dispatch("auth/retrieveUserDetails").then(function (response2) {
-          _this.loading = false;
-          _this.$router.push("/");
+          _this.$store.dispatch("expenses/retrieveExpenses").then(function (response3) {
+            _this.loading = false;
+            _this.$router.push("/");
+          }).catch(function (error3) {
+            console.log(error3);
+            _this.loading = false;
+          });
         }).catch(function (error2) {
           console.log(error2);
           _this.loading = false;
@@ -68627,28 +68629,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         console.log(error);
         _this.loading = false;
       });
-      // this.$store.dispatch("auth/retrieveCurrency");
-      // this.$store
-      //   .dispatch("auth/loginUser", {
-      //     email: this.email,
-      //     password: this.password
-      //   })
-      //   .then(response => {
-      //     this.$router.push("/");
-      //     this.$store
-      //       .dispatch("auth/retrieveUser")
-      //       .then(secondResponse => {
-      //         this.loading = false;
-      //       })
-      //       .catch(secondError => {
-      //         console.log(secondError);
-      //         this.loading = false;
-      //       });
-      //   })
-      //   .catch(error => {
-      //     console.log(error);
-      //     this.loading = false;
-      //   });
     }
   },
   computed: {
@@ -68820,206 +68800,11 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(183)
-}
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(185)
+var __vue_script__ = __webpack_require__(183)
 /* template */
-var __vue_template__ = __webpack_require__(186)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/js/components/auth/Logout.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-4f27ba76", Component.options)
-  } else {
-    hotAPI.reload("data-v-4f27ba76", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 183 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(184);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(4)("228f1dea", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4f27ba76\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Logout.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4f27ba76\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Logout.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 184 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(3)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 185 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_spinner_src_PulseLoader_vue__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_spinner_src_PulseLoader_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_spinner_src_PulseLoader_vue__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    PulseLoader: __WEBPACK_IMPORTED_MODULE_0_vue_spinner_src_PulseLoader_vue___default.a
-  },
-  data: function data() {
-    return {
-      loading: false
-    };
-  },
-
-  methods: {
-    logout: function logout() {
-      var _this = this;
-
-      this.loading = true;
-      this.$store.dispatch("auth/logoutUser").then(function (response) {
-        _this.$router.push("/login");
-        _this.loading = false;
-      }).catch(function (error) {
-        _this.$router.push("/login");
-        _this.loading = false;
-      });
-    },
-    created: function created() {
-      this.$store.commit("errors", null);
-    }
-  },
-  beforeRouteEnter: function beforeRouteEnter(to, from, next) {
-    next(function (vm) {
-      vm.$store.dispatch("auth/retrieveUser").then(function (response) {
-        if (!vm.$store.getters["auth/isLoggedIn"]) {
-          next("/");
-        } else {
-          next();
-        }
-      }).catch(function (error) {
-        next("/");
-      });
-    });
-  }
-});
-
-/***/ }),
-/* 186 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "container" },
-    [
-      !_vm.loading
-        ? _c("div", { staticStyle: { "text-align": "center" } }, [
-            this.$store.getters["auth/isLoggedIn"]
-              ? _c(
-                  "button",
-                  { staticClass: "btn btn-danger", on: { click: _vm.logout } },
-                  [_vm._v("Logout")]
-                )
-              : _vm._e()
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _c("pulse-loader", { attrs: { id: "spinner", loading: _vm.loading } })
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-4f27ba76", module.exports)
-  }
-}
-
-/***/ }),
-/* 187 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(188)
-/* template */
-var __vue_template__ = __webpack_require__(189)
+var __vue_template__ = __webpack_require__(184)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -69058,7 +68843,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 188 */
+/* 183 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -69086,7 +68871,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
-/* 189 */
+/* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -69155,17 +68940,17 @@ if (false) {
 }
 
 /***/ }),
-/* 190 */
+/* 185 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(191)
+  __webpack_require__(186)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(193)
+var __vue_script__ = __webpack_require__(188)
 /* template */
 var __vue_template__ = __webpack_require__(197)
 /* template functional */
@@ -69206,13 +68991,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 191 */
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(192);
+var content = __webpack_require__(187);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -69232,7 +69017,7 @@ if(false) {
 }
 
 /***/ }),
-/* 192 */
+/* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)(false);
@@ -69246,15 +69031,17 @@ exports.push([module.i, "\n*[data-v-fafbb220] {\n  -webkit-box-sizing: border-bo
 
 
 /***/ }),
-/* 193 */
+/* 188 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_spinner_src_PulseLoader_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_spinner_src_PulseLoader_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_spinner_src_PulseLoader_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Summary_vue__ = __webpack_require__(194);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Summary_vue__ = __webpack_require__(189);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Summary_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Summary_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CreateExpense_vue__ = __webpack_require__(192);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CreateExpense_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__CreateExpense_vue__);
 //
 //
 //
@@ -69488,13 +69275,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     PulseLoader: __WEBPACK_IMPORTED_MODULE_0_vue_spinner_src_PulseLoader_vue___default.a,
-    Summary: __WEBPACK_IMPORTED_MODULE_1__Summary_vue___default.a
+    Summary: __WEBPACK_IMPORTED_MODULE_1__Summary_vue___default.a,
+    CreateExpense: __WEBPACK_IMPORTED_MODULE_2__CreateExpense_vue___default.a
   },
   data: function data() {
     return {
@@ -69533,97 +69329,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
   computed: {},
   methods: {
-    sortDate: function sortDate() {
-      if (!this.sort.date) {
-        this.expenses.sort(function (a, b) {
-          return new Date(a.date) - new Date(b.date);
-        });
-        this.sort.name = false;
-        this.sort.cost = false;
-        this.sort.quantity = false;
-        this.sort.date = true;
-        this.sort.description = false;
-        this.editing = false;
-      } else {
-        this.expenses.reverse();
-      }
-    },
-    sortCost: function sortCost() {
-      if (!this.sort.cost) {
-        this.expenses.sort(function (a, b) {
-          return a.cost - b.cost;
-        });
-        this.sort.name = false;
-        this.sort.cost = true;
-        this.sort.quantity = false;
-        this.sort.date = false;
-        this.sort.description = false;
-        this.editing = false;
-      } else {
-        this.expenses.reverse();
-      }
-    },
-    sortQuantity: function sortQuantity() {
-      if (!this.sort.quantity) {
-        this.expenses.sort(function (a, b) {
-          return a.quantity - b.quantity;
-        });
-        this.sort.name = false;
-        this.sort.cost = false;
-        this.sort.quantity = true;
-        this.sort.date = false;
-        this.sort.description = false;
-        this.editing = false;
-      } else {
-        this.expenses.reverse();
-      }
-    },
-    sortName: function sortName() {
-      if (!this.sort.name) {
-        this.expenses.sort(function (a, b) {
-          var x = a.name.toLowerCase();
-          var y = b.name.toLowerCase();
-          if (x < y) {
-            return -1;
-          }
-          if (x > y) {
-            return 1;
-          }
-          return 0;
-        });
-        this.sort.name = true;
-        this.sort.cost = false;
-        this.sort.quantity = false;
-        this.sort.date = false;
-        this.sort.description = false;
-        this.editing = false;
-      } else {
-        this.expenses.reverse();
-      }
-    },
-    sortDescription: function sortDescription() {
-      if (!this.sort.description) {
-        this.expenses.sort(function (a, b) {
-          var x = a.description.toLowerCase();
-          var y = b.description.toLowerCase();
-          if (x < y) {
-            return -1;
-          }
-          if (x > y) {
-            return 1;
-          }
-          return 0;
-        });
-        this.sort.name = false;
-        this.sort.cost = false;
-        this.sort.quantity = false;
-        this.sort.date = false;
-        this.sort.description = true;
-        this.editing = false;
-      } else {
-        this.expenses.reverse();
-      }
-    },
     edit: function edit(expense) {
       this.editableID = expense.id;
       this.editableExpense = window._.cloneDeep(expense);
@@ -69647,67 +69352,36 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       axios.put("/api/expenses/" + expense.id, expense).then(function (response) {
         vm.$store.commit("auth/messages", [["Successfully edited expense."]]);
         _this.loading = false;
-        vm.$set(vm.expenses, vm.expenses.findIndex(function (item) {
-          return item.id == expense.id;
-        }), expense);
+        vm.$store.commit("expenses/replaceExpense", {
+          index: vm.$store.state.expenses.expenses.findIndex(function (item) {
+            return item.id == expense.id;
+          }),
+          expense: expense
+        });
       }).catch(function (error) {
-        console.log(error.data);
+        console.log(error);
         _this.loading = false;
       });
     },
     deleteExpense: function deleteExpense(expense) {
-      this.editing = false;
-      var vm = this;
-      if (confirm("You will be deleting this expense. Are you sure?")) {
-        axios.defaults.headers.common.Authorization = "Bearer " + this.$store.state.auth.accessToken;
-        axios.delete("/api/expenses/" + expense.id).then(function (response) {
-          vm.$store.commit("auth/messages", [["Successfully deleted expense."]]);
-          vm.$delete(vm.expenses, vm.expenses.findIndex(function (item) {
-            return item.id == expense.id;
-          }));
-          vm.$store.commit("expenses/expenses", vm.expenses);
-        }).catch(function (error) {
-          console.log(error.data);
-        });
-      }
-    },
-    createExpense: function createExpense(expense) {
       var _this2 = this;
 
       this.editing = false;
       var vm = this;
-      this.loading = true;
-      var oldDate = expense.date;
-      expense.date = window.moment(expense.date).format("YYYY-MM-DD HH:mm:ss");
-
-      axios.defaults.headers.common.Authorization = "Bearer " + this.$store.state.auth.accessToken;
-      axios.post("/api/expenses", expense).then(function (response) {
-        vm.$store.commit("auth/messages", [["Successfully created expense."]]);
-        vm.expenses.push({
-          id: response.data.data.id,
-          date: expense.date,
-          name: expense.name,
-          description: expense.description,
-          quantity: expense.quantity,
-          cost: expense.cost
+      if (confirm("You will be deleting this expense. Are you sure?")) {
+        this.loading = true;
+        axios.defaults.headers.common.Authorization = "Bearer " + this.$store.state.auth.accessToken;
+        axios.delete("/api/expenses/" + expense.id).then(function (response) {
+          vm.$store.commit("auth/messages", [["Successfully deleted expense."]]);
+          vm.$store.commit("expenses/deleteExpense", vm.$store.state.expenses.expenses.findIndex(function (item) {
+            return item.id === expense.id;
+          }));
+          _this2.loading = false;
+        }).catch(function (error) {
+          console.log(error);
+          _this2.loading = false;
         });
-        vm.$store.commit("expenses/expenses", vm.expenses);
-        _this2.loading = false;
-        expense.name = "";
-        expense.description = "";
-        expense.date = moment().format();
-        expense.quantity = 0;
-        expense.cost = 0;
-      }).catch(function (error) {
-        console.log(error);
-        if (error.response) {
-          _this2.$store.commit("auth/errors", error.response.data.errors);
-        } else if (error.request) {
-          _this2.$store.commit("auth/errors", error.request.data.errors);
-        }
-        _this2.loading = false;
-        expense.date = oldDate;
-      });
+      }
     },
     unedit: function unedit() {
       this.editing = false;
@@ -69723,9 +69397,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       this.loading = true;
       this.$store.dispatch("expenses/retrieveExpenses").then(function (response) {
+        _this3.$store.commit("expenses/sort", "date");
+        _this3.$store.commit("expenses/sort", "date");
         _this3.loading = false;
-        _this3.sortDate();
-        _this3.sortDate();
       }).catch(function (error) {
         _this3.loading = false;
       });
@@ -69739,25 +69413,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
     }
   },
-  mounted: function mounted() {
-    if (this.$store.state.expenses.hasLoadedExpenses) {
-      this.expenses = this.$store.state.expenses.expenses;
-    } else {
-      this.getAllExpenses();
-    }
-  }
+  mounted: function mounted() {}
 });
 
 /***/ }),
-/* 194 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(195)
+var __vue_script__ = __webpack_require__(190)
 /* template */
-var __vue_template__ = __webpack_require__(196)
+var __vue_template__ = __webpack_require__(191)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -69796,7 +69464,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 195 */
+/* 190 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -69843,12 +69511,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       dateMax: moment().format()
     };
   },
-  mounted: function mounted() {
-    var vm = this;
-    if (!this.$store.state.expenses.hasLoadedExpenses) {
-      this.$store.dispatch("expenses/retrieveExpenses");
-    }
-  },
+  mounted: function mounted() {},
 
   methods: {
     moment: function (_moment) {
@@ -69872,6 +69535,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var date = new Date(expense.date);
         return date > dateMin && date < dateMax;
       });
+
       return recordsToDate.reduce(function (total, expense) {
         return total + expense.cost * expense.quantity;
       }, 0);
@@ -69888,7 +69552,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 196 */
+/* 191 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -69991,6 +69655,457 @@ if (false) {
 }
 
 /***/ }),
+/* 192 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(193)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(195)
+/* template */
+var __vue_template__ = __webpack_require__(196)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/resources/CreateExpense.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-34efd7b7", Component.options)
+  } else {
+    hotAPI.reload("data-v-34efd7b7", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 193 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(194);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(4)("7fa30e31", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-34efd7b7\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./CreateExpense.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-34efd7b7\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./CreateExpense.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 194 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 195 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_spinner_src_PulseLoader_vue__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_spinner_src_PulseLoader_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_spinner_src_PulseLoader_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    PulseLoader: __WEBPACK_IMPORTED_MODULE_0_vue_spinner_src_PulseLoader_vue___default.a
+  },
+  data: function data() {
+    return {
+      createdExpense: {
+        id: 0,
+        date: moment().format(),
+        name: "",
+        description: "",
+        cost: 0,
+        quantity: 0,
+        time: ""
+      },
+      loading: false
+    };
+  },
+
+  methods: {
+    createExpense: function createExpense(expense) {
+      var _this = this;
+
+      var vm = this;
+      this.loading = true;
+      var oldDate = expense.date;
+      expense.date = window.moment(expense.date).format("YYYY-MM-DD HH:mm:ss");
+
+      axios.defaults.headers.common.Authorization = "Bearer " + this.$store.state.auth.accessToken;
+      axios.post("/api/expenses", expense).then(function (response) {
+        vm.$store.commit("auth/messages", [["Successfully created expense."]]);
+        vm.$store.commit("expenses/pushExpense", {
+          id: response.data.data.id,
+          date: expense.date,
+          name: expense.name,
+          description: expense.description,
+          quantity: expense.quantity,
+          cost: expense.cost
+        });
+        vm.$store.commit("expenses/sort", "date");
+        vm.$store.commit("expenses/sort", "date");
+        _this.loading = false;
+
+        expense.name = "";
+        expense.description = "";
+        expense.date = moment().format();
+        expense.quantity = 0;
+        expense.cost = 0;
+      }).catch(function (error) {
+        console.log(error);
+        if (error.response) {
+          _this.$store.commit("auth/errors", error.response.data.errors);
+        } else if (error.request) {
+          _this.$store.commit("auth/errors", error.request.data.errors);
+        }
+        _this.loading = false;
+        expense.date = oldDate;
+      });
+    }
+  }
+});
+
+/***/ }),
+/* 196 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("form", { staticClass: "modal fade container" }, [
+    _c("div", { staticClass: "modal-dialog modal-dialog-centered" }, [
+      _c("div", { staticClass: "modal-content" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "modal-body" }, [
+          _c(
+            "div",
+            { staticClass: "form-group" },
+            [
+              _c("label", { attrs: { for: "date" } }, [_vm._v("Date")]),
+              _vm._v(" "),
+              _c("datetime", {
+                attrs: {
+                  placeholder: _vm.createdExpense.date,
+                  id: "datetime",
+                  "use12-hour": "",
+                  type: "datetime",
+                  "input-class": "form-control",
+                  name: "date",
+                  auto: ""
+                },
+                model: {
+                  value: _vm.createdExpense.date,
+                  callback: function($$v) {
+                    _vm.$set(_vm.createdExpense, "date", $$v)
+                  },
+                  expression: "createdExpense.date"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "name" } }, [_vm._v("Name")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.createdExpense.name,
+                  expression: "createdExpense.name"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: {
+                type: "text",
+                name: "name",
+                placeholder: "Expense Name"
+              },
+              domProps: { value: _vm.createdExpense.name },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.createdExpense, "name", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "description" } }, [
+              _vm._v("Description")
+            ]),
+            _vm._v(" "),
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.createdExpense.description,
+                  expression: "createdExpense.description"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { placeholder: "Description", name: "description" },
+              domProps: { value: _vm.createdExpense.description },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.createdExpense,
+                    "description",
+                    $event.target.value
+                  )
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "cost" } }, [
+              _vm._v("Cost (" + _vm._s(this.$store.state.auth.currency) + ")")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.createdExpense.cost,
+                  expression: "createdExpense.cost"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "number", name: "cost", placeholder: "1" },
+              domProps: { value: _vm.createdExpense.cost },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.createdExpense, "cost", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "quantity" } }, [_vm._v("Quantity")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.createdExpense.quantity,
+                  expression: "createdExpense.quantity"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "number", name: "quantity", placeholder: "1" },
+              domProps: { value: _vm.createdExpense.quantity },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.createdExpense, "quantity", $event.target.value)
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "modal-footer" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary",
+              attrs: { "data-dismiss": "modal" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  _vm.createExpense(_vm.createdExpense)
+                }
+              }
+            },
+            [_vm._v("CREATE")]
+          )
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c("h4", { staticClass: "modal-title" }, [_vm._v("Create new expense")]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-34efd7b7", module.exports)
+  }
+}
+
+/***/ }),
 /* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -70041,222 +70156,7 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c(
-                "form",
-                {
-                  staticClass: "modal fade container",
-                  attrs: { id: "createExpensesForm" }
-                },
-                [
-                  _c(
-                    "div",
-                    { staticClass: "modal-dialog modal-dialog-centered" },
-                    [
-                      _c("div", { staticClass: "modal-content" }, [
-                        _vm._m(0),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "modal-body" }, [
-                          _c(
-                            "div",
-                            { staticClass: "form-group" },
-                            [
-                              _c("label", { attrs: { for: "date" } }, [
-                                _vm._v("Date")
-                              ]),
-                              _vm._v(" "),
-                              _c("datetime", {
-                                attrs: {
-                                  placeholder: _vm.createdExpense.date,
-                                  id: "datetime",
-                                  "use12-hour": "",
-                                  type: "datetime",
-                                  "input-class": "form-control",
-                                  name: "date",
-                                  auto: ""
-                                },
-                                model: {
-                                  value: _vm.createdExpense.date,
-                                  callback: function($$v) {
-                                    _vm.$set(_vm.createdExpense, "date", $$v)
-                                  },
-                                  expression: "createdExpense.date"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("label", { attrs: { for: "name" } }, [
-                              _vm._v("Name")
-                            ]),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.createdExpense.name,
-                                  expression: "createdExpense.name"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: {
-                                type: "text",
-                                name: "name",
-                                placeholder: "Expense Name"
-                              },
-                              domProps: { value: _vm.createdExpense.name },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.createdExpense,
-                                    "name",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("label", { attrs: { for: "description" } }, [
-                              _vm._v("Description")
-                            ]),
-                            _vm._v(" "),
-                            _c("textarea", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.createdExpense.description,
-                                  expression: "createdExpense.description"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: {
-                                placeholder: "Description",
-                                name: "description"
-                              },
-                              domProps: {
-                                value: _vm.createdExpense.description
-                              },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.createdExpense,
-                                    "description",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("label", { attrs: { for: "cost" } }, [
-                              _vm._v(
-                                "Cost (" +
-                                  _vm._s(this.$store.state.auth.currency) +
-                                  ")"
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.createdExpense.cost,
-                                  expression: "createdExpense.cost"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: {
-                                type: "number",
-                                name: "cost",
-                                placeholder: "1"
-                              },
-                              domProps: { value: _vm.createdExpense.cost },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.createdExpense,
-                                    "cost",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("label", { attrs: { for: "quantity" } }, [
-                              _vm._v("Quantity")
-                            ]),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.createdExpense.quantity,
-                                  expression: "createdExpense.quantity"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: {
-                                type: "number",
-                                name: "quantity",
-                                placeholder: "1"
-                              },
-                              domProps: { value: _vm.createdExpense.quantity },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.createdExpense,
-                                    "quantity",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            })
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "modal-footer" }, [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-primary",
-                              attrs: { "data-dismiss": "modal" },
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  _vm.createExpense(_vm.createdExpense)
-                                }
-                              }
-                            },
-                            [_vm._v("CREATE")]
-                          )
-                        ])
-                      ])
-                    ]
-                  )
-                ]
-              ),
+              _c("create-expense", { attrs: { id: "createExpensesForm" } }),
               _vm._v(" "),
               _c("hr", { staticClass: "container" }),
               _vm._v(" "),
@@ -70273,7 +70173,7 @@ var render = function() {
                           on: {
                             click: function($event) {
                               $event.preventDefault()
-                              return _vm.sortDate($event)
+                              _vm.$store.commit("expenses/sort", "date")
                             }
                           }
                         },
@@ -70287,7 +70187,7 @@ var render = function() {
                           on: {
                             click: function($event) {
                               $event.preventDefault()
-                              return _vm.sortDate($event)
+                              _vm.$store.commit("expenses/sort", "date")
                             }
                           }
                         },
@@ -70301,7 +70201,7 @@ var render = function() {
                           on: {
                             click: function($event) {
                               $event.preventDefault()
-                              return _vm.sortName($event)
+                              _vm.$store.commit("expenses/sort", "name")
                             }
                           }
                         },
@@ -70315,7 +70215,7 @@ var render = function() {
                           on: {
                             click: function($event) {
                               $event.preventDefault()
-                              return _vm.sortDescription($event)
+                              _vm.$store.commit("expenses/sort", "description")
                             }
                           }
                         },
@@ -70329,7 +70229,7 @@ var render = function() {
                           on: {
                             click: function($event) {
                               $event.preventDefault()
-                              return _vm.sortCost($event)
+                              _vm.$store.commit("expenses/sort", "cost")
                             }
                           }
                         },
@@ -70349,7 +70249,7 @@ var render = function() {
                           on: {
                             click: function($event) {
                               $event.preventDefault()
-                              return _vm.sortQuantity($event)
+                              _vm.$store.commit("expenses/sort", "quantity")
                             }
                           }
                         },
@@ -70773,29 +70673,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c("h4", { staticClass: "modal-title" }, [_vm._v("Create new expense")]),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-label": "Close"
-          }
-        },
-        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -71363,7 +71241,14 @@ if (false) {
     state: {
         expense: {},
         expenses: [],
-        hasLoadedExpenses: false
+        hasLoadedExpenses: false,
+        sort: {
+            date: false,
+            name: false,
+            cost: false,
+            quantity: false,
+            description: false
+        }
     },
     getters: {
         costWithCurrency: function costWithCurrency(state, cost) {
@@ -71379,6 +71264,91 @@ if (false) {
         },
         expenses: function expenses(state, _expenses) {
             state.expenses = _expenses;
+        },
+        pushExpense: function pushExpense(state, expense) {
+            state.expenses.push(expense);
+        },
+        deleteExpense: function deleteExpense(state, index) {
+            state.expenses.splice(index, 1);
+        },
+        replaceExpense: function replaceExpense(state, payload) {
+            Vue.set(state.expenses, payload.index, payload.expense);
+        },
+        sort: function sort(state, sortBy) {
+            if (!state.sort[sortBy]) {
+                // Sorting here
+                switch (sortBy) {
+                    case "date":
+                        state.expenses.sort(function (a, b) {
+                            return new Date(a.date) - new Date(b.date);
+                        });
+                        state.sort.quantity = false;
+                        state.sort.name = false;
+                        state.sort.cost = false;
+                        state.sort.description = false;
+                        break;
+                    case "cost":
+                        state.expenses.sort(function (a, b) {
+                            return a.cost - b.cost;
+                        });
+                        state.sort.quantity = false;
+                        state.sort.name = false;
+                        state.sort.description = false;
+                        state.sort.date = false;
+                        break;
+                    case "quantity":
+                        state.expenses.sort(function (a, b) {
+                            return a.quantity - b.quantity;
+                        });
+                        state.sort.name = false;
+                        state.sort.cost = false;
+                        state.sort.description = false;
+                        state.sort.date = false;
+                        break;
+                    case "name":
+                        state.expenses.sort(function (a, b) {
+                            var x = a.name.toLowerCase();
+                            var y = b.name.toLowerCase();
+                            if (x < y) {
+                                return -1;
+                            }
+                            if (x > y) {
+                                return 1;
+                            }
+                            return 0;
+                        });
+                        state.sort.quantity = false;
+                        state.sort.cost = false;
+                        state.sort.description = false;
+                        state.sort.date = false;
+                        break;
+                    case "description":
+                        state.expenses.sort(function (a, b) {
+                            var x = a.description.toLowerCase();
+                            var y = b.description.toLowerCase();
+                            if (x < y) {
+                                return -1;
+                            }
+                            if (x > y) {
+                                return 1;
+                            }
+                            return 0;
+                        });
+                        state.sort.quantity = false;
+                        state.sort.name = false;
+                        state.sort.cost = false;
+                        state.sort.date = false;
+                        break;
+
+                    default:
+                        break;
+                }
+                state.sort[sortBy] = true;
+            } else {
+                // If sorted already, just reverse the sort.
+                state.expenses.reverse();
+                state.sort[sortBy] = false;
+            }
         }
     },
     actions: {
@@ -71417,7 +71387,6 @@ if (false) {
             });
         },
         deleteExpense: function deleteExpense(context, expense) {
-            this.editing = false;
             return new Promise(function (resolve, reject) {
                 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.headers.common.Authorization = "Bearer " + context.rootState.auth.accessToken;
                 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete("/api/expenses/" + expense.id).then(function (response) {
@@ -71591,7 +71560,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     if (this.$store.state.auth.accessToken) {
       this.loading = true;
       this.$store.dispatch("auth/retrieveUserDetails").then(function (response) {
-        _this.loading = false;
+        if (!_this.$store.state.expenses.hasLoadedExpenses) {
+          _this.$store.dispatch("expenses/retrieveExpenses").then(function (response2) {
+            _this.loading = false;
+            _this.$store.commit("expenses/sort", "date");
+            _this.$store.commit("expenses/sort", "date");
+          });
+        } else {
+          _this.loading = false;
+        }
       }).catch(function (error) {
         console.log(error);
         _this.loading = false;
